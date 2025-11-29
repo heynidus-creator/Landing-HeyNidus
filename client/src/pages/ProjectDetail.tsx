@@ -98,7 +98,7 @@ const ProjectDetail = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 dark:bg-slate-900">
       {/* Imagen Principal */}
-      <div className="w-full h-96 bg-slate-200 overflow-hidden">
+      <div className="w-full h-48 sm:h-64 md:h-96 bg-slate-200 overflow-hidden">
         <img
           src={ProjectImageMap[project.imagen] || ''}
           alt={project.nombre}
@@ -108,27 +108,27 @@ const ProjectDetail = () => {
       </div>
 
       {/* Contenido */}
-      <div className="mx-auto max-w-6xl px-3 sm:px-4 w-full py-12">
+      <div className="mx-auto max-w-6xl px-3 sm:px-4 w-full py-6 sm:py-12">
         {/* Header */}
-        <div className="mb-12">
-          <div className="flex items-center gap-3 mb-3">
-            <span className="text-sm font-semibold text-emerald-700 dark:text-emerald-400">{project.tipo}</span>
-            <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-3 py-1 rounded-full">{project.etapa}</span>
+        <div className="mb-6 sm:mb-12">
+          <div className="flex items-center gap-3 mb-3 flex-wrap">
+            <span className="text-xs sm:text-sm font-semibold text-emerald-700 dark:text-emerald-400">{project.tipo}</span>
+            <span className="text-xs sm:text-sm font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-3 py-1 rounded-full">{project.etapa}</span>
           </div>
-          <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-100 mb-2">{project.nombre}</h1>
-          <p className="text-slate-600 dark:text-slate-400 flex items-center gap-2">
-            <MapPin className="w-4 h-4" />
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 dark:text-slate-100 mb-2">{project.nombre}</h1>
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 flex items-center gap-2">
+            <MapPin className="w-4 h-4 flex-shrink-0" />
             {project.ubicacion}
           </p>
         </div>
 
-        <div className="grid gap-12 lg:grid-cols-3">
+        <div className="grid gap-6 sm:gap-12 lg:grid-cols-3">
           {/* Contenido principal */}
           <div className="lg:col-span-2 space-y-8">
             {/* Descripción */}
             <div>
-              <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">Sobre el proyecto</h2>
-              <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">Sobre el proyecto</h2>
+              <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
                 {project.detalleCompleto || project.descripcion}
               </p>
             </div>
@@ -136,12 +136,12 @@ const ProjectDetail = () => {
             {/* Características */}
             {project.caracteristicas && project.caracteristicas.length > 0 && (
               <div>
-                <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">Características principales</h2>
+                <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">Características principales</h2>
                 <div className="grid gap-3">
                   {project.caracteristicas.map((caracteristica, idx) => (
                     <div key={idx} className="flex gap-3 items-start">
                       <Check className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
-                      <p className="text-slate-700 dark:text-slate-300">{caracteristica}</p>
+                      <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300">{caracteristica}</p>
                     </div>
                   ))}
                 </div>
@@ -151,14 +151,14 @@ const ProjectDetail = () => {
             {/* Servicios */}
             {project.servicios && project.servicios.length > 0 && (
               <div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
-                  <Zap className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+                  <Zap className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
                   Servicios
                 </h3>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {project.servicios.map((servicio, idx) => (
                     <div key={idx} className="bg-white dark:bg-slate-800 p-3 rounded-lg border border-slate-200 dark:border-slate-700">
-                      <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">{servicio}</p>
+                      <p className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-slate-100">{servicio}</p>
                     </div>
                   ))}
                 </div>
@@ -168,14 +168,14 @@ const ProjectDetail = () => {
             {/* Amenidades */}
             {project.amenidades && project.amenidades.length > 0 && (
               <div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
-                  <Leaf className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+                  <Leaf className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
                   Amenidades
                 </h3>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {project.amenidades.map((amenidad, idx) => (
                     <div key={idx} className="bg-white dark:bg-slate-800 p-3 rounded-lg border border-slate-200 dark:border-slate-700">
-                      <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">{amenidad}</p>
+                      <p className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-slate-100">{amenidad}</p>
                     </div>
                   ))}
                 </div>
@@ -184,19 +184,19 @@ const ProjectDetail = () => {
 
             {/* Lotes Disponibles - Solo para Barrio Capinota */}
             {project.id === 1 && (
-              <div className="bg-gradient-to-r from-emerald-50 to-emerald-100 rounded-2xl border border-emerald-200 p-8">
-                <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-2">
-                  <Layers className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+              <div className="bg-gradient-to-r from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-800/20 rounded-2xl border border-emerald-200 dark:border-emerald-700 p-4 sm:p-8">
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-2">
+                  <Layers className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
                   Lotes Disponibles
                 </h3>
-                <p className="text-slate-700 dark:text-slate-300 mb-6">
+                <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 mb-6">
                   Consulta el mapa interactivo para ver todos los lotes disponibles y sus características.
                 </p>
                 <a
                   href="https://df60f4f7-4682-484e-92b2-e42ac976ab75-00-vi7lwl95uo43.kirk.replit.dev/public/b81cb0f0f3c7444a2f82b0df38a285c206ea55ee8bd58aefc0d6c56e42f5294e"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-emerald-600 text-white font-semibold px-6 py-3 rounded-full hover:bg-emerald-700 transition"
+                  className="inline-flex items-center gap-2 bg-emerald-600 text-white font-semibold px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base rounded-full hover:bg-emerald-700 transition"
                   data-testid="link-lotes-disponibles"
                 >
                   Ver Lotes Disponibles
@@ -208,16 +208,16 @@ const ProjectDetail = () => {
             {/* Master Plan, Galería y Videos - Solo para Barrio Capinota */}
             {project.id === 1 && (
               <div>
-                <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">Información del Proyecto</h2>
+                <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">Información del Proyecto</h2>
                 
                 {/* Tabs */}
-                <div className="flex gap-2 border-b border-slate-200 dark:border-slate-700 mb-6">
+                <div className="flex gap-2 border-b border-slate-200 dark:border-slate-700 mb-6 overflow-x-auto">
                   <button
                     onClick={() => setActiveTab('master-plan')}
-                    className={`px-4 py-2 font-semibold border-b-2 transition ${
+                    className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold border-b-2 transition flex-shrink-0 ${
                       activeTab === 'master-plan'
                         ? 'border-emerald-600 text-emerald-600 dark:text-emerald-400'
-                        : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-slate-100'
+                        : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
                     }`}
                     data-testid="tab-master-plan"
                     type="button"
@@ -226,22 +226,22 @@ const ProjectDetail = () => {
                   </button>
                   <button
                     onClick={() => setActiveTab('galeria')}
-                    className={`px-4 py-2 font-semibold border-b-2 transition ${
+                    className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold border-b-2 transition flex-shrink-0 ${
                       activeTab === 'galeria'
                         ? 'border-emerald-600 text-emerald-600 dark:text-emerald-400'
-                        : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-slate-100'
+                        : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
                     }`}
                     data-testid="tab-galeria"
                     type="button"
                   >
-                    Galería de Imágenes
+                    Galería
                   </button>
                   <button
                     onClick={() => setActiveTab('videos')}
-                    className={`px-4 py-2 font-semibold border-b-2 transition ${
+                    className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold border-b-2 transition flex-shrink-0 ${
                       activeTab === 'videos'
                         ? 'border-emerald-600 text-emerald-600 dark:text-emerald-400'
-                        : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-slate-100'
+                        : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
                     }`}
                     data-testid="tab-videos"
                     type="button"
@@ -253,8 +253,8 @@ const ProjectDetail = () => {
                 {/* Contenido Master Plan */}
                 {activeTab === 'master-plan' && (
                   <div className="space-y-4">
-                    <div className="relative bg-slate-100 rounded-2xl overflow-hidden">
-                      <div className="w-full h-96 bg-slate-200">
+                    <div className="relative bg-slate-100 dark:bg-slate-800 rounded-2xl overflow-hidden w-full">
+                      <div className="w-full h-48 sm:h-64 md:h-96 bg-slate-200 dark:bg-slate-700">
                         <img
                           src={masterPlanImages[currentMasterPlanIndex]}
                           alt={`Master Plan imagen ${currentMasterPlanIndex + 1}`}
@@ -264,53 +264,53 @@ const ProjectDetail = () => {
                       </div>
 
                       {/* Controles de navegación */}
-                      <div className="absolute inset-0 flex items-center justify-between p-4">
+                      <div className="absolute inset-0 flex items-center justify-between p-2 sm:p-4">
                         <button
                           onClick={goToPreviousMasterPlan}
-                          className="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition"
+                          className="bg-black/50 hover:bg-black/70 text-white p-1 sm:p-2 rounded-full transition flex-shrink-0"
                           data-testid="button-prev-master-plan"
                           type="button"
                           aria-label="Imagen anterior"
                         >
-                          <ChevronLeft className="w-6 h-6" />
+                          <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" />
                         </button>
                         <button
                           onClick={goToNextMasterPlan}
-                          className="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition"
+                          className="bg-black/50 hover:bg-black/70 text-white p-1 sm:p-2 rounded-full transition flex-shrink-0"
                           data-testid="button-next-master-plan"
                           type="button"
                           aria-label="Siguiente imagen"
                         >
-                          <ChevronRight className="w-6 h-6" />
+                          <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
                         </button>
                       </div>
 
                       {/* Botón expandir */}
                       <button
                         onClick={() => setMasterPlanFullscreen(true)}
-                        className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition"
+                        className="absolute top-2 right-2 sm:top-4 sm:right-4 bg-black/50 hover:bg-black/70 text-white p-1 sm:p-2 rounded-full transition flex-shrink-0"
                         data-testid="button-expand-master-plan"
                         type="button"
                         aria-label="Expandir a pantalla completa"
                       >
-                        <Expand className="w-5 h-5" />
+                        <Expand className="w-4 h-4 sm:w-5 sm:h-5" />
                       </button>
 
                       {/* Indicador de posición */}
-                      <div className="absolute bottom-4 left-0 right-0 text-center">
-                        <span className="text-white text-sm font-semibold bg-black/50 px-3 py-1 rounded-full inline-block">
+                      <div className="absolute bottom-2 left-0 right-0 text-center sm:bottom-4">
+                        <span className="text-white text-xs sm:text-sm font-semibold bg-black/50 px-3 py-1 rounded-full inline-block">
                           {currentMasterPlanIndex + 1} / {masterPlanImages.length}
                         </span>
                       </div>
                     </div>
 
                     {/* Miniaturas */}
-                    <div className="flex gap-2 overflow-x-auto pb-2">
+                    <div className="flex gap-2 overflow-x-auto pb-2 px-1">
                       {masterPlanImages.map((img, idx) => (
                         <button
                           key={idx}
                           onClick={() => setCurrentMasterPlanIndex(idx)}
-                          className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition ${
+                          className={`flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-lg overflow-hidden border-2 transition ${
                             idx === currentMasterPlanIndex ? 'border-emerald-600' : 'border-slate-200 dark:border-slate-700 hover:border-slate-300'
                           }`}
                           data-testid={`thumbnail-master-plan-${idx}`}
@@ -326,8 +326,8 @@ const ProjectDetail = () => {
                 {/* Contenido Galería */}
                 {activeTab === 'galeria' && (
                   <div className="space-y-4">
-                    <div className="relative bg-slate-100 rounded-2xl overflow-hidden">
-                      <div className="w-full h-96 bg-slate-200">
+                    <div className="relative bg-slate-100 dark:bg-slate-800 rounded-2xl overflow-hidden w-full">
+                      <div className="w-full h-48 sm:h-64 md:h-96 bg-slate-200 dark:bg-slate-700">
                         <img
                           src={galeriaImages[currentGaleriaIndex]}
                           alt={`Galería imagen ${currentGaleriaIndex + 1}`}
@@ -337,53 +337,53 @@ const ProjectDetail = () => {
                       </div>
 
                       {/* Controles de navegación */}
-                      <div className="absolute inset-0 flex items-center justify-between p-4">
+                      <div className="absolute inset-0 flex items-center justify-between p-2 sm:p-4">
                         <button
                           onClick={goToPreviousGaleria}
-                          className="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition"
+                          className="bg-black/50 hover:bg-black/70 text-white p-1 sm:p-2 rounded-full transition flex-shrink-0"
                           data-testid="button-prev-galeria"
                           type="button"
                           aria-label="Imagen anterior"
                         >
-                          <ChevronLeft className="w-6 h-6" />
+                          <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" />
                         </button>
                         <button
                           onClick={goToNextGaleria}
-                          className="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition"
+                          className="bg-black/50 hover:bg-black/70 text-white p-1 sm:p-2 rounded-full transition flex-shrink-0"
                           data-testid="button-next-galeria"
                           type="button"
                           aria-label="Siguiente imagen"
                         >
-                          <ChevronRight className="w-6 h-6" />
+                          <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
                         </button>
                       </div>
 
                       {/* Botón expandir */}
                       <button
                         onClick={() => setGaleriaFullscreen(true)}
-                        className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition"
+                        className="absolute top-2 right-2 sm:top-4 sm:right-4 bg-black/50 hover:bg-black/70 text-white p-1 sm:p-2 rounded-full transition flex-shrink-0"
                         data-testid="button-expand-galeria"
                         type="button"
                         aria-label="Expandir a pantalla completa"
                       >
-                        <Expand className="w-5 h-5" />
+                        <Expand className="w-4 h-4 sm:w-5 sm:h-5" />
                       </button>
 
                       {/* Indicador de posición */}
-                      <div className="absolute bottom-4 left-0 right-0 text-center">
-                        <span className="text-white text-sm font-semibold bg-black/50 px-3 py-1 rounded-full inline-block">
+                      <div className="absolute bottom-2 left-0 right-0 text-center sm:bottom-4">
+                        <span className="text-white text-xs sm:text-sm font-semibold bg-black/50 px-3 py-1 rounded-full inline-block">
                           {currentGaleriaIndex + 1} / {galeriaImages.length}
                         </span>
                       </div>
                     </div>
 
                     {/* Miniaturas */}
-                    <div className="flex gap-2 overflow-x-auto pb-2">
+                    <div className="flex gap-2 overflow-x-auto pb-2 px-1">
                       {galeriaImages.map((img, idx) => (
                         <button
                           key={idx}
                           onClick={() => setCurrentGaleriaIndex(idx)}
-                          className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition ${
+                          className={`flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-lg overflow-hidden border-2 transition ${
                             idx === currentGaleriaIndex ? 'border-emerald-600' : 'border-slate-200 dark:border-slate-700 hover:border-slate-300'
                           }`}
                           data-testid={`thumbnail-galeria-${idx}`}
@@ -398,8 +398,8 @@ const ProjectDetail = () => {
 
                 {/* Contenido Videos */}
                 {activeTab === 'videos' && (
-                  <div className="text-center py-12">
-                    <p className="text-slate-600 dark:text-slate-400">Los videos del proyecto estará disponibles pronto</p>
+                  <div className="text-center py-8 sm:py-12">
+                    <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400">Los videos del proyecto estará disponibles pronto</p>
                   </div>
                 )}
               </div>
@@ -408,43 +408,43 @@ const ProjectDetail = () => {
 
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            <div className="sticky top-32 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 space-y-6">
+            <div className="sticky top-28 lg:top-32 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-4 sm:p-6 space-y-4 sm:space-y-6">
               {/* Datos clave */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">Datos del proyecto</h3>
+              <div className="space-y-3 sm:space-y-4">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100">Datos del proyecto</h3>
                 
                 {project.lotes && (
                   <div>
                     <p className="text-xs text-slate-500 dark:text-slate-500 uppercase font-semibold mb-1">Disponibilidad</p>
-                    <p className="text-base font-semibold text-slate-900 dark:text-slate-100">{project.lotes}</p>
+                    <p className="text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-100">{project.lotes}</p>
                   </div>
                 )}
 
                 {project.superficie && (
                   <div>
                     <p className="text-xs text-slate-500 dark:text-slate-500 uppercase font-semibold mb-1">Superficie total</p>
-                    <p className="text-base font-semibold text-slate-900 dark:text-slate-100">{project.superficie}</p>
+                    <p className="text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-100">{project.superficie}</p>
                   </div>
                 )}
 
                 <div>
                   <p className="text-xs text-slate-500 dark:text-slate-500 uppercase font-semibold mb-1">Estado</p>
-                  <p className="text-base font-semibold text-emerald-600 dark:text-emerald-400">{project.etapa}</p>
+                  <p className="text-sm sm:text-base font-semibold text-emerald-600 dark:text-emerald-400">{project.etapa}</p>
                 </div>
               </div>
 
               {/* CTA */}
-              <div className="pt-6 border-t border-slate-200 dark:border-slate-700 space-y-3">
+              <div className="pt-4 sm:pt-6 border-t border-slate-200 dark:border-slate-700 space-y-2 sm:space-y-3">
                 <a
                   href="https://wa.me/5491131298840"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full bg-emerald-600 text-white font-semibold py-3 rounded-full text-center hover:bg-emerald-700 transition"
+                  className="block w-full bg-emerald-600 text-white font-semibold py-2 sm:py-3 text-sm sm:text-base rounded-full text-center hover:bg-emerald-700 transition"
                   data-testid="link-whatsapp-project"
                 >
                   Consultar por WhatsApp
                 </a>
-                <Link href="/#contacto" className="block w-full border border-emerald-600 text-emerald-700 dark:text-emerald-400 font-semibold py-3 rounded-full text-center hover:bg-emerald-50 dark:bg-emerald-900/20 transition" data-testid="link-contact-project">
+                <Link href="/#contacto" className="block w-full border border-emerald-600 text-emerald-700 dark:text-emerald-400 font-semibold py-2 sm:py-3 text-sm sm:text-base rounded-full text-center hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition" data-testid="link-contact-project">
                   Enviar consulta
                 </Link>
               </div>

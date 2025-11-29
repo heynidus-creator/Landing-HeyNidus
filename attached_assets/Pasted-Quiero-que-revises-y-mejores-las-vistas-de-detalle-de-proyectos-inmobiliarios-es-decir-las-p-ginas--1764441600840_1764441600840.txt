@@ -1,0 +1,69 @@
+Quiero que revises y mejores las vistas de detalle de proyectos inmobiliarios, es decir las páginas a las que se accede desde los botones “Ver más” de la sección de proyectos (por ejemplo rutas tipo /proyecto/1, /proyecto/:id, etc.).
+
+En Home el diseño móvil ya quedó muy bien, pero en estas páginas de detalle todavía se ve como antes:
+
+Hay espacio en blanco a la derecha.
+
+Se puede desplazar horizontalmente.
+
+El contenido no ocupa correctamente el ancho del teléfono.
+
+Objetivo
+
+Quiero que las páginas de detalle de proyecto:
+
+No tengan scroll horizontal nunca (solo scroll vertical).
+
+Ocupen 100% del ancho disponible en móviles y tablets.
+
+Respeten el mismo estilo general y comportamiento responsive que ya tiene la Home:
+
+Navbar con logo y menú hamburguesa bien alineados dentro del viewport.
+
+Tipografías legibles en mobile.
+
+Imágenes y secciones adaptadas al ancho del dispositivo.
+
+Tareas concretas
+
+Localiza todos los componentes/páginas correspondientes a:
+
+Detalle de proyecto.
+
+Rutas que se usan al hacer clic en “Ver más”.
+
+Revisa contenedores, grids, imágenes, paddings y widths que puedan estar generando overflow horizontal.
+
+Ajusta estilos y clases (Tailwind u otras) para que:
+
+Ningún elemento sea más ancho que el viewport móvil.
+
+Las imágenes se adapten correctamente (por ejemplo, width completa en mobile, sin recortar contenido importante).
+
+Los textos y botones queden dentro del ancho y alineados de forma clara.
+
+Reglas
+
+No toques la lógica de negocio ni las rutas dinámicas (ids, slug, etc.).
+
+Respeta el stack actual (React + TypeScript + Tailwind).
+
+No rompas lo que ya funciona bien en Home.
+
+Si necesitas crear estilos reutilizables o componentes auxiliares, indícame:
+
+Ruta del archivo.
+
+Nombre.
+
+Breve descripción.
+
+Al finalizar
+
+Confírmame que:
+
+Todas las páginas accesibles desde “Ver más” ya no tienen scroll horizontal.
+
+Todo el contenido se ve de arriba hacia abajo en celulares.
+
+El navbar y menú hamburguesa se muestran correctamente también en estas vistas de detalle.
