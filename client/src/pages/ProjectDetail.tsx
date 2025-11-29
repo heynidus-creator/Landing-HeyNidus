@@ -122,26 +122,26 @@ const ProjectDetail = () => {
           </p>
         </div>
 
-        <div className="grid gap-6 sm:gap-12 lg:grid-cols-3">
+        <div className="grid gap-6 sm:gap-12 lg:grid-cols-3 w-full">
           {/* Contenido principal */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="lg:col-span-2 space-y-8 w-full min-w-0">
             {/* Descripción */}
-            <div>
+            <div className="w-full min-w-0">
               <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">Sobre el proyecto</h2>
-              <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
+              <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed break-words">
                 {project.detalleCompleto || project.descripcion}
               </p>
             </div>
 
             {/* Características */}
             {project.caracteristicas && project.caracteristicas.length > 0 && (
-              <div>
+              <div className="w-full min-w-0">
                 <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">Características principales</h2>
                 <div className="grid gap-3">
                   {project.caracteristicas.map((caracteristica, idx) => (
-                    <div key={idx} className="flex gap-3 items-start">
+                    <div key={idx} className="flex gap-3 items-start w-full min-w-0">
                       <Check className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
-                      <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300">{caracteristica}</p>
+                      <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 break-words">{caracteristica}</p>
                     </div>
                   ))}
                 </div>
@@ -150,15 +150,15 @@ const ProjectDetail = () => {
 
             {/* Servicios */}
             {project.servicios && project.servicios.length > 0 && (
-              <div>
+              <div className="w-full min-w-0">
                 <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
                   <Zap className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
                   Servicios
                 </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
                   {project.servicios.map((servicio, idx) => (
-                    <div key={idx} className="bg-white dark:bg-slate-800 p-3 rounded-lg border border-slate-200 dark:border-slate-700">
-                      <p className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-slate-100">{servicio}</p>
+                    <div key={idx} className="bg-white dark:bg-slate-800 p-3 rounded-lg border border-slate-200 dark:border-slate-700 w-full min-w-0">
+                      <p className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-slate-100 break-words">{servicio}</p>
                     </div>
                   ))}
                 </div>
@@ -167,15 +167,15 @@ const ProjectDetail = () => {
 
             {/* Amenidades */}
             {project.amenidades && project.amenidades.length > 0 && (
-              <div>
+              <div className="w-full min-w-0">
                 <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
                   <Leaf className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
                   Amenidades
                 </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
                   {project.amenidades.map((amenidad, idx) => (
-                    <div key={idx} className="bg-white dark:bg-slate-800 p-3 rounded-lg border border-slate-200 dark:border-slate-700">
-                      <p className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-slate-100">{amenidad}</p>
+                    <div key={idx} className="bg-white dark:bg-slate-800 p-3 rounded-lg border border-slate-200 dark:border-slate-700 w-full min-w-0">
+                      <p className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-slate-100 break-words">{amenidad}</p>
                     </div>
                   ))}
                 </div>
@@ -407,8 +407,8 @@ const ProjectDetail = () => {
           </div>
 
           {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-28 lg:top-32 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-4 sm:p-6 space-y-4 sm:space-y-6">
+          <div className="lg:col-span-1 w-full min-w-0">
+            <div className="sticky top-28 lg:top-32 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-4 sm:p-6 space-y-4 sm:space-y-6 w-full">
               {/* Datos clave */}
               <div className="space-y-3 sm:space-y-4">
                 <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100">Datos del proyecto</h3>

@@ -1,0 +1,81 @@
+Lo que hiciste hasta ahora NO está bien resuelto.
+
+Sigue pasando esto (te adjunto captura):
+
+Donde dice “Sobre el proyecto”, el texto de abajo está cortado a la derecha y no se puede leer completo.
+
+Pasa lo mismo con otros textos más abajo.
+
+Lo único que hiciste fue bloquear el scroll horizontal, pero NO reordenaste ni ajustaste el contenido para que entre correctamente.
+
+👉 Necesito que entiendas esto:
+No quiero una solución que esconda el problema.
+Quiero que el contenido se vea al 100%, completo y legible, sin scroll horizontal y sin recortes.
+
+Tareas (importante que las sigas al pie de la letra)
+
+Revisa TODAS las páginas públicas del sitio:
+
+Home
+
+Listado de proyectos
+
+Detalle de proyecto (las pantallas que se abren con “Ver más”)
+
+Cualquier otra página que use el layout principal
+
+Busca y corrige el problema de raíz:
+
+Localiza qué contenedores, columnas, grids, imágenes o estilos están provocando que el contenido se salga del ancho.
+
+Ajusta widths, max-width, paddings y márgenes para que:
+
+Todo el contenido quede dentro del ancho del viewport.
+
+No haya líneas de texto cortadas ni ocultas.
+
+Las imágenes y secciones se apilen correctamente una debajo de la otra en móvil.
+
+No te limites a poner overflow-x: hidden ni a bloquear el scroll horizontal.
+Eso ya lo hiciste y está mal porque ahora el contenido se recorta.
+Quiero que:
+
+El usuario pueda leer todas las líneas completas.
+
+No haya nada oculto fuera de pantalla.
+
+El layout se adapte a móvil de forma correcta.
+
+Comprueba tú mismo el resultado:
+
+Simula móvil (por ejemplo 360x640) en el navegador.
+
+Navega sección por sección, haciendo scroll vertical.
+
+Verifica que:
+
+No se pueda desplazar en horizontal.
+
+Ningún texto quede cortado.
+
+El contenido de “Sobre el proyecto”, “Características principales”, “Servicios”, etc. se vea completo.
+
+Reglas
+
+No cambies lógica de negocio ni rutas.
+
+No me devuelvas código para copiar/pegar: aplica los cambios directamente en los archivos necesarios.
+
+Si dejas algún overflow-x: hidden en algún contenedor raíz, asegúrate de que no esté recortando nada y explícame en qué archivo está.
+
+Al terminar
+
+Dime qué archivos modificaste.
+
+Confirma que has revisado TODAS las páginas públicas.
+
+Confirma que:
+
+Ya no hay scroll horizontal.
+
+Y que el contenido no se corta en ningún lado (especialmente bajo “Sobre el proyecto” en las páginas de detalle).
