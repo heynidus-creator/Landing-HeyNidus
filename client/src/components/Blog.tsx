@@ -8,6 +8,7 @@ import blogImage5 from '@assets/generated_images/pre-construction_development_ph
 import birdIcon from '@assets/image_1763966603851.png';
 import useEmblaCarousel from 'embla-carousel-react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { AnimatedSection } from './AnimatedSection';
 
 const blogImageMap: Record<string, string> = {
   'peaceful_nature_escape_landscape.png': blogImage1,
@@ -55,18 +56,20 @@ const Blog = memo(() => {
 
   return (
     <div className="mx-auto max-w-6xl px-3 sm:px-4 w-full">
-      <div className="mb-6 sm:mb-8 space-y-2 sm:space-y-3">
-        <h2 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100 flex items-center gap-3">
-          <span className="relative inline-block">
-            Blog HeyNidus
-            <img src={birdIcon} alt="bird" className="absolute w-5 h-5 -top-2 -right-6" style={{marginTop: '-2px'}} />
-          </span>
-        </h2>
-        <p className="text-sm md:text-base text-slate-700 dark:text-slate-300">
-          Compartimos información clave para ayudarte a tomar mejores decisiones al momento de elegir un lote o evaluar
-          un proyecto.
-        </p>
-      </div>
+      <AnimatedSection animation="fade-up">
+        <div className="mb-6 sm:mb-8 space-y-2 sm:space-y-3">
+          <h2 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100 flex items-center gap-3">
+            <span className="relative inline-block">
+              Blog HeyNidus
+              <img src={birdIcon} alt="bird" className="absolute w-5 h-5 -top-2 -right-6" style={{marginTop: '-2px'}} />
+            </span>
+          </h2>
+          <p className="text-sm md:text-base text-slate-700 dark:text-slate-300">
+            Compartimos información clave para ayudarte a tomar mejores decisiones al momento de elegir un lote o evaluar
+            un proyecto.
+          </p>
+        </div>
+      </AnimatedSection>
 
       <div className="flex items-center gap-2 sm:gap-4 w-full">
         <button
@@ -80,12 +83,12 @@ const Blog = memo(() => {
 
         <div className="flex-1 min-w-0 overflow-hidden" ref={emblaRef}>
           <div className="flex gap-4 sm:gap-6">
-            {blogPosts.map((post) => (
-              <article
-                key={post.id}
-                className="flex-shrink-0 w-64 sm:w-80 flex flex-col justify-between rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 overflow-hidden shadow-sm hover:shadow-md transition"
-                data-testid={`card-blog-${post.id}`}
-              >
+            {blogPosts.map((post, idx) => (
+              <AnimatedSection key={post.id} animation="fade-up" delay={0.1 * (idx + 1)}>
+                <article
+                  className="flex-shrink-0 w-64 sm:w-80 flex flex-col justify-between rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 overflow-hidden shadow-sm hover:shadow-md transition"
+                  data-testid={`card-blog-${post.id}`}
+                >
                 <div className="w-full h-48 overflow-hidden bg-slate-100 dark:bg-slate-700">
                   <img
                     src={blogImageMap[post.imagen] || ''}
@@ -114,7 +117,8 @@ const Blog = memo(() => {
                     </div>
                   )}
                 </div>
-              </article>
+                </article>
+              </AnimatedSection>
             ))}
           </div>
         </div>

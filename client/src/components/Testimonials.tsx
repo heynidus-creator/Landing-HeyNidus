@@ -1,6 +1,7 @@
 import { useState, memo } from 'react';
 import { testimonials } from '../data/siteData';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { AnimatedSection } from './AnimatedSection';
 import testimonialImage1 from '@assets/generated_images/argentine_couple_casual_natural.png';
 import testimonialImage2 from '@assets/generated_images/latina_woman_buenos_aires.png';
 import testimonialImage3 from '@assets/generated_images/argentine_man_casual.png';
@@ -50,21 +51,23 @@ const Testimonials = memo(() => {
 
   return (
     <div className="mx-auto max-w-6xl px-4">
-      <div className="mb-12 space-y-3">
-        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Lo que dicen nuestros clientes</h2>
-        <p className="text-sm md:text-base text-slate-700 dark:text-slate-300">
-          Historias reales de personas que encontraron su oportunidad con HeyNidus
-        </p>
-      </div>
+      <AnimatedSection animation="fade-up">
+        <div className="mb-12 space-y-3">
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Lo que dicen nuestros clientes</h2>
+          <p className="text-sm md:text-base text-slate-700 dark:text-slate-300">
+            Historias reales de personas que encontraron su oportunidad con HeyNidus
+          </p>
+        </div>
+      </AnimatedSection>
 
       <div className="relative">
         <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {visibleTestimonials.map((testimonial, idx) => (
-            <div
-              key={`${currentIndex}-${idx}`}
-              className="flex flex-col rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 overflow-hidden shadow-sm hover:shadow-md transition"
-              data-testid={`card-testimonial-${testimonial.id}`}
-            >
+            <AnimatedSection key={`${currentIndex}-${idx}`} animation="fade-up" delay={0.1 * (idx + 1)}>
+              <div
+                className="flex flex-col rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 overflow-hidden shadow-sm hover:shadow-md transition"
+                data-testid={`card-testimonial-${testimonial.id}`}
+              >
               <div className="w-full h-48 overflow-hidden bg-slate-100 dark:bg-slate-700">
                 <img
                   src={testimonialImageMap[testimonial.imagen] || ''}
@@ -84,7 +87,8 @@ const Testimonials = memo(() => {
                   <p className="text-xs text-emerald-700 dark:text-emerald-400">{testimonial.rol}</p>
                 </div>
               </div>
-            </div>
+              </div>
+            </AnimatedSection>
           ))}
         </div>
 
