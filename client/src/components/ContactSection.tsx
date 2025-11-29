@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AnimatedSection } from './AnimatedSection';
+import { SectionCard } from './SectionCard';
 
 interface FormState {
   nombre: string;
@@ -74,11 +74,10 @@ Mensaje: ${form.mensaje}`;
   };
 
   return (
-    <div className="mx-auto max-w-6xl px-3 sm:px-4 w-full">
+    <SectionCard className="mx-auto max-w-6xl px-3 sm:px-4 w-full">
       <div className="grid gap-6 sm:gap-10 md:grid-cols-2">
         {/* Formulario */}
-        <AnimatedSection animation="fade-left">
-          <div>
+        <div>
             <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-2">Hablemos sobre tu próximo lote</h2>
             <p className="text-sm md:text-base text-slate-700 dark:text-slate-300 mb-6">
             Completá el formulario y contanos qué tipo de lote estás buscando. Nuestro equipo te va a responder con
@@ -187,12 +186,10 @@ Mensaje: ${form.mensaje}`;
               Enviar consulta
             </button>
           </form>
-          </div>
-        </AnimatedSection>
+        </div>
 
         {/* Contacto y ubicación */}
-        <AnimatedSection animation="fade-right">
-          <div className="space-y-6">
+        <div className="space-y-6">
           <div>
             <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-2">Contacto y ubicación</h3>
             <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">
@@ -245,10 +242,9 @@ Mensaje: ${form.mensaje}`;
               Te respondemos durante nuestro horario de atención para ayudarte a encontrar el lote adecuado.
             </p>
           </div>
-          </div>
-        </AnimatedSection>
+        </div>
       </div>
-    </div>
+    </SectionCard>
   );
 };
 

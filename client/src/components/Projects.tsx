@@ -3,7 +3,7 @@ import barrioBg from '@assets/DJI_20251119104425_0010_D_1763965801429.JPG?url';
 import altosVallesBg from '@assets/generated_images/altos_valles_glew_lots.png';
 import altoCañuelaBg from '@assets/generated_images/alto_de_cañuela_lots.png';
 import vallesPinoBg from '@assets/generated_images/flat_agricultural_field_la_matanza.png';
-import { AnimatedSection } from './AnimatedSection';
+import { SectionCard } from './SectionCard';
 
 const ProjectImageMap: Record<string, string> = {
   'barrio_capinota_real.jpg': barrioBg,
@@ -14,20 +14,18 @@ const ProjectImageMap: Record<string, string> = {
 
 const Projects = () => {
   return (
-    <div className="mx-auto max-w-6xl px-3 sm:px-4 w-full">
-      <AnimatedSection animation="fade-up">
-        <div className="mb-6 sm:mb-8 space-y-2 sm:space-y-3">
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Proyectos</h2>
-          <p className="text-sm md:text-base text-slate-700 dark:text-slate-300">
-            Combinamos desarrollos propios y de terceros para que encuentres el lote que mejor se adapte a tu plan de vida
-            o inversión.
-          </p>
-        </div>
-      </AnimatedSection>
+    <SectionCard className="mx-auto max-w-6xl px-3 sm:px-4 w-full">
+      <div className="mb-6 sm:mb-8 space-y-2 sm:space-y-3">
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Proyectos</h2>
+        <p className="text-sm md:text-base text-slate-700 dark:text-slate-300">
+          Combinamos desarrollos propios y de terceros para que encuentres el lote que mejor se adapte a tu plan de vida
+          o inversión.
+        </p>
+      </div>
 
       <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 w-full">
         {projects.map((project, idx) => (
-          <AnimatedSection key={project.id} animation="fade-up" delay={0.1 * (idx + 1)}>
+          <div key={project.id}>
             <article
               className="flex flex-col justify-between rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm hover:shadow-md transition overflow-hidden"
               data-testid={`card-project-${project.id}`}
@@ -84,10 +82,10 @@ const Projects = () => {
                 </div>
               </div>
             </article>
-          </AnimatedSection>
+          </div>
         ))}
       </div>
-    </div>
+    </SectionCard>
   );
 };
 

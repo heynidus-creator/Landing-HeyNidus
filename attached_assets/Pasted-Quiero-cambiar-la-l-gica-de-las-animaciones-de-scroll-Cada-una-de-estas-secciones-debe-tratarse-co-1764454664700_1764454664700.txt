@@ -1,0 +1,86 @@
+Quiero cambiar la lógica de las animaciones de scroll:
+
+Cada una de estas secciones debe tratarse como una tarjeta completa:
+
+Inicio
+
+Quiénes Somos
+
+Proyectos
+
+Blog
+
+Testimonios
+
+Contacto
+
+Comportamiento deseado:
+
+Cuando bajo con la rueda / swipe / menú / navbar:
+
+La sección que entra debe tener una animación clara tipo “tarjeta que sube” o “se desliza desde abajo hacia su posición”.
+
+Cuando subo:
+
+La sección que entra debe animarse también, pero coherente con el movimiento (por ejemplo, entrando desde arriba hacia su posición).
+
+Es decir: quiero animaciones SIEMPRE que una sección entra en escena, no solo la primera vez.
+
+Requisitos importantes:
+
+NO quiero animaciones “once: true” o equivalentes.
+Si estás usando IntersectionObserver, Framer Motion o algún hook, desactiva cualquier opción que haga que la animación se ejecute una sola vez.
+
+Cada vez que una sección sale completamente del viewport y vuelve a entrar, debe volver a animarse.
+
+Tiene que funcionar igual:
+
+Scrolleando con rueda.
+
+Haciendo swipe en móvil.
+
+Haciendo clic en los ítems del navbar o en el menú hamburguesa.
+
+Estilo de animación:
+
+Pensalo como “pantallas apiladas”:
+
+La nueva sección entra desde abajo cuando bajo.
+
+Cuando subo, puede entrar desde arriba (o repetir el mismo efecto pero que se note que hay un cambio de sección).
+
+Puede ser un slide + fade (por ejemplo: opacity 0→1 y translateY +20→0 o -20→0), pero aplicados al bloque completo de la sección, no solo a textos sueltos.
+
+Mantén la duración entre ~300–700ms para no marear.
+
+Técnicamente:
+
+Si estás usando Framer Motion:
+
+NO uses viewport={{ once: true }}.
+
+Usa una lógica que permita re-animar cuando el componente vuelve a entrar en viewport.
+
+Si estás usando IntersectionObserver:
+
+Cuando la sección DEJA de ser visible, reseteá el estado que controla la animación para que pueda volver a dispararse al entrar.
+
+Intenta encapsular la lógica en un componente reutilizable, por ejemplo:
+
+<SectionCard id="projects"> ... </SectionCard>
+
+que ya incluya la animación y el hook de visibilidad.
+
+Validación:
+
+Probá subir y bajar varias veces por toda la página.
+
+Probá navegar solo con el navbar (clic en Proyectos, luego en Testimonios, luego subir a Inicio, etc.).
+
+En todos los casos, las secciones deben animarse al entrar, no sólo la primera vez.
+
+Al final, explícame:
+
+Qué componente/hook maneja ahora estas animaciones.
+
+Cómo se reutiliza para que pueda aplicarse fácilmente a nuevas secciones si las agrego más adelante.
