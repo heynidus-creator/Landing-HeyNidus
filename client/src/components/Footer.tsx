@@ -36,10 +36,10 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="border-t border-slate-200 bg-slate-50 py-10">
+    <footer className="border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 py-10">
       <div className="mx-auto max-w-6xl px-4">
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
-          <p className="text-sm text-slate-600">
+          <p className="text-sm text-slate-600 dark:text-slate-400">
             © {new Date().getFullYear()} HeyNidus. Todos los derechos reservados.
           </p>
           
@@ -52,7 +52,7 @@ const Footer = () => {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-slate-600 hover:text-emerald-700 transition"
+                  className="text-slate-600 dark:text-slate-400 hover:text-emerald-700 dark:hover:text-emerald-400 transition"
                   data-testid={social.testId}
                   title={social.name}
                 >

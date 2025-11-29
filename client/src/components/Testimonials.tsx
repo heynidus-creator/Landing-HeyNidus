@@ -40,7 +40,6 @@ const Testimonials = memo(() => {
     );
   };
 
-  // Determinar cuántas tarjetas mostrar según el tamaño
   const itemsToShow = 3;
   const visibleTestimonials = [];
   
@@ -52,24 +51,21 @@ const Testimonials = memo(() => {
   return (
     <div className="mx-auto max-w-6xl px-4">
       <div className="mb-12 space-y-3">
-        <h2 className="text-2xl font-bold text-slate-900">Lo que dicen nuestros clientes</h2>
-        <p className="text-sm md:text-base text-slate-700">
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Lo que dicen nuestros clientes</h2>
+        <p className="text-sm md:text-base text-slate-700 dark:text-slate-300">
           Historias reales de personas que encontraron su oportunidad con HeyNidus
         </p>
       </div>
 
-      {/* Carrusel */}
       <div className="relative">
-        {/* Grid de tarjetas */}
         <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {visibleTestimonials.map((testimonial, idx) => (
             <div
               key={`${currentIndex}-${idx}`}
-              className="flex flex-col rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm hover:shadow-md transition"
+              className="flex flex-col rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 overflow-hidden shadow-sm hover:shadow-md transition"
               data-testid={`card-testimonial-${testimonial.id}`}
             >
-              {/* Imagen */}
-              <div className="w-full h-48 overflow-hidden bg-slate-100">
+              <div className="w-full h-48 overflow-hidden bg-slate-100 dark:bg-slate-700">
                 <img
                   src={testimonialImageMap[testimonial.imagen] || ''}
                   alt={testimonial.autor}
@@ -78,33 +74,29 @@ const Testimonials = memo(() => {
                 />
               </div>
 
-              {/* Contenido */}
               <div className="p-5 flex flex-col flex-1">
-                {/* Testimonio */}
-                <p className="mb-4 text-xs md:text-sm text-slate-700 italic leading-relaxed">
+                <p className="mb-4 text-xs md:text-sm text-slate-700 dark:text-slate-300 italic leading-relaxed">
                   "{testimonial.contenido}"
                 </p>
 
-                {/* Autor y rol */}
-                <div className="mt-auto pt-4 border-t border-slate-200">
-                  <p className="font-semibold text-slate-900 text-sm">{testimonial.autor}</p>
-                  <p className="text-xs text-emerald-700">{testimonial.rol}</p>
+                <div className="mt-auto pt-4 border-t border-slate-200 dark:border-slate-700">
+                  <p className="font-semibold text-slate-900 dark:text-slate-100 text-sm">{testimonial.autor}</p>
+                  <p className="text-xs text-emerald-700 dark:text-emerald-400">{testimonial.rol}</p>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Botones de navegación */}
         <div className="mt-8 flex justify-center gap-4">
           <button
             onClick={goToPrevious}
-            className="flex items-center justify-center rounded-full border border-slate-300 p-2 hover:bg-slate-100 transition"
+            className="flex items-center justify-center rounded-full border border-slate-300 dark:border-slate-600 p-2 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
             data-testid="button-prev-testimonial"
             type="button"
             aria-label="Testimonios anteriores"
           >
-            <ChevronLeft className="w-5 h-5 text-slate-700" />
+            <ChevronLeft className="w-5 h-5 text-slate-700 dark:text-slate-300" />
           </button>
 
           <div className="flex gap-2">
@@ -114,8 +106,8 @@ const Testimonials = memo(() => {
                 onClick={() => setCurrentIndex(index)}
                 className={`h-2 rounded-full transition-all ${
                   index >= currentIndex && index < currentIndex + itemsToShow
-                    ? 'w-8 bg-emerald-700'
-                    : 'w-2 bg-slate-300 hover:bg-slate-400'
+                    ? 'w-8 bg-emerald-700 dark:bg-emerald-600'
+                    : 'w-2 bg-slate-300 dark:bg-slate-600 hover:bg-slate-400 dark:hover:bg-slate-500'
                 }`}
                 data-testid={`dot-testimonial-${index}`}
                 type="button"
@@ -126,17 +118,16 @@ const Testimonials = memo(() => {
 
           <button
             onClick={goToNext}
-            className="flex items-center justify-center rounded-full border border-slate-300 p-2 hover:bg-slate-100 transition"
+            className="flex items-center justify-center rounded-full border border-slate-300 dark:border-slate-600 p-2 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
             data-testid="button-next-testimonial"
             type="button"
             aria-label="Siguientes testimonios"
           >
-            <ChevronRight className="w-5 h-5 text-slate-700" />
+            <ChevronRight className="w-5 h-5 text-slate-700 dark:text-slate-300" />
           </button>
         </div>
 
-        {/* Contador */}
-        <div className="mt-6 text-center text-xs text-slate-500">
+        <div className="mt-6 text-center text-xs text-slate-500 dark:text-slate-400">
           {currentIndex + 1} - {Math.min(currentIndex + itemsToShow, testimonials.length)} de {testimonials.length}
         </div>
       </div>

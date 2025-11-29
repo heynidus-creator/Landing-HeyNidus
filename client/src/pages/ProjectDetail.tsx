@@ -87,16 +87,16 @@ const ProjectDetail = () => {
 
   if (!project) {
     return (
-      <div className="min-h-screen bg-slate-50 py-16">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 dark:bg-slate-900 py-16">
         <div className="mx-auto max-w-6xl px-4 text-center">
-          <h1 className="text-3xl font-bold text-slate-900 mb-4">Proyecto no encontrado</h1>
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-4">Proyecto no encontrado</h1>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 dark:bg-slate-900">
       {/* Imagen Principal */}
       <div className="w-full h-96 bg-slate-200 overflow-hidden">
         <img
@@ -112,11 +112,11 @@ const ProjectDetail = () => {
         {/* Header */}
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-3">
-            <span className="text-sm font-semibold text-emerald-700">{project.tipo}</span>
-            <span className="text-sm font-semibold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">{project.etapa}</span>
+            <span className="text-sm font-semibold text-emerald-700 dark:text-emerald-400">{project.tipo}</span>
+            <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-3 py-1 rounded-full">{project.etapa}</span>
           </div>
-          <h1 className="text-4xl font-bold text-slate-900 mb-2">{project.nombre}</h1>
-          <p className="text-slate-600 flex items-center gap-2">
+          <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-100 mb-2">{project.nombre}</h1>
+          <p className="text-slate-600 dark:text-slate-400 flex items-center gap-2">
             <MapPin className="w-4 h-4" />
             {project.ubicacion}
           </p>
@@ -127,8 +127,8 @@ const ProjectDetail = () => {
           <div className="lg:col-span-2 space-y-8">
             {/* Descripción */}
             <div>
-              <h2 className="text-2xl font-bold text-slate-900 mb-4">Sobre el proyecto</h2>
-              <p className="text-slate-700 leading-relaxed">
+              <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">Sobre el proyecto</h2>
+              <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
                 {project.detalleCompleto || project.descripcion}
               </p>
             </div>
@@ -136,12 +136,12 @@ const ProjectDetail = () => {
             {/* Características */}
             {project.caracteristicas && project.caracteristicas.length > 0 && (
               <div>
-                <h2 className="text-2xl font-bold text-slate-900 mb-4">Características principales</h2>
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">Características principales</h2>
                 <div className="grid gap-3">
                   {project.caracteristicas.map((caracteristica, idx) => (
                     <div key={idx} className="flex gap-3 items-start">
-                      <Check className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
-                      <p className="text-slate-700">{caracteristica}</p>
+                      <Check className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+                      <p className="text-slate-700 dark:text-slate-300">{caracteristica}</p>
                     </div>
                   ))}
                 </div>
@@ -151,14 +151,14 @@ const ProjectDetail = () => {
             {/* Servicios */}
             {project.servicios && project.servicios.length > 0 && (
               <div>
-                <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-                  <Zap className="w-5 h-5 text-emerald-600" />
+                <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+                  <Zap className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                   Servicios
                 </h3>
                 <div className="grid grid-cols-2 gap-3">
                   {project.servicios.map((servicio, idx) => (
-                    <div key={idx} className="bg-white p-3 rounded-lg border border-slate-200">
-                      <p className="text-sm font-semibold text-slate-900">{servicio}</p>
+                    <div key={idx} className="bg-white dark:bg-slate-800 p-3 rounded-lg border border-slate-200 dark:border-slate-700">
+                      <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">{servicio}</p>
                     </div>
                   ))}
                 </div>
@@ -168,14 +168,14 @@ const ProjectDetail = () => {
             {/* Amenidades */}
             {project.amenidades && project.amenidades.length > 0 && (
               <div>
-                <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-                  <Leaf className="w-5 h-5 text-emerald-600" />
+                <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+                  <Leaf className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                   Amenidades
                 </h3>
                 <div className="grid grid-cols-2 gap-3">
                   {project.amenidades.map((amenidad, idx) => (
-                    <div key={idx} className="bg-white p-3 rounded-lg border border-slate-200">
-                      <p className="text-sm font-semibold text-slate-900">{amenidad}</p>
+                    <div key={idx} className="bg-white dark:bg-slate-800 p-3 rounded-lg border border-slate-200 dark:border-slate-700">
+                      <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">{amenidad}</p>
                     </div>
                   ))}
                 </div>
@@ -185,11 +185,11 @@ const ProjectDetail = () => {
             {/* Lotes Disponibles - Solo para Barrio Capinota */}
             {project.id === 1 && (
               <div className="bg-gradient-to-r from-emerald-50 to-emerald-100 rounded-2xl border border-emerald-200 p-8">
-                <h3 className="text-xl font-bold text-slate-900 mb-3 flex items-center gap-2">
-                  <Layers className="w-5 h-5 text-emerald-600" />
+                <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-2">
+                  <Layers className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                   Lotes Disponibles
                 </h3>
-                <p className="text-slate-700 mb-6">
+                <p className="text-slate-700 dark:text-slate-300 mb-6">
                   Consulta el mapa interactivo para ver todos los lotes disponibles y sus características.
                 </p>
                 <a
@@ -208,16 +208,16 @@ const ProjectDetail = () => {
             {/* Master Plan, Galería y Videos - Solo para Barrio Capinota */}
             {project.id === 1 && (
               <div>
-                <h2 className="text-2xl font-bold text-slate-900 mb-4">Información del Proyecto</h2>
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">Información del Proyecto</h2>
                 
                 {/* Tabs */}
-                <div className="flex gap-2 border-b border-slate-200 mb-6">
+                <div className="flex gap-2 border-b border-slate-200 dark:border-slate-700 mb-6">
                   <button
                     onClick={() => setActiveTab('master-plan')}
                     className={`px-4 py-2 font-semibold border-b-2 transition ${
                       activeTab === 'master-plan'
-                        ? 'border-emerald-600 text-emerald-600'
-                        : 'border-transparent text-slate-600 hover:text-slate-900'
+                        ? 'border-emerald-600 text-emerald-600 dark:text-emerald-400'
+                        : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-slate-100'
                     }`}
                     data-testid="tab-master-plan"
                     type="button"
@@ -228,8 +228,8 @@ const ProjectDetail = () => {
                     onClick={() => setActiveTab('galeria')}
                     className={`px-4 py-2 font-semibold border-b-2 transition ${
                       activeTab === 'galeria'
-                        ? 'border-emerald-600 text-emerald-600'
-                        : 'border-transparent text-slate-600 hover:text-slate-900'
+                        ? 'border-emerald-600 text-emerald-600 dark:text-emerald-400'
+                        : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-slate-100'
                     }`}
                     data-testid="tab-galeria"
                     type="button"
@@ -240,8 +240,8 @@ const ProjectDetail = () => {
                     onClick={() => setActiveTab('videos')}
                     className={`px-4 py-2 font-semibold border-b-2 transition ${
                       activeTab === 'videos'
-                        ? 'border-emerald-600 text-emerald-600'
-                        : 'border-transparent text-slate-600 hover:text-slate-900'
+                        ? 'border-emerald-600 text-emerald-600 dark:text-emerald-400'
+                        : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-slate-100'
                     }`}
                     data-testid="tab-videos"
                     type="button"
@@ -311,7 +311,7 @@ const ProjectDetail = () => {
                           key={idx}
                           onClick={() => setCurrentMasterPlanIndex(idx)}
                           className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition ${
-                            idx === currentMasterPlanIndex ? 'border-emerald-600' : 'border-slate-200 hover:border-slate-300'
+                            idx === currentMasterPlanIndex ? 'border-emerald-600' : 'border-slate-200 dark:border-slate-700 hover:border-slate-300'
                           }`}
                           data-testid={`thumbnail-master-plan-${idx}`}
                           type="button"
@@ -384,7 +384,7 @@ const ProjectDetail = () => {
                           key={idx}
                           onClick={() => setCurrentGaleriaIndex(idx)}
                           className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition ${
-                            idx === currentGaleriaIndex ? 'border-emerald-600' : 'border-slate-200 hover:border-slate-300'
+                            idx === currentGaleriaIndex ? 'border-emerald-600' : 'border-slate-200 dark:border-slate-700 hover:border-slate-300'
                           }`}
                           data-testid={`thumbnail-galeria-${idx}`}
                           type="button"
@@ -399,7 +399,7 @@ const ProjectDetail = () => {
                 {/* Contenido Videos */}
                 {activeTab === 'videos' && (
                   <div className="text-center py-12">
-                    <p className="text-slate-600">Los videos del proyecto estará disponibles pronto</p>
+                    <p className="text-slate-600 dark:text-slate-400">Los videos del proyecto estará disponibles pronto</p>
                   </div>
                 )}
               </div>
@@ -408,33 +408,33 @@ const ProjectDetail = () => {
 
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            <div className="sticky top-32 bg-white rounded-2xl border border-slate-200 p-6 space-y-6">
+            <div className="sticky top-32 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 space-y-6">
               {/* Datos clave */}
               <div className="space-y-4">
-                <h3 className="text-lg font-bold text-slate-900">Datos del proyecto</h3>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">Datos del proyecto</h3>
                 
                 {project.lotes && (
                   <div>
-                    <p className="text-xs text-slate-500 uppercase font-semibold mb-1">Disponibilidad</p>
-                    <p className="text-base font-semibold text-slate-900">{project.lotes}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-500 uppercase font-semibold mb-1">Disponibilidad</p>
+                    <p className="text-base font-semibold text-slate-900 dark:text-slate-100">{project.lotes}</p>
                   </div>
                 )}
 
                 {project.superficie && (
                   <div>
-                    <p className="text-xs text-slate-500 uppercase font-semibold mb-1">Superficie total</p>
-                    <p className="text-base font-semibold text-slate-900">{project.superficie}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-500 uppercase font-semibold mb-1">Superficie total</p>
+                    <p className="text-base font-semibold text-slate-900 dark:text-slate-100">{project.superficie}</p>
                   </div>
                 )}
 
                 <div>
-                  <p className="text-xs text-slate-500 uppercase font-semibold mb-1">Estado</p>
-                  <p className="text-base font-semibold text-emerald-600">{project.etapa}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-500 uppercase font-semibold mb-1">Estado</p>
+                  <p className="text-base font-semibold text-emerald-600 dark:text-emerald-400">{project.etapa}</p>
                 </div>
               </div>
 
               {/* CTA */}
-              <div className="pt-6 border-t border-slate-200 space-y-3">
+              <div className="pt-6 border-t border-slate-200 dark:border-slate-700 space-y-3">
                 <a
                   href="https://wa.me/5491131298840"
                   target="_blank"
@@ -444,7 +444,7 @@ const ProjectDetail = () => {
                 >
                   Consultar por WhatsApp
                 </a>
-                <Link href="/#contacto" className="block w-full border border-emerald-600 text-emerald-700 font-semibold py-3 rounded-full text-center hover:bg-emerald-50 transition" data-testid="link-contact-project">
+                <Link href="/#contacto" className="block w-full border border-emerald-600 text-emerald-700 dark:text-emerald-400 font-semibold py-3 rounded-full text-center hover:bg-emerald-50 dark:bg-emerald-900/20 transition" data-testid="link-contact-project">
                   Enviar consulta
                 </Link>
               </div>
@@ -477,7 +477,7 @@ const ProjectDetail = () => {
             {/* Botón cerrar */}
             <button
               onClick={() => setMasterPlanFullscreen(false)}
-              className="absolute top-4 right-4 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition"
+              className="absolute top-4 right-4 bg-white dark:bg-slate-800/20 hover:bg-white dark:bg-slate-800/30 text-white p-3 rounded-full transition"
               data-testid="button-close-master-plan-fullscreen"
               type="button"
               aria-label="Cerrar"
@@ -490,7 +490,7 @@ const ProjectDetail = () => {
               onClick={() => {
                 handleKeyDown({ key: 'ArrowLeft' } as React.KeyboardEvent);
               }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition"
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white dark:bg-slate-800/20 hover:bg-white dark:bg-slate-800/30 text-white p-3 rounded-full transition"
               data-testid="button-prev-master-plan-fullscreen"
               type="button"
               aria-label="Imagen anterior"
@@ -502,7 +502,7 @@ const ProjectDetail = () => {
               onClick={() => {
                 handleKeyDown({ key: 'ArrowRight' } as React.KeyboardEvent);
               }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition"
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white dark:bg-slate-800/20 hover:bg-white dark:bg-slate-800/30 text-white p-3 rounded-full transition"
               data-testid="button-next-master-plan-fullscreen"
               type="button"
               aria-label="Siguiente imagen"
@@ -544,7 +544,7 @@ const ProjectDetail = () => {
             {/* Botón cerrar */}
             <button
               onClick={() => setGaleriaFullscreen(false)}
-              className="absolute top-4 right-4 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition"
+              className="absolute top-4 right-4 bg-white dark:bg-slate-800/20 hover:bg-white dark:bg-slate-800/30 text-white p-3 rounded-full transition"
               data-testid="button-close-galeria-fullscreen"
               type="button"
               aria-label="Cerrar"
@@ -557,7 +557,7 @@ const ProjectDetail = () => {
               onClick={() => {
                 handleKeyDown({ key: 'ArrowLeft' } as React.KeyboardEvent);
               }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition"
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white dark:bg-slate-800/20 hover:bg-white dark:bg-slate-800/30 text-white p-3 rounded-full transition"
               data-testid="button-prev-galeria-fullscreen"
               type="button"
               aria-label="Imagen anterior"
@@ -569,7 +569,7 @@ const ProjectDetail = () => {
               onClick={() => {
                 handleKeyDown({ key: 'ArrowRight' } as React.KeyboardEvent);
               }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition"
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white dark:bg-slate-800/20 hover:bg-white dark:bg-slate-800/30 text-white p-3 rounded-full transition"
               data-testid="button-next-galeria-fullscreen"
               type="button"
               aria-label="Siguiente imagen"

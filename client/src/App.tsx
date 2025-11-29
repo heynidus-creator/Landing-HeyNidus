@@ -6,6 +6,7 @@ import About from "./components/About.tsx";
 import Projects from "./components/Projects.tsx";
 import ContactSection from "./components/ContactSection.tsx";
 import Footer from "./components/Footer.tsx";
+import BackToTopButton from "./components/BackToTopButton.tsx";
 import ProjectDetail from "./pages/ProjectDetail.tsx";
 import NotFound from "./pages/not-found.tsx";
 
@@ -14,7 +15,7 @@ const Testimonials = lazy(() => import("./components/Testimonials.tsx"));
 
 const LoadingFallback = () => (
   <div className="flex justify-center items-center py-16">
-    <div className="w-8 h-8 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin"></div>
+    <div className="w-8 h-8 border-4 border-emerald-200 dark:border-emerald-800 border-t-emerald-600 dark:border-t-emerald-400 rounded-full animate-spin"></div>
   </div>
 );
 
@@ -27,7 +28,7 @@ function HomePage() {
       <section id="quienes-somos" className="py-16">
         <About />
       </section>
-      <section id="proyectos" className="py-16 bg-white">
+      <section id="proyectos" className="py-16 bg-white dark:bg-slate-900">
         <Projects />
       </section>
       <section id="blog" className="py-16">
@@ -35,7 +36,7 @@ function HomePage() {
           <Blog />
         </Suspense>
       </section>
-      <section id="testimonios" className="py-16 bg-white">
+      <section id="testimonios" className="py-16 bg-white dark:bg-slate-900">
         <Suspense fallback={<LoadingFallback />}>
           <Testimonials />
         </Suspense>
@@ -49,13 +50,14 @@ function HomePage() {
 
 function App() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
       <Navbar />
       <Switch>
         <Route path="/" component={HomePage} />
         <Route path="/proyecto/:id" component={ProjectDetail} />
         <Route component={NotFound} />
       </Switch>
+      <BackToTopButton />
       <Footer />
     </div>
   );

@@ -56,13 +56,13 @@ const Blog = memo(() => {
   return (
     <div className="mx-auto max-w-6xl px-4">
       <div className="mb-8 space-y-3">
-        <h2 className="text-2xl font-semibold tracking-tight text-slate-900 flex items-center gap-3">
+        <h2 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100 flex items-center gap-3">
           <span className="relative inline-block">
             Blog HeyNidus
             <img src={birdIcon} alt="bird" className="absolute w-5 h-5 -top-2 -right-6" style={{marginTop: '-2px'}} />
           </span>
         </h2>
-        <p className="text-sm md:text-base text-slate-700">
+        <p className="text-sm md:text-base text-slate-700 dark:text-slate-300">
           Compartimos información clave para ayudarte a tomar mejores decisiones al momento de elegir un lote o evaluar
           un proyecto.
         </p>
@@ -72,7 +72,7 @@ const Blog = memo(() => {
         <button
           onClick={scrollPrev}
           disabled={!canScrollPrev}
-          className="flex-shrink-0 p-2 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 disabled:opacity-30 disabled:cursor-not-allowed transition"
+          className="flex-shrink-0 p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed transition"
           data-testid="button-carousel-prev"
         >
           <ChevronLeft className="w-5 h-5" />
@@ -83,10 +83,10 @@ const Blog = memo(() => {
             {blogPosts.map((post) => (
               <article
                 key={post.id}
-                className="flex-shrink-0 w-80 flex flex-col justify-between rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm hover:shadow-md transition"
+                className="flex-shrink-0 w-80 flex flex-col justify-between rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 overflow-hidden shadow-sm hover:shadow-md transition"
                 data-testid={`card-blog-${post.id}`}
               >
-                <div className="w-full h-48 overflow-hidden bg-slate-100">
+                <div className="w-full h-48 overflow-hidden bg-slate-100 dark:bg-slate-700">
                   <img
                     src={blogImageMap[post.imagen] || ''}
                     alt={post.titulo}
@@ -95,21 +95,21 @@ const Blog = memo(() => {
                   />
                 </div>
                 <div className="p-5">
-                  <p className="text-xs text-slate-500 mb-1">{post.fecha}</p>
-                  <h3 className="text-sm md:text-base font-semibold text-slate-900 mb-2">{post.titulo}</h3>
-                  <p className="text-xs md:text-sm text-slate-700">{post.resumen}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">{post.fecha}</p>
+                  <h3 className="text-sm md:text-base font-semibold text-slate-900 dark:text-slate-100 mb-2">{post.titulo}</h3>
+                  <p className="text-xs md:text-sm text-slate-700 dark:text-slate-300">{post.resumen}</p>
                 </div>
                 <div className="px-5 pb-5">
                   <button
                     type="button"
                     onClick={() => setSelectedPost(selectedPost === post.id ? null : post.id)}
-                    className="text-xs font-semibold text-emerald-700 hover:text-emerald-800 transition"
+                    className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 transition"
                     data-testid={`button-read-more-${post.id}`}
                   >
                     {selectedPost === post.id ? 'Leer menos ↑' : 'Leer más →'}
                   </button>
                   {selectedPost === post.id && (
-                    <div className="mt-3 pt-3 border-t border-slate-200 text-xs text-slate-700 leading-relaxed">
+                    <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
                       {blogContent[post.id]}
                     </div>
                   )}
@@ -122,7 +122,7 @@ const Blog = memo(() => {
         <button
           onClick={scrollNext}
           disabled={!canScrollNext}
-          className="flex-shrink-0 p-2 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 disabled:opacity-30 disabled:cursor-not-allowed transition"
+          className="flex-shrink-0 p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed transition"
           data-testid="button-carousel-next"
         >
           <ChevronRight className="w-5 h-5" />
