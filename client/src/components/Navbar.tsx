@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useLocation } from 'wouter';
 import birdIcon from '@assets/image_1763966603851.png';
 import ThemeToggle from './ThemeToggle';
+import { useScrollSpy } from '../hooks/useScrollSpy';
 
 const navLinks = [
   { label: 'Inicio', href: 'inicio' },
@@ -15,6 +16,8 @@ const navLinks = [
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [location] = useLocation();
+  const sectionIds = navLinks.map(link => link.href);
+  const activeSection = useScrollSpy({ sectionIds, offset: 100 });
 
   const handleNavClick = (sectionId: string) => {
     setOpen(false);
@@ -63,16 +66,23 @@ const Navbar = () => {
 
         {/* Desktop */}
         <div className="hidden gap-4 md:gap-6 md:flex items-center">
-          {navLinks.map((link) => (
-            <button
-              key={link.href}
-              onClick={() => handleNavClick(link.href)}
-              className="text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors bg-none border-none cursor-pointer p-0"
-              data-testid={`button-nav-${link.href}`}
-            >
-              {link.label}
-            </button>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = activeSection === link.href;
+            return (
+              <button
+                key={link.href}
+                onClick={() => handleNavClick(link.href)}
+                className={`text-sm font-medium transition-colors bg-none border-none cursor-pointer p-0 pb-1 border-b-2 ${
+                  isActive
+                    ? 'text-emerald-700 dark:text-emerald-400 border-emerald-700 dark:border-emerald-400'
+                    : 'text-slate-700 dark:text-slate-300 border-transparent hover:text-emerald-700 dark:hover:text-emerald-400'
+                }`}
+                data-testid={`button-nav-${link.href}`}
+              >
+                {link.label}
+              </button>
+            );
+          })}
           <ThemeToggle />
         </div>
 
@@ -94,16 +104,23 @@ const Navbar = () => {
       {open && (
         <div className="border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 md:hidden w-full">
           <div className="mx-auto flex max-w-6xl flex-col px-3 sm:px-4 py-3 space-y-2 w-full">
-            {navLinks.map((link) => (
-              <button
-                key={link.href}
-                onClick={() => handleNavClick(link.href)}
-                className="text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors bg-none border-none cursor-pointer p-0 text-left"
-                data-testid={`button-mobile-nav-${link.href}`}
-              >
-                {link.label}
-              </button>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.href;
+              return (
+                <button
+                  key={link.href}
+                  onClick={() => handleNavClick(link.href)}
+                  className={`text-sm font-medium transition-colors bg-none border-none cursor-pointer p-2 text-left rounded-md ${
+                    isActive
+                      ? 'text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20'
+                      : 'text-slate-700 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400'
+                  }`}
+                  data-testid={`button-mobile-nav-${link.href}`}
+                >
+                  {link.label}
+                </button>
+              );
+            })}
           </div>
         </div>
       )}
