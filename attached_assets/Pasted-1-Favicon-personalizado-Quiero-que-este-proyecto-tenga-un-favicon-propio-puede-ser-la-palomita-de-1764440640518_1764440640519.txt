@@ -1,0 +1,113 @@
+1) Favicon personalizado
+
+Quiero que este proyecto tenga un favicon propio (puede ser la palomita del logo o las iniciales “HN”), para que no aparezca más el ícono gris por defecto del navegador.
+
+Instrucciones:
+
+Verifica si existe la carpeta /public. Si no existe, créala.
+
+Indícame en qué ruta exacta debo subir mi imagen base (por ejemplo: /public/favicon.png o /public/logo-hn.png).
+
+A partir de esa imagen, configura correctamente los favicons para navegadores modernos:
+
+favicon.ico
+
+favicon-32x32.png
+
+favicon-16x16.png
+
+apple-touch-icon.png
+
+Agrega las etiquetas <link> necesarias en el HTML raíz (por ejemplo index.html en Vite), sin borrar las que ya existan en el <head>.
+
+Déjamelo todo listo para que con solo subir la imagen, el favicon funcione en desktop y mobile.
+
+2) Layout móvil sin scroll horizontal (usar SIEMPRE el ancho del teléfono)
+
+En mobile (ej: heynidus.com en el celular) ahora mismo pasa esto:
+
+La página se ve, pero hay espacio blanco grande a la derecha.
+
+Se puede hacer scroll horizontal hacia la derecha para ver el resto del contenido.
+
+El menú hamburguesa no está bien centrado en la vista, queda como “desplazado” y no siempre se ve como debería.
+
+Quiero que en celulares y tablets TODO ocupe siempre el ancho de la pantalla, y que no se pueda mover hacia la derecha nunca.
+
+Tareas:
+
+Detecta qué contenedores, imágenes, grids, paddings o widths están generando overflow horizontal.
+
+Corrige esos estilos para que:
+
+El layout se acomode de arriba hacia abajo (scroll solo vertical).
+
+Las imágenes ocupen el ancho correcto en mobile sin desbordarse.
+
+No haya elementos más anchos que el viewport.
+
+Asegúrate de que el <body> y contenedores principales NO necesiten hacks tipo overflow-x: hidden para tapar errores, salvo que sea estrictamente necesario y después de corregir las causas reales del overflow.
+
+3) Menú hamburguesa siempre visible y bien ubicado
+
+En la captura en mobile se ve que el menú hamburguesa queda demasiado a la derecha y no siempre se percibe bien.
+
+Objetivo:
+
+El ícono de menú hamburguesa debe:
+
+Ser siempre visible en el extremo derecho del navbar.
+
+Quedar alineado dentro del ancho de pantalla (sin obligar a hacer scroll horizontal).
+
+Verse bien en tamaños de pantalla pequeños (360–430 px).
+
+Tareas:
+
+Revisa el componente del Navbar y su comportamiento responsive.
+
+Ajusta el layout para que en mobile:
+
+Logo + botón hamburguesa queden bien alineados dentro del viewport.
+
+No haya márgenes/paddings excesivos que “empujen” el menú fuera de la pantalla.
+
+El menú desplegable (si existe) se vea claro y legible.
+
+4) Responsive general (móvil, tablet, desktop)
+
+Ya que vas a tocar estilos, aprovecha para asegurarte de que:
+
+La web se vea bien en:
+
+Móviles (~360–430 px)
+
+Tablets (~768–1024 px)
+
+Desktop
+
+Ajustes tipografías, espacios y botones para que sean cómodos de leer y tocar en móvil.
+
+No cambies la estructura ni lógica (rutas, hooks, contextos), solo layout y estilos.
+
+5) Reglas de trabajo
+
+Mantén el stack actual: React, TypeScript, Tailwind (y lo que ya esté configurado).
+
+No elimines lógica de negocio ni endpoints.
+
+Si necesitas crear nuevos archivos (por ejemplo, algún componente de layout o estilos), indícame:
+
+Ruta del archivo
+
+Nombre
+
+Para qué sirve (descripción breve).
+
+Al finalizar, quiero que me confirmes:
+
+En qué ruta debo subir la imagen que voy a usar como favicon.
+
+Que en mobile ya no exista scroll horizontal y todo quede alineado solo de arriba hacia abajo.
+
+Que el menú hamburguesa se vea correctamente ubicado dentro del ancho de pantalla en celulares.

@@ -88,7 +88,7 @@ const ProjectDetail = () => {
   if (!project) {
     return (
       <div className="min-h-screen bg-slate-50 dark:bg-slate-950 dark:bg-slate-900 py-16">
-        <div className="mx-auto max-w-6xl px-4 text-center">
+        <div className="mx-auto max-w-6xl px-3 sm:px-4 w-full text-center">
           <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-4">Proyecto no encontrado</h1>
         </div>
       </div>
@@ -108,7 +108,7 @@ const ProjectDetail = () => {
       </div>
 
       {/* Contenido */}
-      <div className="mx-auto max-w-6xl px-4 py-12">
+      <div className="mx-auto max-w-6xl px-3 sm:px-4 w-full py-12">
         {/* Header */}
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-3">

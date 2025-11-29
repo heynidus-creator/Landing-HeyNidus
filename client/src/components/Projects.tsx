@@ -13,8 +13,8 @@ const ProjectImageMap: Record<string, string> = {
 
 const Projects = () => {
   return (
-    <div className="mx-auto max-w-6xl px-4">
-      <div className="mb-8 space-y-3">
+    <div className="mx-auto max-w-6xl px-3 sm:px-4 w-full">
+      <div className="mb-6 sm:mb-8 space-y-2 sm:space-y-3">
         <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Proyectos</h2>
         <p className="text-sm md:text-base text-slate-700 dark:text-slate-300">
           Combinamos desarrollos propios y de terceros para que encuentres el lote que mejor se adapte a tu plan de vida
@@ -22,14 +22,14 @@ const Projects = () => {
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 w-full">
         {projects.map((project) => (
           <article
             key={project.id}
             className="flex flex-col justify-between rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm hover:shadow-md transition overflow-hidden"
             data-testid={`card-project-${project.id}`}
           >
-            <div className="relative w-full h-48 bg-slate-200 dark:bg-slate-700 overflow-hidden">
+            <div className="relative w-full h-40 sm:h-48 bg-slate-200 dark:bg-slate-700 overflow-hidden">
               <img
                 src={ProjectImageMap[project.imagen] || ''}
                 alt={project.nombre}
@@ -56,7 +56,7 @@ const Projects = () => {
               <div className="mt-4 flex gap-3 flex-col sm:flex-row">
                 <a
                   href={`/proyecto/${project.id}`}
-                  className="inline-flex items-center justify-center rounded-full bg-emerald-600 dark:bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700 dark:hover:bg-emerald-700 transition"
+                  className="inline-flex items-center justify-center rounded-full bg-emerald-600 dark:bg-emerald-600 px-3 sm:px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700 dark:hover:bg-emerald-700 transition"
                   data-testid={`button-project-detail-${project.id}`}
                 >
                   Ver más
@@ -72,7 +72,7 @@ const Projects = () => {
                       }, 500);
                     }
                   }}
-                  className="inline-flex items-center justify-center rounded-full border border-emerald-600 dark:border-emerald-500 px-4 py-2 text-xs font-semibold text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition"
+                  className="inline-flex items-center justify-center rounded-full border border-emerald-600 dark:border-emerald-500 px-3 sm:px-4 py-2 text-xs font-semibold text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition"
                   data-testid={`button-project-contact-${project.id}`}
                   type="button"
                 >

@@ -30,3 +30,4 @@ body {
 .animate-fade-in {
   animation: fade-in 0.3s ease-in-out;
 }
+body { overflow-x: hidden; }

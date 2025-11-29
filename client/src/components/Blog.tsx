@@ -54,8 +54,8 @@ const Blog = memo(() => {
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-4">
-      <div className="mb-8 space-y-3">
+    <div className="mx-auto max-w-6xl px-3 sm:px-4 w-full">
+      <div className="mb-6 sm:mb-8 space-y-2 sm:space-y-3">
         <h2 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100 flex items-center gap-3">
           <span className="relative inline-block">
             Blog HeyNidus
@@ -68,22 +68,22 @@ const Blog = memo(() => {
         </p>
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 sm:gap-4 w-full">
         <button
           onClick={scrollPrev}
           disabled={!canScrollPrev}
-          className="flex-shrink-0 p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed transition"
+          className="flex-shrink-0 p-1 sm:p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed transition"
           data-testid="button-carousel-prev"
         >
-          <ChevronLeft className="w-5 h-5" />
+          <ChevronLeft className="w-4 sm:w-5 h-4 sm:h-5" />
         </button>
 
-        <div className="flex-1 overflow-hidden" ref={emblaRef}>
-          <div className="flex gap-6">
+        <div className="flex-1 min-w-0 overflow-hidden" ref={emblaRef}>
+          <div className="flex gap-4 sm:gap-6">
             {blogPosts.map((post) => (
               <article
                 key={post.id}
-                className="flex-shrink-0 w-80 flex flex-col justify-between rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 overflow-hidden shadow-sm hover:shadow-md transition"
+                className="flex-shrink-0 w-64 sm:w-80 flex flex-col justify-between rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 overflow-hidden shadow-sm hover:shadow-md transition"
                 data-testid={`card-blog-${post.id}`}
               >
                 <div className="w-full h-48 overflow-hidden bg-slate-100 dark:bg-slate-700">
@@ -122,10 +122,10 @@ const Blog = memo(() => {
         <button
           onClick={scrollNext}
           disabled={!canScrollNext}
-          className="flex-shrink-0 p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed transition"
+          className="flex-shrink-0 p-1 sm:p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed transition"
           data-testid="button-carousel-next"
         >
-          <ChevronRight className="w-5 h-5" />
+          <ChevronRight className="w-4 sm:w-5 h-4 sm:h-5" />
         </button>
       </div>
     </div>

@@ -48,21 +48,21 @@ const Navbar = () => {
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur border-b border-slate-200 dark:border-slate-700">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+    <header className="fixed inset-x-0 top-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur border-b border-slate-200 dark:border-slate-700 w-full overflow-hidden">
+      <nav className="mx-auto flex max-w-full md:max-w-6xl items-center justify-between px-3 sm:px-4 py-3 w-full">
         <button 
           onClick={handleLogoClick}
-          className="relative inline-block text-2xl font-semibold tracking-tight text-emerald-700 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors cursor-pointer bg-none border-none p-0"
+          className="relative inline-block text-lg sm:text-2xl font-semibold tracking-tight text-emerald-700 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors cursor-pointer bg-none border-none p-0 flex-shrink-0"
           data-testid="button-logo"
         >
-          <span className="relative">
+          <span className="relative whitespace-nowrap">
             HeyNidus
-            <img src={birdIcon} alt="bird" className="absolute w-7 h-7 -top-3 -right-7" data-testid="img-bird-logo" style={{marginTop: '-2px'}} />
+            <img src={birdIcon} alt="bird" className="absolute w-5 sm:w-7 h-5 sm:h-7 -top-2 sm:-top-3 -right-6 sm:-right-7" data-testid="img-bird-logo" style={{marginTop: '-2px'}} />
           </span>
         </button>
 
         {/* Desktop */}
-        <div className="hidden gap-6 md:flex items-center">
+        <div className="hidden gap-4 md:gap-6 md:flex items-center">
           {navLinks.map((link) => (
             <button
               key={link.href}
@@ -77,12 +77,13 @@ const Navbar = () => {
         </div>
 
         {/* Mobile controls */}
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-1 sm:gap-2 md:hidden flex-shrink-0">
           <ThemeToggle />
           <button
-            className="inline-flex items-center justify-center rounded-md border border-slate-300 dark:border-slate-600 px-2 py-1 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+            className="inline-flex items-center justify-center rounded-md border border-slate-300 dark:border-slate-600 px-2 py-1 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex-shrink-0"
             onClick={() => setOpen(!open)}
             aria-label="Abrir menú"
+            data-testid="button-hamburger"
           >
             <span className="text-lg">{open ? '✕' : '☰'}</span>
           </button>
@@ -91,8 +92,8 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {open && (
-        <div className="border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 md:hidden">
-          <div className="mx-auto flex max-w-6xl flex-col px-4 py-3 space-y-2">
+        <div className="border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 md:hidden w-full overflow-x-hidden">
+          <div className="mx-auto flex max-w-full md:max-w-6xl flex-col px-3 sm:px-4 py-3 space-y-2">
             {navLinks.map((link) => (
               <button
                 key={link.href}
