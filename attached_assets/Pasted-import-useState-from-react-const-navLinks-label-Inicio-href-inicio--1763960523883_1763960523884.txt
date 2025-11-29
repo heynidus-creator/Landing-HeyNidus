@@ -1,0 +1,69 @@
+import { useState } from 'react';
+
+const navLinks = [
+  { label: 'Inicio', href: '#inicio' },
+  { label: 'Quiénes Somos', href: '#quienes-somos' },
+  { label: 'Proyectos', href: '#proyectos' },
+  { label: 'Blog', href: '#blog' },
+  { label: 'Contacto', href: '#contacto' },
+];
+
+const Navbar = () => {
+  const [open, setOpen] = useState(false);
+
+  const handleLinkClick = () => {
+    setOpen(false);
+  };
+
+  return (
+    <header className="fixed inset-x-0 top-0 z-30 bg-white/80 backdrop-blur border-b border-slate-200">
+      <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+        <a href="#inicio" className="text-xl font-bold tracking-tight text-emerald-700">
+          HEYnidus
+        </a>
+
+        {/* Desktop */}
+        <div className="hidden gap-6 md:flex">
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="text-sm font-medium text-slate-700 hover:text-emerald-700 transition-colors"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+
+        {/* Mobile button */}
+        <button
+          className="inline-flex items-center justify-center rounded-md border border-slate-300 px-2 py-1 text-slate-700 hover:bg-slate-100 md:hidden"
+          onClick={() => setOpen(!open)}
+          aria-label="Abrir menú"
+        >
+          <span className="text-lg">{open ? '✕' : '☰'}</span>
+        </button>
+      </nav>
+
+      {/* Mobile menu */}
+      {open && (
+        <div className="border-t border-slate-200 bg-white md:hidden">
+          <div className="mx-auto flex max-w-6xl flex-col px-4 py-3 space-y-2">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={handleLinkClick}
+                className="text-sm font-medium text-slate-700 hover:text-emerald-700 transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </header>
+  );
+};
+
+export default Navbar;

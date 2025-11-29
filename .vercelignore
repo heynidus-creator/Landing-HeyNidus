@@ -1,0 +1,6 @@
+server/
+shared/
+drizzle/
+migrations/
+.git/
+node_modules/

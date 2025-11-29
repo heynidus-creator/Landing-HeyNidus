@@ -1,0 +1,39 @@
+git add . && git commit -m "Update" && git push
+runner@replit:~/workspace$
+git push --force
+git push --force
+
+git push --force
+git add vercel.json && git commit -m "Fix Vercel config" && git push
+git add . && git commit -m "Fix static file path for production" && git push
+git remote set-url origin https://github.com/heynidus/heynidus.git
+git push -u origin main --force
+git remote set-url origin https://github.com/heynidus-creator/heynidus.git
+git remote set-url origin https://github.com/heynidus-creator/heynidus.git
+git push --force
+git log --oneline -3
+
+git log --oneline -3
+git log --oneline -3
+git log --oneline -3
+git remote add origin https://github.com/heynidus-creator/heynidus.git
+git branch -M main
+git push -u origin main
+git push -u origin main
+git status
+git status
+git status
+ls -l
+git add -A
+git commit -m "Deploy HeyNidus landing page"
+git push -u origin main
+git remote add origin https://github.com/heynidus-creator/heynidus.git
+
+git push -u origin main
+git remote remove origin
+git remote add origin https://github.com/heynidus-creator/heynidus.git
+git push -u origin main --force
+git add vercel.json && git commit -m "Fix Vercel configuration for Express deployment" && git push origin main
+git push origin main
+git push origin main
+git push origin main

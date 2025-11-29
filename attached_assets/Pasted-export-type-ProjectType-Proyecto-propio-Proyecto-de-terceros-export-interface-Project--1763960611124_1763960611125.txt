@@ -1,0 +1,75 @@
+export type ProjectType = 'Proyecto propio' | 'Proyecto de terceros';
+
+export interface Project {
+  id: number;
+  nombre: string;
+  tipo: ProjectType;
+  ubicacion: string;
+  descripcion: string;
+}
+
+export interface BlogPost {
+  id: number;
+  titulo: string;
+  fecha: string;
+  resumen: string;
+}
+
+export const projects: Project[] = [
+  {
+    id: 1,
+    nombre: 'Valles del Pino',
+    tipo: 'Proyecto propio',
+    ubicacion: 'La Matanza, Buenos Aires',
+    descripcion:
+      'Barrio privado con lotes residenciales pensados para vivienda permanente o de fin de semana, rodeado de naturaleza y con proyección de crecimiento.',
+  },
+  {
+    id: 2,
+    nombre: 'Altos del Horizonte',
+    tipo: 'Proyecto de terceros',
+    ubicacion: 'Cañuelas, Buenos Aires',
+    descripcion:
+      'Lotes en entorno semi-urbano, ideales para combinar accesibilidad, servicios y una buena oportunidad de valorización futura.',
+  },
+  {
+    id: 3,
+    nombre: 'Puertas del Campo',
+    tipo: 'Proyecto propio',
+    ubicacion: 'Zona Sur, Gran Buenos Aires',
+    descripcion:
+      'Emprendimiento con lotes amplios, pensado para familias que buscan proyectar su casa con espacio, verde y entorno en desarrollo.',
+  },
+  {
+    id: 4,
+    nombre: 'Senderos de la Laguna',
+    tipo: 'Proyecto de terceros',
+    ubicacion: 'Provincia de Buenos Aires',
+    descripcion:
+      'Lotes cercanos a áreas de laguna y recreación, orientados a quienes buscan una segunda vivienda o espacio de descanso con potencial turístico.',
+  },
+];
+
+export const blogPosts: BlogPost[] = [
+  {
+    id: 1,
+    titulo: '5 claves antes de elegir un lote para invertir',
+    fecha: '15 de noviembre de 2025',
+    resumen:
+      'No todos los lotes son iguales. Ubicación, servicios, acceso y etapas del proyecto pueden marcar la diferencia en el resultado de tu inversión.',
+  },
+  {
+    id: 2,
+    titulo: 'Diferencias entre proyectos propios y de terceros',
+    fecha: '3 de noviembre de 2025',
+    resumen:
+      'Como comercializadora trabajamos con ambos tipos de proyectos. Te contamos qué significa cada uno y qué tener en cuenta al comparar alternativas.',
+  },
+  {
+    id: 3,
+    titulo: '¿Qué significa comprar en pozo un lote de terreno?',
+    fecha: '25 de octubre de 2025',
+    resumen:
+      'Comprar en pozo implica etapas, plazos y condiciones específicas. Explicamos el concepto con ejemplos simples y concretos.',
+  },
+];
