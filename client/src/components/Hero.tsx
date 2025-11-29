@@ -2,7 +2,7 @@ import landImage from '@assets/generated_images/aerial_view_of_residential_land_
 
 const Hero = () => {
   return (
-    <section className="relative w-full overflow-hidden">
+    <section className="relative w-full">
       {/* Imagen de fondo */}
       <img
         src={landImage}

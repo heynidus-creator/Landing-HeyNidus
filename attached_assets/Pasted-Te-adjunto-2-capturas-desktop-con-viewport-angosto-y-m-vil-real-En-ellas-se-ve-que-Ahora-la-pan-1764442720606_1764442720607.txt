@@ -1,0 +1,95 @@
+Te adjunto 2 capturas (desktop con viewport angosto y móvil real).
+En ellas se ve que:
+
+Ahora la pantalla ya no se mueve horizontalmente (bien).
+
+PERO el contenido queda cortado a la derecha:
+se ve la columna donde están los textos, pero parte del texto queda fuera y no se puede leer completo.
+
+Esto es inaceptable:
+no quiero que soluciones el scroll horizontal recortando contenido.
+Quiero que TODO el contenido sea visible dentro del ancho del dispositivo.
+
+Qué quiero EXACTAMENTE
+
+Revisá qué cambio hiciste para eliminar el scroll horizontal
+
+Buscá en el código cosas como:
+
+overflow-x: hidden
+
+overflow: hidden
+
+width: 100vw
+
+min-width raros
+
+max-width o height fijos en contenedores importantes
+
+Identificá si hay contenedores con ancho fijo o con padding/margins que rompen el layout.
+
+NO uses más el truco de “ocultar lo que sobra”
+
+Si estás usando overflow-x: hidden o algo similar para tapar el problema, revísalo.
+
+Quiero que la solución sea que el contenido encaje bien, no que se oculte.
+
+Reordenar y ajustar el layout correctamente
+
+En las páginas de detalle de proyecto (las que se abren con “Ver más”):
+
+La imagen superior debe ocupar el ancho correcto en móvil.
+
+Debajo de la imagen, el contenido (títulos, párrafos, listas, secciones de servicios, etc.) debe:
+
+Estar alineado dentro del ancho del teléfono.
+
+Verse completo de izquierda a derecha, sin cortarse.
+
+El navbar con logo + botón de modo oscuro + hamburguesa debe seguir viéndose bien, pero sin empujar ni recortar el contenido.
+
+Regla de oro
+
+En ningún breakpoint debe quedar texto o contenido cortado lateralmente.
+
+El usuario debe poder leer la línea completa sin que se “pierda” por fuera de la pantalla.
+
+El scroll debe ser solo vertical.
+
+Cómo testearlo
+
+Probá la vista de detalle de proyecto:
+
+En simulación de móvil (ej. 360x640) en el navegador.
+
+Reduce y agranda el ancho para verificar que el contenido siempre se adapte.
+
+Si hace falta, ajustá:
+
+max-width
+
+padding horizontales
+
+flex / grid / gap
+
+Pero sin usar recortes ni alturas fijas que escondan contenido.
+
+Reglas
+
+No cambies la lógica de negocio ni las rutas.
+
+No me devuelvas código para copiar/pegar; aplica los cambios directamente.
+
+Si finalmente dejás algún overflow-x: hidden, justificá dónde y por qué, y asegurate de que no esté cortando contenido.
+
+Al terminar
+
+Indícame qué archivos tocaste.
+
+Confirma que en las páginas de detalle de proyecto:
+
+El contenido no se corta.
+
+No hay scroll horizontal.
+
+Todo se ve apilado de arriba hacia abajo, legible, dentro del ancho del teléfono.

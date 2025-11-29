@@ -13,7 +13,7 @@ const ProjectImageMap: Record<string, string> = {
 
 const Projects = () => {
   return (
-    <div className="mx-auto max-w-6xl px-3 sm:px-4 w-full overflow-x-hidden">
+    <div className="mx-auto max-w-6xl px-3 sm:px-4 w-full">
       <div className="mb-6 sm:mb-8 space-y-2 sm:space-y-3">
         <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Proyectos</h2>
         <p className="text-sm md:text-base text-slate-700 dark:text-slate-300">
@@ -22,7 +22,7 @@ const Projects = () => {
         </p>
       </div>
 
-      <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 w-full overflow-x-hidden">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 w-full">
         {projects.map((project) => (
           <article
             key={project.id}

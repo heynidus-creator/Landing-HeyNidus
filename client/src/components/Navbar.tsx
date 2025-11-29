@@ -48,7 +48,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur border-b border-slate-200 dark:border-slate-700 w-full overflow-x-hidden">
+    <header className="fixed inset-x-0 top-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur border-b border-slate-200 dark:border-slate-700 w-full">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-3 sm:px-4 py-3 w-full">
         <button 
           onClick={handleLogoClick}
@@ -92,7 +92,7 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {open && (
-        <div className="border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 md:hidden w-full overflow-x-hidden">
+        <div className="border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 md:hidden w-full">
           <div className="mx-auto flex max-w-6xl flex-col px-3 sm:px-4 py-3 space-y-2 w-full">
             {navLinks.map((link) => (
               <button
