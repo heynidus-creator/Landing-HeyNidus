@@ -1,6 +1,8 @@
+import { SectionCard } from './SectionCard';
+
 const About = () => {
   return (
-    <div className="mx-auto max-w-6xl px-3 sm:px-4 w-full">
+    <SectionCard className="mx-auto max-w-6xl px-3 sm:px-4 w-full">
       <div className="space-y-8">
         <div>
           <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">Quiénes somos</h2>
@@ -80,7 +82,7 @@ const About = () => {
           </ul>
         </div>
       </div>
-    </div>
+    </SectionCard>
   );
 };
 
