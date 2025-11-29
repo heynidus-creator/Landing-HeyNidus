@@ -48,8 +48,8 @@ const Navbar = () => {
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur border-b border-slate-200 dark:border-slate-700 w-full overflow-hidden">
-      <nav className="mx-auto flex max-w-full md:max-w-6xl items-center justify-between px-3 sm:px-4 py-3 w-full">
+    <header className="fixed inset-x-0 top-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur border-b border-slate-200 dark:border-slate-700 w-full overflow-x-hidden">
+      <nav className="mx-auto flex max-w-6xl items-center justify-between px-3 sm:px-4 py-3 w-full">
         <button 
           onClick={handleLogoClick}
           className="relative inline-block text-lg sm:text-2xl font-semibold tracking-tight text-emerald-700 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors cursor-pointer bg-none border-none p-0 flex-shrink-0"
@@ -93,7 +93,7 @@ const Navbar = () => {
       {/* Mobile menu */}
       {open && (
         <div className="border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 md:hidden w-full overflow-x-hidden">
-          <div className="mx-auto flex max-w-full md:max-w-6xl flex-col px-3 sm:px-4 py-3 space-y-2">
+          <div className="mx-auto flex max-w-6xl flex-col px-3 sm:px-4 py-3 space-y-2 w-full">
             {navLinks.map((link) => (
               <button
                 key={link.href}

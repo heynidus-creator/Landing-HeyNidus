@@ -1,0 +1,75 @@
+Voy a adjuntarte una captura de pantalla desde el celular.
+En esa captura podés ver claramente el problema:
+
+La imagen del proyecto no ocupa todo el ancho del teléfono.
+
+El navbar, el logo y los botones (modo oscuro y menú hamburguesa) quedan “cortados” a la derecha.
+
+Se puede desplazar la página en horizontal para ver el resto.
+
+👉 Eso es una muy mala práctica y NO lo quiero en ninguna parte del sitio.
+
+Quiero que hagas lo siguiente:
+
+Analizá la captura que te adjunto y usala como referencia del problema.
+
+Abrí la app en modo desarrollo y simulá un móvil (por ejemplo 360x640).
+
+Recorre TODAS estas vistas:
+
+Home
+
+Listado de proyectos
+
+Detalle de proyecto (las páginas que se abren con “Ver más”)
+
+Cualquier otra página pública que use el layout principal
+
+Objetivo global
+
+En ningún lugar de la web debe existir scroll horizontal.
+Solo se debe poder hacer scroll vertical.
+
+El ancho de la web en móvil debe ser exactamente el del dispositivo.
+
+La imagen principal en los proyectos debe ocupar el ancho correcto y el contenido debe apilarse debajo.
+
+El navbar completo (logo, modo oscuro, menú hamburguesa) debe verse siempre dentro del ancho de pantalla, sin quedar cortado.
+
+Qué quiero que hagas
+
+Localizá qué contenedores, imágenes, grids o estilos están generando overflow horizontal (por ejemplo width: 100vw mal usado, paddings, márgenes negativos, etc.).
+
+Corregí esos estilos y clases para que:
+
+Todos los elementos respeten max-width: 100% en móvil.
+
+Las imágenes ocupen el ancho disponible sin salirse del viewport.
+
+El navbar y sus botones se mantengan siempre visibles dentro del ancho del dispositivo.
+
+Aplicá estos ajustes en toda la estructura de la app, no solo en una pantalla:
+
+Layout principal
+
+Páginas de detalle
+
+Cualquier sección que pueda causar desbordes
+
+Reglas
+
+No modifiques la lógica de negocio ni las rutas.
+
+No me devuelvas bloques de código para copiar/pegar: aplicá los cambios directamente en los archivos necesarios.
+
+Solo como último recurso podés usar overflow-x: hidden en el contenedor raíz, pero primero quiero que soluciones las causas reales del desborde.
+
+Al finalizar
+
+Confirmá qué archivos tocaste.
+
+Confirmá que en móvil:
+
+Ya no se puede desplazar la pantalla hacia los costados en ninguna vista.
+
+El navbar, la imagen y el contenido se ven apilados verticalmente y ocupando todo el ancho del teléfono.

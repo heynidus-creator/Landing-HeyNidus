@@ -96,7 +96,7 @@ const ProjectDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 dark:bg-slate-900">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 dark:bg-slate-900 overflow-x-hidden">
       {/* Imagen Principal */}
       <div className="w-full h-48 sm:h-64 md:h-96 bg-slate-200 overflow-hidden">
         <img
@@ -108,7 +108,7 @@ const ProjectDetail = () => {
       </div>
 
       {/* Contenido */}
-      <div className="mx-auto max-w-6xl px-3 sm:px-4 w-full py-6 sm:py-12">
+      <div className="mx-auto max-w-6xl px-3 sm:px-4 w-full py-6 sm:py-12 overflow-x-hidden">
         {/* Header */}
         <div className="mb-6 sm:mb-12">
           <div className="flex items-center gap-3 mb-3 flex-wrap">
