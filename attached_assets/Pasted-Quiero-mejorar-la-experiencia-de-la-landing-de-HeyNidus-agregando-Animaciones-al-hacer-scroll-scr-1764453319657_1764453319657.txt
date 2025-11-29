@@ -1,0 +1,149 @@
+Quiero mejorar la experiencia de la landing de HeyNidus agregando:
+
+Animaciones al hacer scroll (scroll-based animations).
+
+Un sistema de “scroll spy” en el navbar para marcar en qué sección estoy.
+
+La landing es de página única (single-page) con estas secciones principales:
+
+Inicio
+
+Quiénes Somos
+
+Proyectos
+
+Blog
+
+Testimonios
+
+Contacto
+
+Cada una funciona como “capítulo” y se accede desde el navbar o haciendo scroll (mouse/ruedita o deslizando en móvil).
+
+1) Scroll spy: navbar marcando la sección activa
+
+Objetivo:
+
+Según la sección visible en pantalla, el navbar debe marcar claramente en cuál estoy.
+
+Debe funcionar tanto:
+
+Cuando scrolléo manualmente.
+
+Como cuando hago clic en un ítem del navbar.
+
+Requisitos:
+
+Añade IDs claros a las secciones si no existen (ej: section="home", section="about", section="projects", section="blog", section="testimonials", section="contact").
+
+Implementa un sistema tipo “scroll spy” usando IntersectionObserver o una solución eficiente equivalente (no uses window.onscroll con listeners pesados si se puede evitar).
+
+Mantén un estado global o en el componente principal que indique activeSection.
+
+Pasa activeSection al Navbar para que:
+
+Resalte el ítem correspondiente (color, subrayado, bolita, fondo, lo que ya tengas en el diseño).
+
+En mobile (menú hamburguesa) también se marque la sección activa.
+
+Cuando el usuario hace clic en un ítem del navbar:
+
+Haz scroll suave hacia la sección (usa scrollIntoView o similar con behavior: "smooth").
+
+Actualiza el activeSection para que el highlight sea consistente.
+
+2) Smooth scroll general
+
+Asegúrate de que todo el sitio tenga scroll suave:
+
+Si es apropiado, puedes habilitarlo con CSS (scroll-behavior: smooth) en el contenedor adecuado.
+
+O manejarlo en las funciones de navegación del navbar.
+
+Debe funcionar bien en desktop y móvil.
+
+3) Animaciones de entrada al hacer scroll (efecto tecnológico / moderno)
+
+Quiero que la página tenga una sensación más tecnológica e innovadora, sin exagerar.
+
+Requisitos:
+
+Usa el stack actual del proyecto (React + TypeScript + Tailwind).
+Si el proyecto ya tiene una librería de animaciones (por ejemplo Framer Motion), úsala.
+Si no, puedes usar:
+
+Clases de Tailwind (transition, duration, opacity, translate, etc.).
+
+Keyframes definidos en index.css o donde corresponda.
+
+Implementa un sistema reutilizable, por ejemplo:
+
+Un hook tipo useInViewAnimation.
+
+O un componente AnimatedSection / AnimatedBlock que:
+
+Observe cuándo un elemento entra en el viewport.
+
+Le agregue clases de animación (ej: fade-in-up, slide-in, etc.).
+
+Aplica animaciones sutiles a los bloques importantes, por ejemplo:
+
+Hero (título, subtítulo, botones).
+
+Cards de Proyectos.
+
+Bloques de “Quiénes Somos”.
+
+Testimonios.
+
+CTA de contacto o formularios.
+
+Estilo de animaciones:
+
+Entrada suave: opacity de 0 a 1, translateY de 20–40px a 0, o ligeros slides laterales.
+
+Duración entre 300ms y 700ms aprox.
+
+Usar ease-out / ease-in-out para sensación fluida.
+
+No animes absolutamente todo para no marear:
+
+Deja elementos estáticos donde tenga sentido.
+
+Prioriza secciones que aparecen al scrollear.
+
+4) Accesibilidad y rendimiento
+
+Respeta dark/light mode y diseño responsive actual (no rompas nada de eso).
+
+Minimiza trabajo en el hilo principal:
+
+IntersectionObserver en lugar de muchos listeners de scroll.
+
+No hagas animaciones infinitas pesadas.
+
+Considera la preferencia de “reducir movimiento” del sistema (prefers-reduced-motion) si es fácil integrar.
+
+5) Entrega y resumen
+
+Al terminar:
+
+Indícame:
+
+Qué archivos nuevos creaste (por ejemplo hooks o componentes de animación).
+
+Qué archivos existentes modificaste (Navbar, layout principal, secciones, etc.).
+
+Describe brevemente:
+
+Cómo funciona el sistema de scroll spy.
+
+Cómo se usan los componentes / hooks de animación por si quiero reutilizarlos en otras partes.
+
+Verifica tú mismo:
+
+Que el ítem correcto del navbar se marca al scrollear y al hacer clic.
+
+Que las animaciones se disparan correctamente al entrar cada sección, tanto en desktop como en móvil.
+
+Que no hay nuevos problemas de scroll horizontal o recortes de contenido.
