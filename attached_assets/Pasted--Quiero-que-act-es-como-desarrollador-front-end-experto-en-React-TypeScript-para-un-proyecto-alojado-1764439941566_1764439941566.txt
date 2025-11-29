@@ -1,0 +1,81 @@
+
+Quiero que actúes como desarrollador front-end experto en React/TypeScript para un proyecto alojado en Replit.
+Tu tarea es modificar el código existente sin romper la arquitectura actual (rutas, hooks, contexto, autenticación, etc.).
+
+A partir de ahora, todas las pantallas y componentes que toques o crees deben cumplir estas reglas generales:
+
+Logo en el Navbar como botón a HOME
+
+Si el proyecto tiene navbar con logo de la empresa/marca:
+
+El logo debe ser un botón/enlace que lleve a la vista principal / Home.
+
+El logo debe aparecer en todas las pantallas internas de la app.
+
+Excepción: en pantallas de autenticación (/login, /register, /signup, /auth/*) NO debe ir como botón a Home. Ahí puede mostrarse estático o no mostrarse, pero el usuario todavía “no entró” a la app.
+
+Botón flotante “volver arriba”
+
+Agrega un botón flotante en la esquina inferior derecha de la pantalla.
+
+Debe respetar la paleta de colores del proyecto (usa los colores principales ya definidos en Tailwind/CSS).
+
+Funcionalidad:
+
+Solo debe ser visible cuando el usuario no está en lo más alto de la página (por ejemplo, cuando window.scrollY > 50).
+
+Al hacer clic, debe hacer scroll suave hasta el tope de la página.
+
+Estética:
+
+Diseño redondeado, limpio, moderno.
+
+Si es posible, agrega un pequeño efecto bonito (por ejemplo: sombra suave, hover con leve escala, transición suave de opacidad/aparición).
+
+Modo oscuro (dark mode)
+
+Implementa dark mode en toda la app de forma consistente.
+
+Reglas:
+
+Detectar el tema del sistema si es posible (prefers-color-scheme).
+
+Agregar un toggle de tema (ícono de sol/luna) en el navbar o en un lugar visible.
+
+Guardar la preferencia del usuario en localStorage (por ejemplo, theme = "light" | "dark") para que recuerde el modo al recargar.
+
+Usa las clases o el sistema que ya tenga el proyecto (por ejemplo, class="dark" en <html> o en <body>, o el mecanismo que veas en el código actual).
+
+Diseño totalmente responsive
+
+Asegúrate de que el diseño funcione muy bien en:
+
+Móviles (ancho ~360–430 px)
+
+Tablets (ancho ~768–1024 px)
+
+Desktop
+
+Ajusta layouts con Flex/Grid y breakpoints (por ejemplo sm, md, lg, xl) para:
+
+Navegación clara en móvil (menús colapsables si hace falta).
+
+Tipografías legibles.
+
+Botones suficientemente grandes y cómodos para tocar con el dedo.
+
+Estilo y mantenimiento del código
+
+Respeta el stack actual del proyecto (React, TypeScript, Tailwind, etc.).
+
+No borres lógica de negocio ni endpoints; solo mejora la experiencia visual y de interacción.
+
+Donde sea posible, encapsula la nueva lógica en componentes reutilizables (BackToTopButton, ThemeToggle, etc.).
+
+Si necesitas crear nuevos archivos, indícame:
+
+Ruta del archivo (por ejemplo: src/components/BackToTopButton.tsx)
+
+Código completo del archivo.
+
+Cuando modifiques componentes existentes, devuelve siempre el código completo del archivo actualizado, listo para copiar y pegar.
