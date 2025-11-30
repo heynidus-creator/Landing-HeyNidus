@@ -22,11 +22,16 @@ body {
   padding: 0;
 }
 
+/* =========================
+   Fades básicos
+   ========================= */
+
 @keyframes fade-in {
   from {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -37,12 +42,14 @@ body {
   animation: fade-in 0.3s ease-in-out;
 }
 
-/* Scroll-based animations */
+/* Scroll-based animations clásicas (las dejamos por si las usás en otros lados) */
+
 @keyframes fade-in-up {
   from {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -54,6 +61,7 @@ body {
     opacity: 0;
     transform: translateY(-30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -65,6 +73,7 @@ body {
     opacity: 0;
     transform: translateX(-30px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -76,6 +85,7 @@ body {
     opacity: 0;
     transform: translateX(30px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -87,6 +97,7 @@ body {
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -119,8 +130,93 @@ body {
 }
 
 /* Stagger delays */
-.stagger-1 { animation-delay: 0.1s; }
-.stagger-2 { animation-delay: 0.2s; }
-.stagger-3 { animation-delay: 0.3s; }
-.stagger-4 { animation-delay: 0.4s; }
-.stagger-5 { animation-delay: 0.5s; }
+.stagger-1 {
+  animation-delay: 0.1s;
+}
+
+.stagger-2 {
+  animation-delay: 0.2s;
+}
+
+.stagger-3 {
+  animation-delay: 0.3s;
+}
+
+.stagger-4 {
+  animation-delay: 0.4s;
+}
+
+.stagger-5 {
+  animation-delay: 0.5s;
+}
+
+/* =========================
+   Slide + Rotate horizontal (inspirado en Animista)
+   ========================= */
+
+/* Bajando: la tarjeta viene desde arriba y rota levemente hacia vos */
+@keyframes slide-rotate-down {
+  0% {
+    opacity: 0;
+    transform:
+      perspective(1200px) translateY(-70px) rotateX(8deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform:
+      perspective(1200px) translateY(0) rotateX(0deg);
+  }
+}
+
+/* Subiendo: la tarjeta viene desde abajo y rota en sentido inverso */
+@keyframes slide-rotate-up {
+  0% {
+    opacity: 0;
+    transform:
+      perspective(1200px) translateY(70px) rotateX(-8deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform:
+      perspective(1200px) translateY(0) rotateX(0deg);
+  }
+}
+
+/* Clases que usaremos desde React */
+
+.slide-rotate-in-down,
+.slide-rotate-in-up {
+  transform-origin: center center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.slide-rotate-in-down {
+  animation: slide-rotate-down 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.slide-rotate-in-up {
+  animation: slide-rotate-up 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+/* =========================
+   Respeto a usuarios con reduce-motion
+   ========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .slide-rotate-in-down,
+  .slide-rotate-in-up,
+  .animate-fade-in,
+  .animate-fade-in-up,
+  .animate-fade-in-down,
+  .animate-fade-in-left,
+  .animate-fade-in-right,
+  .animate-scale-in {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

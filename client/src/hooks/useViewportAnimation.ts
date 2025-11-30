@@ -1,39 +1,42 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from "react";
 
-interface UseViewportAnimationOptions extends IntersectionObserverInit {
-  onEnter?: () => void;
-  onExit?: () => void;
-}
-
-export const useViewportAnimation = (options?: UseViewportAnimationOptions) => {
-  const ref = useRef<HTMLDivElement>(null);
+/**
+ * Detecta cuándo una sección entra / sale del viewport.
+ * - ref: se asigna al contenedor de la sección
+ * - isInView: true si la sección está visible
+ * - triggerId: se incrementa cada vez que VUELVE a entrar, para reiniciar animaciones
+ */
+export const useViewportAnimation = () => {
+  const ref = useRef<HTMLDivElement | null>(null);
   const [isInView, setIsInView] = useState(false);
-  const { onEnter, onExit, ...observerOptions } = options || {};
+  const [triggerId, setTriggerId] = useState(0);
 
   useEffect(() => {
-    const config: IntersectionObserverInit = {
-      threshold: 0.1,
-      ...observerOptions,
-    };
+    const el = ref.current;
+    if (!el) return;
 
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIsInView(true);
-        onEnter?.();
-      } else {
-        setIsInView(false);
-        onExit?.();
-      }
-    }, config);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.target !== el) return;
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+          if (entry.isIntersecting) {
+            setIsInView(true);
+            // Cada vez que entra de nuevo al viewport, subimos el contador
+            setTriggerId((prev) => prev + 1);
+          } else {
+            setIsInView(false);
+          }
+        });
+      },
+      {
+        threshold: 0.35, // con ~35% visible ya cuenta como "en vista"
+      },
+    );
 
-    return () => {
-      observer.disconnect();
-    };
-  }, [onEnter, onExit, observerOptions]);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
-  return { ref, isInView };
+  return { ref, isInView, triggerId };
 };
