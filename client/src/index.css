@@ -23,7 +23,7 @@ body {
 }
 
 /* =========================
-   Fades básicos
+   Fades básicos (por si los usás en otros lados)
    ========================= */
 
 @keyframes fade-in {
@@ -41,8 +41,6 @@ body {
 .animate-fade-in {
   animation: fade-in 0.3s ease-in-out;
 }
-
-/* Scroll-based animations clásicas (las dejamos por si las usás en otros lados) */
 
 @keyframes fade-in-up {
   from {
@@ -129,7 +127,7 @@ body {
   opacity: 0;
 }
 
-/* Stagger delays */
+/* Stagger delays opcionales */
 .stagger-1 {
   animation-delay: 0.1s;
 }
@@ -150,65 +148,62 @@ body {
   animation-delay: 0.5s;
 }
 
-/* =========================
-   Slide + Rotate horizontal (inspirado en Animista)
-   ========================= */
+/* ===================================================
+   EFECTO TARJETA: SLIDE + ROTATE (inspirado en Animista)
+   =================================================== */
 
-/* Bajando: la tarjeta viene desde arriba y rota levemente hacia vos */
-@keyframes slide-rotate-down {
+@keyframes section-slide-rotate-down {
   0% {
     opacity: 0;
-    transform:
-      perspective(1200px) translateY(-70px) rotateX(8deg);
+    transform: perspective(1200px) translateY(-40px) rotateX(10deg);
   }
 
   100% {
     opacity: 1;
-    transform:
-      perspective(1200px) translateY(0) rotateX(0deg);
+    transform: perspective(1200px) translateY(0) rotateX(0deg);
   }
 }
 
-/* Subiendo: la tarjeta viene desde abajo y rota en sentido inverso */
-@keyframes slide-rotate-up {
+@keyframes section-slide-rotate-up {
   0% {
     opacity: 0;
-    transform:
-      perspective(1200px) translateY(70px) rotateX(-8deg);
+    transform: perspective(1200px) translateY(40px) rotateX(-10deg);
   }
 
   100% {
     opacity: 1;
-    transform:
-      perspective(1200px) translateY(0) rotateX(0deg);
+    transform: perspective(1200px) translateY(0) rotateX(0deg);
   }
 }
 
-/* Clases que usaremos desde React */
-
-.slide-rotate-in-down,
-.slide-rotate-in-up {
+/* Clase base para las secciones animadas */
+.section-anim-base {
   transform-origin: center center;
+  transform-style: preserve-3d;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  will-change: transform, opacity;
 }
 
-.slide-rotate-in-down {
-  animation: slide-rotate-down 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+/* Scroll hacia ABAJO */
+.section-anim-down {
+  animation: section-slide-rotate-down 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
-.slide-rotate-in-up {
-  animation: slide-rotate-up 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+/* Scroll hacia ARRIBA */
+.section-anim-up {
+  animation: section-slide-rotate-up 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
-/* =========================
+/* ===================================================
    Respeto a usuarios con reduce-motion
-   ========================= */
+   =================================================== */
 
 @media (prefers-reduced-motion: reduce) {
 
-  .slide-rotate-in-down,
-  .slide-rotate-in-up,
+  .section-anim-base,
+  .section-anim-down,
+  .section-anim-up,
   .animate-fade-in,
   .animate-fade-in-up,
   .animate-fade-in-down,

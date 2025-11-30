@@ -1,35 +1,23 @@
 import { useEffect, useRef } from "react";
 
-type ScrollDirection = "up" | "down" | null;
-
 /**
- * Hook global y liviano para saber si el usuario está scrolleando
- * hacia ARRIBA o hacia ABAJO.
- *
- * - Devuelve un ref con el valor actual:
- *   ref.current === "up"   | "down" | null
+ * Devuelve un ref con la última dirección de scroll:
+ * 'down' | 'up' | 'none'
  */
 export const useScrollDirection = () => {
-  const directionRef = useRef<ScrollDirection>(null);
-  const lastScrollYRef = useRef<number>(0);
+  const directionRef = useRef<"down" | "up" | "none">("none");
+  const lastScrollYRef = useRef<number>(window.scrollY || 0);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    lastScrollYRef.current = window.scrollY;
-
     const handleScroll = () => {
-      const currentY = window.scrollY;
-      const lastY = lastScrollYRef.current;
+      const currentY = window.scrollY || 0;
+      const diff = currentY - lastScrollYRef.current;
 
-      const delta = currentY - lastY;
+      if (Math.abs(diff) < 2) return; // ruido pequeño, lo ignoramos
 
-      // pequeño umbral para evitar ruido
-      if (Math.abs(delta) < 2) return;
-
-      if (delta > 0) {
+      if (diff > 0) {
         directionRef.current = "down";
-      } else if (delta < 0) {
+      } else if (diff < 0) {
         directionRef.current = "up";
       }
 

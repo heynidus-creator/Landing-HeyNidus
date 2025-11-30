@@ -1,15 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Detecta cuándo una sección entra / sale del viewport.
- * - ref: se asigna al contenedor de la sección
- * - isInView: true si la sección está visible
- * - triggerId: se incrementa cada vez que VUELVE a entrar, para reiniciar animaciones
+ * Detecta si la sección está "bien dentro" del viewport.
+ * Lo usamos para disparar la animación cada vez que entra
+ * y la reseteamos cuando sale.
  */
 export const useViewportAnimation = () => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [isInView, setIsInView] = useState(false);
-  const [triggerId, setTriggerId] = useState(0);
 
   useEffect(() => {
     const el = ref.current;
@@ -18,19 +16,13 @@ export const useViewportAnimation = () => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.target !== el) return;
-
-          if (entry.isIntersecting) {
-            setIsInView(true);
-            // Cada vez que entra de nuevo al viewport, subimos el contador
-            setTriggerId((prev) => prev + 1);
-          } else {
-            setIsInView(false);
-          }
+          // Consideramos "en vista" cuando al menos ~35% de la tarjeta es visible
+          const visible = entry.intersectionRatio >= 0.35;
+          setIsInView(visible);
         });
       },
       {
-        threshold: 0.35, // con ~35% visible ya cuenta como "en vista"
+        threshold: [0, 0.35, 1],
       },
     );
 
@@ -38,5 +30,5 @@ export const useViewportAnimation = () => {
     return () => observer.disconnect();
   }, []);
 
-  return { ref, isInView, triggerId };
+  return { ref, isInView };
 };

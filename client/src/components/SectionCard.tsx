@@ -18,28 +18,40 @@ export const SectionCard = ({
   const [animationClass, setAnimationClass] = useState<string>("");
 
   useEffect(() => {
-    if (isInView) {
-      const direction = scrollDirectionRef.current;
-
-      if (direction === "down") {
-        // Scroll hacia abajo → entra desde arriba con slide + rotate
-        setAnimationClass("slide-rotate-in-down");
-      } else if (direction === "up") {
-        // Scroll hacia arriba → entra desde abajo con slide + rotate inverso
-        setAnimationClass("slide-rotate-in-up");
-      } else {
-        // Primer render / sin dirección clara → usamos el efecto “down” por defecto
-        setAnimationClass("slide-rotate-in-down");
-      }
-    } else {
-      // Cuando sale de vista, reseteamos la clase para que la animación
-      // vuelva a ejecutarse la próxima vez que entre al viewport
+    // Si la tarjeta NO está en vista → reseteamos animación
+    if (!isInView) {
       setAnimationClass("");
+      return;
+    }
+
+    const direction = scrollDirectionRef.current;
+
+    // Al cargar la página todavía no hay dirección de scroll:
+    // no animamos el primer render (Hero quieto al entrar).
+    if (direction === "none") {
+      setAnimationClass("");
+      return;
+    }
+
+    // Si venís bajando → animación desde arriba
+    if (direction === "down") {
+      setAnimationClass("section-anim-down");
+      return;
+    }
+
+    // Si venís subiendo → animación invertida
+    if (direction === "up") {
+      setAnimationClass("section-anim-up");
+      return;
     }
   }, [isInView, scrollDirectionRef]);
 
   return (
-    <div ref={ref} id={id} className={`${animationClass} ${className}`}>
+    <div
+      ref={ref}
+      id={id}
+      className={`section-anim-base ${animationClass} ${className}`}
+    >
       {children}
     </div>
   );
