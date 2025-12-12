@@ -9,6 +9,8 @@ import Footer from "./components/Footer.tsx";
 import BackToTopButton from "./components/BackToTopButton.tsx";
 import ProjectDetail from "./pages/ProjectDetail.tsx";
 import NotFound from "./pages/not-found.tsx";
+import AdminLogin from "./pages/admin/Login.tsx";
+import AdminDashboard from "./pages/admin/Dashboard.tsx";
 
 const Blog = lazy(() => import("./components/Blog.tsx"));
 const Testimonials = lazy(() => import("./components/Testimonials.tsx"));
@@ -51,14 +53,21 @@ function HomePage() {
 function App() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
-      <Navbar />
       <Switch>
-        <Route path="/" component={HomePage} />
-        <Route path="/proyecto/:id" component={ProjectDetail} />
-        <Route component={NotFound} />
+        <Route path="/admin/login" component={AdminLogin} />
+        <Route path="/admin" component={AdminDashboard} />
+        <Route>
+          {/* Landing layout */}
+          <Navbar />
+          <Switch>
+            <Route path="/" component={HomePage} />
+            <Route path="/proyecto/:id" component={ProjectDetail} />
+            <Route component={NotFound} />
+          </Switch>
+          <BackToTopButton />
+          <Footer />
+        </Route>
       </Switch>
-      <BackToTopButton />
-      <Footer />
     </div>
   );
 }
