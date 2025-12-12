@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useLocation } from 'wouter';
-import heynidusLogo from '@assets/heynidus-logo.png';
+import { Bird } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import { useScrollSpy } from '../hooks/useScrollSpy';
 
@@ -55,10 +55,11 @@ const Navbar = () => {
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-3 sm:px-4 py-3 w-full">
         <button 
           onClick={handleLogoClick}
-          className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer bg-none border-none p-0 flex-shrink-0"
+          className="flex items-center gap-1.5 hover:opacity-80 transition-opacity cursor-pointer bg-none border-none p-0 flex-shrink-0 group"
           data-testid="button-logo"
         >
-          <img src={heynidusLogo} alt="HeyNidus" className="w-8 sm:w-10 h-auto" data-testid="img-heynidus-logo" />
+          <Bird className="w-5 sm:w-6 h-5 sm:h-6 text-emerald-700 dark:text-emerald-400 group-hover:text-emerald-800 dark:group-hover:text-emerald-300 transition-colors" data-testid="icon-bird-logo" />
+          <span className="text-lg sm:text-xl font-semibold tracking-tight text-emerald-700 dark:text-emerald-400 group-hover:text-emerald-800 dark:group-hover:text-emerald-300 transition-colors">HeyNidus</span>
         </button>
 
         {/* Desktop */}
