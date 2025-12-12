@@ -3,10 +3,11 @@ import { createServer, type Server } from "http";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
-import { insertProjectSchema, insertBlogPostSchema, type Project, type BlogPost } from "@shared/schema";
+import { insertProjectSchema, insertBlogPostSchema, insertTestimonialSchema, type Project, type BlogPost, type Testimonial } from "@shared/schema";
 
 const PROJECTS_FILE = path.join(process.cwd(), "server/data/projects.json");
 const BLOG_FILE = path.join(process.cwd(), "server/data/blog.json");
+const TESTIMONIALS_FILE = path.join(process.cwd(), "server/data/testimonials.json");
 const UPLOADS_DIR = path.join(process.cwd(), "client/public/uploads");
 
 // Ensure uploads directory exists
@@ -65,6 +66,19 @@ function readBlogPosts(): BlogPost[] {
 
 function writeBlogPosts(posts: BlogPost[]): void {
   fs.writeFileSync(BLOG_FILE, JSON.stringify(posts, null, 2));
+}
+
+function readTestimonials(): Testimonial[] {
+  try {
+    const data = fs.readFileSync(TESTIMONIALS_FILE, "utf-8");
+    return JSON.parse(data);
+  } catch {
+    return [];
+  }
+}
+
+function writeTestimonials(testimonials: Testimonial[]): void {
+  fs.writeFileSync(TESTIMONIALS_FILE, JSON.stringify(testimonials, null, 2));
 }
 
 function generateId(): string {
@@ -510,6 +524,158 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error deleting blog post:", error);
       res.status(500).json({ error: "Error al eliminar post" });
+    }
+  });
+
+  // ==================== TESTIMONIALS ENDPOINTS ====================
+
+  // Public: solo aprobados
+  app.get("/api/testimonials/list", (req, res) => {
+    try {
+      const testimonials = readTestimonials();
+      const approved = testimonials.filter((t) => t.aprobado);
+      res.json(approved);
+    } catch (error) {
+      res.status(500).json({ error: "Error al leer testimonios" });
+    }
+  });
+
+  // Admin: ver todos
+  app.get("/api/testimonials/list-admin", requireAdmin, (req, res) => {
+    try {
+      const testimonials = readTestimonials();
+      res.json(testimonials);
+    } catch (error) {
+      res.status(500).json({ error: "Error al leer testimonios" });
+    }
+  });
+
+  // Crear testimonio (con imagen opcional)
+  app.post(
+    "/api/testimonials/create",
+    requireAdmin,
+    upload.single("imagen"),
+    (req, res) => {
+      try {
+        const body = req.body;
+        
+        const validation = insertTestimonialSchema.safeParse({
+          autor: body.autor,
+          rol: body.rol || "",
+          contenido: body.contenido,
+          aprobado: body.aprobado === "true" || body.aprobado === true,
+        });
+
+        if (!validation.success) {
+          return res.status(400).json({ error: validation.error.errors });
+        }
+
+        const file = req.file;
+        const imagen = file ? `/uploads/${file.filename}` : "";
+
+        const testimonials = readTestimonials();
+        const newTestimonial: Testimonial = {
+          id: generateId(),
+          autor: validation.data.autor,
+          rol: validation.data.rol || "",
+          contenido: validation.data.contenido,
+          imagen,
+          fecha: new Date().toISOString().split("T")[0],
+          aprobado: validation.data.aprobado ?? false,
+          updatedAt: new Date().toISOString(),
+        };
+
+        testimonials.unshift(newTestimonial);
+        writeTestimonials(testimonials);
+
+        res.status(201).json(newTestimonial);
+      } catch (error) {
+        console.error("Error creating testimonial:", error);
+        res.status(500).json({ error: "Error al crear testimonio" });
+      }
+    }
+  );
+
+  // Actualizar testimonio
+  app.put(
+    "/api/testimonials/update/:id",
+    requireAdmin,
+    upload.single("imagen"),
+    (req, res) => {
+      try {
+        const testimonials = readTestimonials();
+        const index = testimonials.findIndex((t) => t.id === req.params.id);
+
+        if (index === -1) {
+          return res.status(404).json({ error: "Testimonio no encontrado" });
+        }
+
+        const body = req.body;
+        const oldTestimonial = testimonials[index];
+        const file = req.file;
+
+        let imagen = oldTestimonial.imagen;
+        if (file) {
+          // Delete old image if it's an upload
+          if (oldTestimonial.imagen.startsWith("/uploads/")) {
+            const oldPath = path.join(process.cwd(), "client/public", oldTestimonial.imagen);
+            if (fs.existsSync(oldPath)) {
+              fs.unlinkSync(oldPath);
+            }
+          }
+          imagen = `/uploads/${file.filename}`;
+        } else if (body.existingImagen) {
+          imagen = body.existingImagen;
+        }
+
+        const updatedTestimonial: Testimonial = {
+          ...oldTestimonial,
+          autor: body.autor ?? oldTestimonial.autor,
+          rol: body.rol ?? oldTestimonial.rol,
+          contenido: body.contenido ?? oldTestimonial.contenido,
+          imagen,
+          aprobado: body.aprobado === "true" || body.aprobado === true,
+          updatedAt: new Date().toISOString(),
+        };
+
+        testimonials[index] = updatedTestimonial;
+        writeTestimonials(testimonials);
+
+        res.json(updatedTestimonial);
+      } catch (error) {
+        console.error("Error updating testimonial:", error);
+        res.status(500).json({ error: "Error al actualizar testimonio" });
+      }
+    }
+  );
+
+  // Eliminar testimonio
+  app.delete("/api/testimonials/delete/:id", requireAdmin, (req, res) => {
+    try {
+      const testimonials = readTestimonials();
+      const index = testimonials.findIndex((t) => t.id === req.params.id);
+
+      if (index === -1) {
+        return res.status(404).json({ error: "Testimonio no encontrado" });
+      }
+
+      const testimonial = testimonials[index];
+
+      // Delete image if it's an upload
+      if (testimonial.imagen.startsWith("/uploads/")) {
+        const fullPath = path.join(process.cwd(), "client/public", testimonial.imagen);
+        if (fs.existsSync(fullPath)) {
+          fs.unlinkSync(fullPath);
+        }
+      }
+
+      testimonials.splice(index, 1);
+      writeTestimonials(testimonials);
+
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error deleting testimonial:", error);
+      res.status(500).json({ error: "Error al eliminar testimonio" });
     }
   });
 

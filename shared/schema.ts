@@ -86,3 +86,24 @@ export const insertBlogPostSchema = z.object({
 });
 
 export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;
+
+// Testimonial types for JSON storage
+export interface Testimonial {
+  id: string;
+  autor: string;
+  rol: string;
+  contenido: string;
+  imagen: string;
+  fecha: string;
+  aprobado: boolean;
+  updatedAt: string;
+}
+
+export const insertTestimonialSchema = z.object({
+  autor: z.string().min(1, "Autor requerido"),
+  rol: z.string().optional().default(""),
+  contenido: z.string().min(1, "Contenido requerido"),
+  aprobado: z.boolean().optional().default(false),
+});
+
+export type InsertTestimonial = z.infer<typeof insertTestimonialSchema>;

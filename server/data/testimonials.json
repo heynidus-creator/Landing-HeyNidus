@@ -1,0 +1,102 @@
+[
+  {
+    "id": "t1",
+    "autor": "María & Joaquín",
+    "rol": "Familia joven",
+    "contenido": "Encontramos el equilibrio perfecto entre tranquilidad y crecimiento. Es un proyecto pensado para vivir bien, con espacios verdes y una planificación clara.",
+    "imagen": "attached_assets/generated_images/argentine_couple_casual_natural.png",
+    "fecha": "2025-11-01",
+    "aprobado": true,
+    "updatedAt": "2025-12-12T00:00:00.000Z"
+  },
+  {
+    "id": "t2",
+    "autor": "Sofía & Martín",
+    "rol": "Primera inversión",
+    "contenido": "Buscábamos nuestro primer lote y queríamos algo seguro y transparente. El proceso fue sencillo, la atención excelente y el proyecto tiene un potencial enorme.",
+    "imagen": "attached_assets/generated_images/latina_woman_buenos_aires.png",
+    "fecha": "2025-10-25",
+    "aprobado": true,
+    "updatedAt": "2025-12-12T00:00:00.000Z"
+  },
+  {
+    "id": "t3",
+    "autor": "Diego",
+    "rol": "Ingeniero",
+    "contenido": "Me convenció la ubicación y la proyección de la zona. Es una oportunidad real de invertir donde todavía hay margen de crecimiento, pero con un plan serio detrás.",
+    "imagen": "attached_assets/generated_images/argentine_man_casual.png",
+    "fecha": "2025-10-20",
+    "aprobado": true,
+    "updatedAt": "2025-12-12T00:00:00.000Z"
+  },
+  {
+    "id": "t4",
+    "autor": "Laura",
+    "rol": "Arquitecta",
+    "contenido": "Lo que más me llamó la atención fue el orden del master plan: calles amplias, lotes bien distribuidos y una visión urbana responsable. Da confianza.",
+    "imagen": "attached_assets/generated_images/latina_woman_home_setting.png",
+    "fecha": "2025-10-15",
+    "aprobado": true,
+    "updatedAt": "2025-12-12T00:00:00.000Z"
+  },
+  {
+    "id": "t5",
+    "autor": "Familia Rodríguez",
+    "rol": "Familia que busca mudarse",
+    "contenido": "Queríamos un lugar más tranquilo y seguro para nuestros hijos. Nos gustó el entorno, los accesos y la comunidad que se está formando.",
+    "imagen": "attached_assets/generated_images/argentine_family_outdoor.png",
+    "fecha": "2025-10-10",
+    "aprobado": true,
+    "updatedAt": "2025-12-12T00:00:00.000Z"
+  },
+  {
+    "id": "t6",
+    "autor": "Pablo",
+    "rol": "Inversor",
+    "contenido": "Vengo comprando terrenos hace años y este desarrollo destaca por su calidad y su proyección. Tiene un excelente potencial de revalorización a mediano plazo.",
+    "imagen": "attached_assets/generated_images/mature_latino_man.png",
+    "fecha": "2025-10-05",
+    "aprobado": true,
+    "updatedAt": "2025-12-12T00:00:00.000Z"
+  },
+  {
+    "id": "t7",
+    "autor": "Carolina",
+    "rol": "Orientada al bienestar",
+    "contenido": "Se siente diferente. Hay verde, amplitud y una armonía que no se encuentra en cualquier barrio. Ideal para desconectarse y vivir con más calma.",
+    "imagen": "attached_assets/generated_images/latina_woman_outdoor_natural.png",
+    "fecha": "2025-09-30",
+    "aprobado": true,
+    "updatedAt": "2025-12-12T00:00:00.000Z"
+  },
+  {
+    "id": "t8",
+    "autor": "Gustavo",
+    "rol": "Enfocado en seguridad",
+    "contenido": "Lo que más valoro es la tranquilidad. El proyecto plantea estándares altos de seguridad y una comunidad organizada. Eso fue clave para tomar la decisión.",
+    "imagen": "attached_assets/generated_images/latino_man_friendly_casual.png",
+    "fecha": "2025-09-25",
+    "aprobado": true,
+    "updatedAt": "2025-12-12T00:00:00.000Z"
+  },
+  {
+    "id": "t9",
+    "autor": "Rodrigo",
+    "rol": "Comprador racional",
+    "contenido": "Comparamos varios proyectos y este fue el más coherente en precio, ubicación y desarrollo. No solo es comprar un terreno, es proyectar futuro con bases sólidas.",
+    "imagen": "attached_assets/generated_images/argentine_man_urban_casual.png",
+    "fecha": "2025-09-20",
+    "aprobado": true,
+    "updatedAt": "2025-12-12T00:00:00.000Z"
+  },
+  {
+    "id": "t10",
+    "autor": "Ana & Tomás",
+    "rol": "Pareja joven",
+    "contenido": "Queríamos nuestro primer lugar propio y este proyecto nos dio una oportunidad real. Buena financiación, buena atención y un entorno que nos encanta.",
+    "imagen": "attached_assets/generated_images/latino_couple_buenos_aires.png",
+    "fecha": "2025-09-15",
+    "aprobado": true,
+    "updatedAt": "2025-12-12T00:00:00.000Z"
+  }
+]
