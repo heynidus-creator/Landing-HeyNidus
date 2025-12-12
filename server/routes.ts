@@ -3,9 +3,10 @@ import { createServer, type Server } from "http";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
-import { insertProjectSchema, type Project } from "@shared/schema";
+import { insertProjectSchema, insertBlogPostSchema, type Project, type BlogPost } from "@shared/schema";
 
 const PROJECTS_FILE = path.join(process.cwd(), "server/data/projects.json");
+const BLOG_FILE = path.join(process.cwd(), "server/data/blog.json");
 const UPLOADS_DIR = path.join(process.cwd(), "client/public/uploads");
 
 // Ensure uploads directory exists
@@ -51,6 +52,19 @@ function readProjects(): Project[] {
 
 function writeProjects(projects: Project[]): void {
   fs.writeFileSync(PROJECTS_FILE, JSON.stringify(projects, null, 2));
+}
+
+function readBlogPosts(): BlogPost[] {
+  try {
+    const data = fs.readFileSync(BLOG_FILE, "utf-8");
+    return JSON.parse(data);
+  } catch {
+    return [];
+  }
+}
+
+function writeBlogPosts(posts: BlogPost[]): void {
+  fs.writeFileSync(BLOG_FILE, JSON.stringify(posts, null, 2));
 }
 
 function generateId(): string {
@@ -362,6 +376,140 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error deleting project:", error);
       res.status(500).json({ error: "Error al eliminar proyecto" });
+    }
+  });
+
+  // ==================== BLOG ENDPOINTS ====================
+
+  // Public blog endpoints
+  app.get("/api/blog/list", (req, res) => {
+    try {
+      const posts = readBlogPosts();
+      res.json(posts);
+    } catch (error) {
+      res.status(500).json({ error: "Error al leer posts" });
+    }
+  });
+
+  app.get("/api/blog/:id", (req, res) => {
+    try {
+      const posts = readBlogPosts();
+      const post = posts.find((p) => p.id === req.params.id);
+      if (!post) {
+        return res.status(404).json({ error: "Post no encontrado" });
+      }
+      res.json(post);
+    } catch (error) {
+      res.status(500).json({ error: "Error al leer post" });
+    }
+  });
+
+  // Admin blog endpoints
+  app.post(
+    "/api/blog/create",
+    requireAdmin,
+    upload.array("imagenes", 10),
+    (req, res) => {
+      try {
+        const body = JSON.parse(req.body.data || "{}");
+        const validation = insertBlogPostSchema.safeParse(body);
+
+        if (!validation.success) {
+          return res.status(400).json({ error: validation.error.errors });
+        }
+
+        const files = req.files as Express.Multer.File[];
+        const imagenes = files.map((f) => `uploads/${f.filename}`);
+
+        const posts = readBlogPosts();
+        const newPost: BlogPost = {
+          id: generateId(),
+          titulo: body.titulo,
+          subtitulo: body.subtitulo || "",
+          contenido: body.contenido,
+          fecha: body.fecha || new Date().toISOString(),
+          imagenes,
+          updatedAt: new Date().toISOString(),
+        };
+
+        posts.unshift(newPost);
+        writeBlogPosts(posts);
+
+        res.json(newPost);
+      } catch (error) {
+        console.error("Error creating blog post:", error);
+        res.status(500).json({ error: "Error al crear post" });
+      }
+    }
+  );
+
+  app.put(
+    "/api/blog/update/:id",
+    requireAdmin,
+    upload.array("imagenes", 10),
+    (req, res) => {
+      try {
+        const posts = readBlogPosts();
+        const index = posts.findIndex((p) => p.id === req.params.id);
+
+        if (index === -1) {
+          return res.status(404).json({ error: "Post no encontrado" });
+        }
+
+        const body = JSON.parse(req.body.data || "{}");
+        const oldPost = posts[index];
+
+        const files = req.files as Express.Multer.File[];
+        const newImagenes = files.map((f) => `uploads/${f.filename}`);
+        const existingImagenes = body.existingImagenes || oldPost.imagenes;
+
+        const updatedPost: BlogPost = {
+          ...oldPost,
+          titulo: body.titulo ?? oldPost.titulo,
+          subtitulo: body.subtitulo ?? oldPost.subtitulo,
+          contenido: body.contenido ?? oldPost.contenido,
+          fecha: body.fecha ?? oldPost.fecha,
+          imagenes: [...existingImagenes, ...newImagenes],
+          updatedAt: new Date().toISOString(),
+        };
+
+        posts[index] = updatedPost;
+        writeBlogPosts(posts);
+
+        res.json(updatedPost);
+      } catch (error) {
+        console.error("Error updating blog post:", error);
+        res.status(500).json({ error: "Error al actualizar post" });
+      }
+    }
+  );
+
+  app.delete("/api/blog/delete/:id", requireAdmin, (req, res) => {
+    try {
+      const posts = readBlogPosts();
+      const index = posts.findIndex((p) => p.id === req.params.id);
+
+      if (index === -1) {
+        return res.status(404).json({ error: "Post no encontrado" });
+      }
+
+      const post = posts[index];
+
+      // Delete associated images
+      post.imagenes.forEach((filePath) => {
+        const fullPath = path.join(process.cwd(), "client/public", filePath);
+        if (fs.existsSync(fullPath)) {
+          fs.unlinkSync(fullPath);
+        }
+      });
+
+      posts.splice(index, 1);
+      writeBlogPosts(posts);
+
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error deleting blog post:", error);
+      res.status(500).json({ error: "Error al eliminar post" });
     }
   });
 

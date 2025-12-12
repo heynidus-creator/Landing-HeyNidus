@@ -66,3 +66,23 @@ export const insertProjectSchema = z.object({
 });
 
 export type InsertProject = z.infer<typeof insertProjectSchema>;
+
+// Blog types for JSON storage
+export interface BlogPost {
+  id: string;
+  titulo: string;
+  subtitulo: string;
+  contenido: string;
+  fecha: string;
+  imagenes: string[];
+  updatedAt: string;
+}
+
+export const insertBlogPostSchema = z.object({
+  titulo: z.string().min(1, "Título requerido"),
+  subtitulo: z.string().optional().default(""),
+  contenido: z.string().min(1, "Contenido requerido"),
+  fecha: z.string().optional(),
+});
+
+export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;
