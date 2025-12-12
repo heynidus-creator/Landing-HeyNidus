@@ -25,8 +25,8 @@ Preferred communication style: Simple, everyday language.
 
 **State Management:**
 - React hooks (useState, useEffect) for local component state
-- TanStack Query (React Query) configured but not actively used in current implementation
-- Form state managed locally in components without external form libraries
+- TanStack Query (React Query) for data fetching from API endpoints
+- Form state managed with react-hook-form in admin pages
 
 **Design Approach:**
 - Landing page optimized for conversions
@@ -57,11 +57,13 @@ Preferred communication style: Simple, everyday language.
 **API Structure:**
 - RESTful API design pattern (routes prefixed with /api)
 - Modular route registration system in routes.ts
-- Currently minimal backend logic - primarily serves static content
+- Projects CRUD endpoints: GET /api/projects/list, GET /api/projects/:id, POST /api/projects, PUT /api/projects/:id, DELETE /api/projects/:id
+- File upload support with multer for project images, master plans and videos
 
 **Storage Layer:**
-- In-memory storage implementation (MemStorage class) for development
-- User storage interface defined but not actively used
+- JSON file storage for projects (data/projects.json)
+- File uploads stored in uploads/ directory
+- In-memory storage implementation (MemStorage class) for users
 - Prepared for database integration with Drizzle ORM configuration
 
 ### Data Storage Solutions
@@ -73,24 +75,24 @@ Preferred communication style: Simple, everyday language.
 - Connection expects DATABASE_URL environment variable
 
 **Current Data Management:**
-- Static data stored in client/src/data/siteData.ts
-- Projects, blog posts, and testimonials defined as TypeScript constants
-- No active database queries in current implementation
-- Image assets stored in attached_assets directory and imported statically
+- Projects data stored in data/projects.json (dynamic, editable via admin)
+- Blog posts and testimonials still in client/src/data/siteData.ts as static constants
+- Project images, master plans, videos uploaded to uploads/ directory
+- Static image assets in attached_assets directory for fallbacks
 
 ### Authentication and Authorization
 
 **Current Implementation:**
-- No authentication system currently implemented
-- User schema exists in database configuration but unused
-- No login/logout functionality
-- No protected routes or user sessions
-- Application is entirely public-facing
+- Basic admin password protection for /admin routes
+- Admin password configured via ADMIN_PASSWORD environment variable (default: "admin123")
+- Session-based authentication using express-session with memory store
+- Admin pages protected with checkAdminAuth middleware
 
-**Prepared Infrastructure:**
-- Express session configuration with connect-pg-simple available
-- User model with username/password fields defined
-- Storage interface includes user CRUD methods for future implementation
+**Admin Features:**
+- Projects admin page at /admin/proyectos
+- Create, edit, delete projects with full CRUD functionality
+- File upload for images, master plan files, and videos
+- Google Maps integration with lat/lng coordinates and place URLs
 
 ### External Dependencies
 
