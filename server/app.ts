@@ -6,8 +6,12 @@ import express, {
   Response,
   NextFunction,
 } from "express";
+import session from "express-session";
+import MemoryStore from "memorystore";
 
 import { registerRoutes } from "./routes";
+
+const SessionStore = MemoryStore(session);
 
 export function log(message: string, source = "express") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
@@ -27,12 +31,38 @@ declare module 'http' {
     rawBody: unknown
   }
 }
+
+declare global {
+  namespace Express {
+    interface Session {
+      adminAuth?: boolean;
+    }
+  }
+}
+
 app.use(express.json({
   verify: (req, _res, buf) => {
     req.rawBody = buf;
   }
 }));
 app.use(express.urlencoded({ extended: false }));
+
+app.use(
+  session({
+    store: new SessionStore({
+      checkPeriod: 86400000,
+    }),
+    secret: process.env.SESSION_SECRET || 'heynidus-secret-key',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 24 * 60 * 60 * 1000,
+    },
+  })
+);
 
 app.use((req, res, next) => {
   const start = Date.now();

@@ -16,7 +16,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     if (password === adminPassword) {
       // Crear sesión
       (req.session as any).adminAuth = true;
-      req.session.save((err) => {
+      req.session.save((err: any) => {
         if (err) {
           return res.status(500).json({ error: "Error al crear sesión" });
         }
@@ -28,7 +28,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.post("/api/admin/logout", (req, res) => {
-    req.session.destroy((err) => {
+    req.session.destroy((err: any) => {
       if (err) {
         return res.status(500).json({ error: "Error al cerrar sesión" });
       }
