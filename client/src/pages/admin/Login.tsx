@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 
-export default function AdminLogin() {
-  const [, navigate] = useLocation();
+interface AdminLoginProps {
+  onLoginSuccess: () => void;
+}
+
+export default function AdminLogin({ onLoginSuccess }: AdminLoginProps) {
   const { toast } = useToast();
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +30,7 @@ export default function AdminLogin() {
           description: 'Sesión iniciada correctamente',
           variant: 'default',
         });
-        navigate('/admin');
+        onLoginSuccess();
       } else {
         toast({
           title: 'Error',

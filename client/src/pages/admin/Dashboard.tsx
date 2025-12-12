@@ -1,42 +1,14 @@
-import { useEffect, useState } from 'react';
-import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { LogOut, FileText, MessageSquare, Users, BarChart3 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
-interface AdminUser {
-  authenticated: boolean;
+interface AdminDashboardProps {
+  onLogoutSuccess: () => void;
 }
 
-export default function AdminDashboard() {
-  const [, navigate] = useLocation();
+export default function AdminDashboard({ onLogoutSuccess }: AdminDashboardProps) {
   const { toast } = useToast();
-  const [user, setUser] = useState<AdminUser | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    verifyAuth();
-  }, []);
-
-  const verifyAuth = async () => {
-    try {
-      const response = await fetch('/api/admin/me', {
-        credentials: 'include',
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setUser(data);
-      } else {
-        navigate('/admin/login');
-      }
-    } catch (error) {
-      navigate('/admin/login');
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handleLogout = async () => {
     try {
@@ -50,7 +22,7 @@ export default function AdminDashboard() {
         description: 'Has salido correctamente',
       });
 
-      navigate('/admin/login');
+      onLogoutSuccess();
     } catch (error) {
       toast({
         title: 'Error',
@@ -59,18 +31,6 @@ export default function AdminDashboard() {
       });
     }
   };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-emerald-200 dark:border-emerald-800 border-t-emerald-600 dark:border-t-emerald-400 rounded-full animate-spin"></div>
-      </div>
-    );
-  }
-
-  if (!user?.authenticated) {
-    return null;
-  }
 
   const menuItems = [
     {

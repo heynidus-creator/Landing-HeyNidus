@@ -9,8 +9,7 @@ import Footer from "./components/Footer.tsx";
 import BackToTopButton from "./components/BackToTopButton.tsx";
 import ProjectDetail from "./pages/ProjectDetail.tsx";
 import NotFound from "./pages/not-found.tsx";
-import AdminLogin from "./pages/admin/Login.tsx";
-import AdminDashboard from "./pages/admin/Dashboard.tsx";
+import AdminPage from "./pages/admin/AdminPage.tsx";
 
 const Blog = lazy(() => import("./components/Blog.tsx"));
 const Testimonials = lazy(() => import("./components/Testimonials.tsx"));
@@ -54,8 +53,7 @@ function App() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
       <Switch>
-        <Route path="/admin/login" component={AdminLogin} />
-        <Route path="/admin" component={AdminDashboard} />
+        <Route path="/admin" component={AdminPage} />
         <Route>
           {/* Landing layout */}
           <Navbar />
