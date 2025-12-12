@@ -11,6 +11,7 @@ import ProjectDetail from "./pages/ProjectDetail.tsx";
 import NotFound from "./pages/not-found.tsx";
 import AdminPage from "./pages/admin/AdminPage.tsx";
 import ProjectsAdmin from "./pages/admin/ProjectsAdmin.tsx";
+import BlogAdmin from "./pages/admin/BlogAdmin.tsx";
 
 const Blog = lazy(() => import("./components/Blog.tsx"));
 const Testimonials = lazy(() => import("./components/Testimonials.tsx"));
@@ -55,6 +56,7 @@ function App() {
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
       <Switch>
         <Route path="/admin/proyectos" component={ProjectsAdmin} />
+        <Route path="/admin/blog" component={BlogAdmin} />
         <Route path="/admin" component={AdminPage} />
         <Route>
           {/* Landing layout */}
