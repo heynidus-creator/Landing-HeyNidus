@@ -3,12 +3,13 @@ import { createServer, type Server } from "http";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
-import { insertProjectSchema, insertBlogPostSchema, insertTestimonialSchema, type Project, type BlogPost, type Testimonial } from "@shared/schema";
+import { insertProjectSchema, insertBlogPostSchema, insertTestimonialSchema, insertLeadSchema, type Project, type BlogPost, type Testimonial, type Lead } from "@shared/schema";
 
 const PROJECTS_FILE = path.join(process.cwd(), "server/data/projects.json");
 const BLOG_FILE = path.join(process.cwd(), "server/data/blog.json");
 const TESTIMONIALS_FILE = path.join(process.cwd(), "server/data/testimonials.json");
 const ANALYTICS_FILE = path.join(process.cwd(), "server/data/analytics.json");
+const LEADS_FILE = path.join(process.cwd(), "server/data/leads.json");
 const UPLOADS_DIR = path.join(process.cwd(), "client/public/uploads");
 
 // Ensure uploads directory exists
@@ -106,6 +107,23 @@ function readAnalytics(): AnalyticsData {
 
 function writeAnalytics(data: AnalyticsData): void {
   fs.writeFileSync(ANALYTICS_FILE, JSON.stringify(data, null, 2));
+}
+
+interface LeadsData {
+  leads: Lead[];
+}
+
+function readLeads(): Lead[] {
+  try {
+    const data = fs.readFileSync(LEADS_FILE, "utf-8");
+    return JSON.parse(data).leads || [];
+  } catch {
+    return [];
+  }
+}
+
+function writeLeads(leads: Lead[]): void {
+  fs.writeFileSync(LEADS_FILE, JSON.stringify({ leads }, null, 2));
 }
 
 function generateId(): string {
@@ -772,6 +790,137 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       res.json(summary);
+    } catch (error) {
+      res.status(500).json({ error: "Error" });
+    }
+  });
+
+  // Get analytics with date filter
+  app.get("/api/analytics/summary-filtered", requireAdmin, (req, res) => {
+    try {
+      const days = parseInt(req.query.days as string) || 30;
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - days);
+      const cutoffStr = cutoffDate.toISOString();
+
+      const analytics = readAnalytics();
+      const views = analytics.pageViews.filter(v => v.timestamp >= cutoffStr);
+      const projects = readProjects();
+
+      const uniqueVisitors = new Set(views.map(v => `${v.source}-${v.timestamp.split('T')[0]}`)).size;
+
+      const summary = {
+        totalViews: views.length,
+        uniqueVisitors,
+        totalSeconds: views.reduce((acc, v) => acc + v.seconds, 0),
+        avgSecondsPerView: views.length > 0 ? views.reduce((acc, v) => acc + v.seconds, 0) / views.length : 0,
+        byPage: {} as Record<string, { views: number; seconds: number }>,
+        byProject: {} as Record<string, { views: number; seconds: number; name?: string }>,
+        bySource: {} as Record<string, number>,
+        byDay: {} as Record<string, { views: number; seconds: number }>,
+      };
+
+      views.forEach((v) => {
+        if (!summary.byPage[v.page]) summary.byPage[v.page] = { views: 0, seconds: 0 };
+        summary.byPage[v.page].views++;
+        summary.byPage[v.page].seconds += v.seconds;
+
+        if (v.projectId) {
+          if (!summary.byProject[v.projectId]) {
+            const proj = projects.find(p => p.id === v.projectId);
+            summary.byProject[v.projectId] = { views: 0, seconds: 0, name: proj?.nombre };
+          }
+          summary.byProject[v.projectId].views++;
+          summary.byProject[v.projectId].seconds += v.seconds;
+        }
+
+        summary.bySource[v.source] = (summary.bySource[v.source] || 0) + 1;
+
+        const day = v.timestamp.split("T")[0];
+        if (!summary.byDay[day]) summary.byDay[day] = { views: 0, seconds: 0 };
+        summary.byDay[day].views++;
+        summary.byDay[day].seconds += v.seconds;
+      });
+
+      res.json(summary);
+    } catch (error) {
+      res.status(500).json({ error: "Error" });
+    }
+  });
+
+  // Leads endpoints
+  app.post("/api/leads/create", (req, res) => {
+    try {
+      const result = insertLeadSchema.safeParse(req.body);
+      if (!result.success) {
+        return res.status(400).json({ error: result.error.errors[0].message });
+      }
+      const leads = readLeads();
+      const newLead: Lead = {
+        id: generateId(),
+        ...result.data,
+        telefono: result.data.telefono || "",
+        mensaje: result.data.mensaje || "",
+        proyectoInteres: result.data.proyectoInteres || "",
+        fuente: result.data.fuente || "web",
+        estado: "nuevo",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      leads.push(newLead);
+      writeLeads(leads);
+      res.json(newLead);
+    } catch (error) {
+      res.status(500).json({ error: "Error al crear lead" });
+    }
+  });
+
+  app.get("/api/leads/list", requireAdmin, (req, res) => {
+    try {
+      const leads = readLeads();
+      res.json(leads.sort((a, b) => b.createdAt.localeCompare(a.createdAt)));
+    } catch (error) {
+      res.status(500).json({ error: "Error" });
+    }
+  });
+
+  app.put("/api/leads/update/:id", requireAdmin, (req, res) => {
+    try {
+      const { id } = req.params;
+      const { estado } = req.body;
+      const leads = readLeads();
+      const idx = leads.findIndex(l => l.id === id);
+      if (idx === -1) return res.status(404).json({ error: "Lead no encontrado" });
+      leads[idx].estado = estado;
+      leads[idx].updatedAt = new Date().toISOString();
+      writeLeads(leads);
+      res.json(leads[idx]);
+    } catch (error) {
+      res.status(500).json({ error: "Error" });
+    }
+  });
+
+  app.delete("/api/leads/delete/:id", requireAdmin, (req, res) => {
+    try {
+      const { id } = req.params;
+      const leads = readLeads();
+      const filtered = leads.filter(l => l.id !== id);
+      writeLeads(filtered);
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ error: "Error" });
+    }
+  });
+
+  app.get("/api/leads/count", requireAdmin, (req, res) => {
+    try {
+      const days = parseInt(req.query.days as string) || 30;
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - days);
+      const cutoffStr = cutoffDate.toISOString();
+      const leads = readLeads();
+      const filtered = leads.filter(l => l.createdAt >= cutoffStr);
+      res.json({ total: filtered.length, nuevos: filtered.filter(l => l.estado === 'nuevo').length });
     } catch (error) {
       res.status(500).json({ error: "Error" });
     }

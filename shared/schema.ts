@@ -107,3 +107,27 @@ export const insertTestimonialSchema = z.object({
 });
 
 export type InsertTestimonial = z.infer<typeof insertTestimonialSchema>;
+
+export interface Lead {
+  id: string;
+  nombre: string;
+  email: string;
+  telefono: string;
+  mensaje: string;
+  proyectoInteres: string;
+  fuente: string;
+  estado: 'nuevo' | 'contactado' | 'convertido' | 'descartado';
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const insertLeadSchema = z.object({
+  nombre: z.string().min(1, "Nombre requerido"),
+  email: z.string().email("Email inválido"),
+  telefono: z.string().optional().default(""),
+  mensaje: z.string().optional().default(""),
+  proyectoInteres: z.string().optional().default(""),
+  fuente: z.string().optional().default("web"),
+});
+
+export type InsertLead = z.infer<typeof insertLeadSchema>;

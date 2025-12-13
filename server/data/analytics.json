@@ -119,6 +119,54 @@
       "source": "otro",
       "seconds": 30,
       "timestamp": "2025-12-13T00:21:15.034Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-13T00:22:15.037Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 1,
+      "timestamp": "2025-12-13T00:22:27.385Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 1,
+      "timestamp": "2025-12-13T00:23:49.792Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-13T00:24:19.822Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-13T00:24:50.256Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-13T00:25:49.807Z"
     }
   ],
   "sessions": []
