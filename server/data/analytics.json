@@ -23,6 +23,38 @@
       "source": "otro",
       "seconds": 1,
       "timestamp": "2025-12-13T00:04:52.747Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-13T00:05:22.759Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 1,
+      "timestamp": "2025-12-13T00:05:50.138Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 1,
+      "timestamp": "2025-12-13T00:05:56.972Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 1,
+      "timestamp": "2025-12-13T00:06:06.607Z"
     }
   ],
   "sessions": []

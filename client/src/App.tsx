@@ -8,6 +8,8 @@ import ContactSection from "./components/ContactSection.tsx";
 import Footer from "./components/Footer.tsx";
 import BackToTopButton from "./components/BackToTopButton.tsx";
 import ProjectDetail from "./pages/ProjectDetail.tsx";
+import BlogList from "./pages/BlogList.tsx";
+import BlogDetail from "./pages/BlogDetail.tsx";
 import NotFound from "./pages/not-found.tsx";
 import AdminPage from "./pages/admin/AdminPage.tsx";
 import ProjectsAdmin from "./pages/admin/ProjectsAdmin.tsx";
@@ -75,6 +77,8 @@ function App() {
           <Switch>
             <Route path="/" component={HomePage} />
             <Route path="/proyecto/:id" component={ProjectDetail} />
+            <Route path="/blog" component={BlogList} />
+            <Route path="/blog/:id" component={BlogDetail} />
             <Route component={NotFound} />
           </Switch>
           <BackToTopButton />
