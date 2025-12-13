@@ -1543,6 +1543,14 @@
       "source": "otro",
       "seconds": 57,
       "timestamp": "2025-12-13T16:52:32.083Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 53,
+      "timestamp": "2025-12-13T16:53:25.061Z"
     }
   ],
   "sessions": []
