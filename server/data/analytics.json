@@ -951,6 +951,30 @@
       "source": "direct",
       "seconds": 1,
       "timestamp": "2025-12-13T01:21:08.361Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-13T01:21:35.881Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 1,
+      "timestamp": "2025-12-13T01:22:17.132Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 1,
+      "timestamp": "2025-12-13T01:22:18.378Z"
     }
   ],
   "sessions": []

@@ -54,6 +54,15 @@ html.dark.rest header {
   @apply !bg-slate-800/90 !border-slate-700;
 }
 
+/* Footer backgrounds por tema */
+html.dark:not(.rest) footer {
+  @apply !bg-neutral-900 !border-neutral-700;
+}
+
+html.dark.rest footer {
+  @apply !bg-slate-800 !border-slate-700;
+}
+
 /* =========================
    Fades básicos (por si los usás en otros lados)
    ========================= */
