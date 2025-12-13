@@ -40,7 +40,7 @@ const ThemeToggle = () => {
     if (newTheme === 'dark') {
       root.classList.add('dark');
     } else if (newTheme === 'rest') {
-      root.classList.add('rest');
+      root.classList.add('dark', 'rest');
     }
   };
 
@@ -58,9 +58,9 @@ const ThemeToggle = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="ghost"
+          variant="outline"
           size="icon"
-          className="text-slate-700 dark:text-slate-300 rest:text-slate-300"
+          className="bg-white/90 dark:bg-slate-800/90 border-slate-200 dark:border-slate-700"
           aria-label="Seleccionar tema"
           data-testid="button-theme-dropdown"
         >
