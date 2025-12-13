@@ -60,7 +60,7 @@ const Navbar = () => {
           <img 
             src="/heynidus-logo.png" 
             alt="HeyNidus" 
-            className="h-8 sm:h-10 w-auto"
+            className="h-10 sm:h-12 w-auto dark:brightness-0 dark:invert"
             data-testid="img-logo"
           />
         </button>
