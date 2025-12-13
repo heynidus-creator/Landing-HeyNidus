@@ -247,6 +247,22 @@
       "source": "otro",
       "seconds": 30,
       "timestamp": "2025-12-13T00:30:43.623Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-13T00:31:43.618Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-13T00:32:13.621Z"
     }
   ],
   "sessions": []
