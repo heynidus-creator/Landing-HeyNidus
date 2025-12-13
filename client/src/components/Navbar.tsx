@@ -1,66 +1,66 @@
-import { useState } from 'react';
-import { useLocation } from 'wouter';
-import ThemeToggle from './ThemeToggle';
-import { useScrollSpy } from '../hooks/useScrollSpy';
+import { useState } from "react";
+import { useLocation } from "wouter";
+import ThemeToggle from "./ThemeToggle";
+import { useScrollSpy } from "../hooks/useScrollSpy";
 
 const navLinks = [
-  { label: 'Inicio', href: 'inicio' },
-  { label: 'Quiénes Somos', href: 'quienes-somos' },
-  { label: 'Proyectos', href: 'proyectos' },
-  { label: 'Blog', href: 'blog' },
-  { label: 'Testimonios', href: 'testimonios' },
-  { label: 'Contacto', href: 'contacto' },
+  { label: "Inicio", href: "inicio" },
+  { label: "Quiénes Somos", href: "quienes-somos" },
+  { label: "Proyectos", href: "proyectos" },
+  { label: "Blog", href: "blog" },
+  { label: "Testimonios", href: "testimonios" },
+  { label: "Contacto", href: "contacto" },
 ];
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [location] = useLocation();
-  const sectionIds = navLinks.map(link => link.href);
+  const sectionIds = navLinks.map((link) => link.href);
   const activeSection = useScrollSpy({ sectionIds, offset: 100 });
 
   const handleNavClick = (sectionId: string) => {
     setOpen(false);
-    
-    if (location.startsWith('/proyecto')) {
-      window.history.pushState({}, '', '/');
+
+    if (location.startsWith("/proyecto")) {
+      window.history.pushState({}, "", "/");
       setTimeout(() => {
         const element = document.getElementById(sectionId);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+          element.scrollIntoView({ behavior: "smooth" });
         }
       }, 0);
     } else {
       const element = document.getElementById(sectionId);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        element.scrollIntoView({ behavior: "smooth" });
       }
     }
   };
 
   const handleLogoClick = () => {
     setOpen(false);
-    if (location.startsWith('/proyecto')) {
-      window.history.pushState({}, '', '/');
+    if (location.startsWith("/proyecto")) {
+      window.history.pushState({}, "", "/");
       setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }, 0);
     } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   return (
     <header className="fixed inset-x-0 top-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur border-b border-slate-200 dark:border-slate-700 w-full">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-3 sm:px-4 py-2 w-full">
-        <button 
+      <nav className="mx-auto flex max-w-6xl items-center justify-between px-3 sm:px-4 h-16 sm:h-20 w-full">
+        <button
           onClick={handleLogoClick}
           className="flex items-center hover:opacity-80 transition-opacity cursor-pointer bg-none border-none p-0 flex-shrink-0 group"
           data-testid="button-logo"
         >
-          <img 
-            src="/heynidus-logo.png" 
-            alt="HeyNidus" 
-            className="h-14 sm:h-16 w-auto dark:brightness-0 dark:invert"
+          <img
+            src="/heynidus-logo.png"
+            alt="HeyNidus"
+            className="h-[90%] max-h-14 sm:max-h-[72px] w-auto object-contain dark:brightness-0 dark:invert"
             data-testid="img-logo"
           />
         </button>
@@ -75,8 +75,8 @@ const Navbar = () => {
                 onClick={() => handleNavClick(link.href)}
                 className={`text-sm font-medium transition-colors bg-none border-none cursor-pointer p-0 pb-1 border-b-2 ${
                   isActive
-                    ? 'text-emerald-700 dark:text-emerald-400 border-emerald-700 dark:border-emerald-400'
-                    : 'text-slate-700 dark:text-slate-300 border-transparent hover:text-emerald-700 dark:hover:text-emerald-400'
+                    ? "text-emerald-700 dark:text-emerald-400 border-emerald-700 dark:border-emerald-400"
+                    : "text-slate-700 dark:text-slate-300 border-transparent hover:text-emerald-700 dark:hover:text-emerald-400"
                 }`}
                 data-testid={`button-nav-${link.href}`}
               >
@@ -96,7 +96,7 @@ const Navbar = () => {
             aria-label="Abrir menú"
             data-testid="button-hamburger"
           >
-            <span className="text-lg">{open ? '✕' : '☰'}</span>
+            <span className="text-lg">{open ? "✕" : "☰"}</span>
           </button>
         </div>
       </nav>
@@ -113,8 +113,8 @@ const Navbar = () => {
                   onClick={() => handleNavClick(link.href)}
                   className={`text-sm font-medium transition-colors bg-none border-none cursor-pointer p-2 text-left rounded-md ${
                     isActive
-                      ? 'text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20'
-                      : 'text-slate-700 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400'
+                      ? "text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20"
+                      : "text-slate-700 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400"
                   }`}
                   data-testid={`button-mobile-nav-${link.href}`}
                 >
