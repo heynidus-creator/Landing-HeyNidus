@@ -27,7 +27,9 @@ import {
   Sun,
 } from 'lucide-react';
 import { SiFacebook, SiInstagram, SiTiktok, SiGoogle, SiYoutube, SiX } from 'react-icons/si';
-import type { Project, BlogPost, Testimonial } from '@shared/schema';
+import type { Project, BlogPost, Testimonial, Lead } from '@shared/schema';
+import { Badge } from '@/components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 function useTheme() {
   const [theme, setThemeState] = useState<'light' | 'dark'>(() => {
@@ -66,6 +68,7 @@ interface AnalyticsSummary {
   totalViews: number;
   totalSeconds: number;
   avgSecondsPerView: number;
+  uniqueVisitors?: number;
   byPage: Record<string, { views: number; seconds: number }>;
   byProject: Record<string, { views: number; seconds: number; name?: string }>;
   bySource: Record<string, number>;
@@ -151,6 +154,9 @@ export default function AdminDashboard({ onLogoutSuccess }: AdminDashboardProps)
 
   const [analyticsData, setAnalyticsData] = useState<AnalyticsSummary | null>(null);
   const [analyticsLoading, setAnalyticsLoading] = useState(true);
+  const [dateRange, setDateRange] = useState<number>(30);
+  const [leads, setLeads] = useState<Lead[]>([]);
+  const [leadsCount, setLeadsCount] = useState<{ total: number; nuevos: number }>({ total: 0, nuevos: 0 });
 
   const [projects, setProjects] = useState<Project[]>([]);
   const [projectsLoading, setProjectsLoading] = useState(true);
@@ -182,11 +188,18 @@ export default function AdminDashboard({ onLogoutSuccess }: AdminDashboardProps)
   const [testimonialSubmitting, setTestimonialSubmitting] = useState(false);
 
   useEffect(() => {
-    loadAnalytics();
+    loadAnalyticsFiltered(dateRange);
+    loadLeads();
+    loadLeadsCount(dateRange);
     loadProjects();
     loadPosts();
     loadTestimonials();
   }, []);
+
+  useEffect(() => {
+    loadAnalyticsFiltered(dateRange);
+    loadLeadsCount(dateRange);
+  }, [dateRange]);
 
   const handleLogout = async () => {
     try {
@@ -198,9 +211,10 @@ export default function AdminDashboard({ onLogoutSuccess }: AdminDashboardProps)
     }
   };
 
-  const loadAnalytics = async () => {
+  const loadAnalyticsFiltered = async (days: number) => {
+    setAnalyticsLoading(true);
     try {
-      const response = await fetch('/api/analytics/summary', { credentials: 'include' });
+      const response = await fetch(`/api/analytics/summary-filtered?days=${days}`, { credentials: 'include' });
       if (response.ok) {
         const data = await response.json();
         setAnalyticsData(data);
@@ -209,6 +223,58 @@ export default function AdminDashboard({ onLogoutSuccess }: AdminDashboardProps)
       console.error('Error loading analytics');
     } finally {
       setAnalyticsLoading(false);
+    }
+  };
+
+  const loadLeads = async () => {
+    try {
+      const response = await fetch('/api/leads/list', { credentials: 'include' });
+      if (response.ok) {
+        const data = await response.json();
+        setLeads(data);
+      }
+    } catch {
+      console.error('Error loading leads');
+    }
+  };
+
+  const loadLeadsCount = async (days: number) => {
+    try {
+      const response = await fetch(`/api/leads/count?days=${days}`, { credentials: 'include' });
+      if (response.ok) {
+        const data = await response.json();
+        setLeadsCount(data);
+      }
+    } catch {
+      console.error('Error loading leads count');
+    }
+  };
+
+  const handleUpdateLeadStatus = async (leadId: string, newStatus: Lead['estado']) => {
+    try {
+      const response = await fetch(`/api/leads/update/${leadId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ estado: newStatus }),
+        credentials: 'include',
+      });
+      if (response.ok) {
+        toast({ title: 'Estado actualizado' });
+        loadLeads();
+        loadLeadsCount(dateRange);
+      }
+    } catch {
+      toast({ title: 'Error', description: 'Error al actualizar estado', variant: 'destructive' });
+    }
+  };
+
+  const getLeadStatusColor = (estado: Lead['estado']) => {
+    switch (estado) {
+      case 'nuevo': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      case 'contactado': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+      case 'convertido': return 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
+      case 'descartado': return 'bg-red-500/20 text-red-400 border-red-500/30';
+      default: return 'bg-slate-500/20 text-slate-400 border-slate-500/30';
     }
   };
 
@@ -595,14 +661,26 @@ export default function AdminDashboard({ onLogoutSuccess }: AdminDashboardProps)
           </TabsList>
 
           <TabsContent value="estadisticas" className="space-y-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
                 <h2 className="text-xl font-bold text-white">Estadísticas</h2>
                 <p className="text-sm text-slate-400">Métricas de visitas y engagement</p>
               </div>
-              <Button variant="outline" onClick={loadAnalytics} className="border-slate-700 text-slate-300 hover:bg-slate-800" data-testid="button-refresh-analytics">
-                Actualizar
-              </Button>
+              <div className="flex items-center gap-3">
+                <Select value={String(dateRange)} onValueChange={(val) => setDateRange(Number(val))}>
+                  <SelectTrigger className="w-32 bg-slate-800 border-slate-700 text-white" data-testid="select-date-range">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-slate-800 border-slate-700">
+                    <SelectItem value="7" className="text-white">7 días</SelectItem>
+                    <SelectItem value="30" className="text-white">30 días</SelectItem>
+                    <SelectItem value="90" className="text-white">90 días</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Button variant="outline" onClick={() => { loadAnalyticsFiltered(dateRange); loadLeads(); loadLeadsCount(dateRange); }} className="border-slate-700 text-slate-300" data-testid="button-refresh-analytics">
+                  Actualizar
+                </Button>
+              </div>
             </div>
 
             {analyticsLoading ? (
@@ -613,33 +691,33 @@ export default function AdminDashboard({ onLogoutSuccess }: AdminDashboardProps)
               <div className="text-center py-12 text-slate-500">No hay datos de analytics disponibles.</div>
             ) : (
               <>
-                <div className="grid gap-4 md:grid-cols-4">
+                <div className="grid gap-4 md:grid-cols-5">
                   <Card className="bg-slate-800/50 border-slate-700">
                     <CardContent className="p-4 flex items-center gap-4">
                       <div className="p-3 bg-blue-500/20 rounded-lg">
-                        <Eye className="w-6 h-6 text-blue-400" />
+                        <Users className="w-6 h-6 text-blue-400" />
                       </div>
                       <div>
-                        <p className="text-2xl font-bold text-white">{analyticsData.totalViews}</p>
-                        <p className="text-sm text-slate-400">Visitas totales</p>
+                        <p className="text-2xl font-bold text-white">{analyticsData.uniqueVisitors || 0}</p>
+                        <p className="text-sm text-slate-400">Visitantes únicos</p>
                       </div>
                     </CardContent>
                   </Card>
                   <Card className="bg-slate-800/50 border-slate-700">
                     <CardContent className="p-4 flex items-center gap-4">
                       <div className="p-3 bg-emerald-500/20 rounded-lg">
-                        <Clock className="w-6 h-6 text-emerald-400" />
+                        <Eye className="w-6 h-6 text-emerald-400" />
                       </div>
                       <div>
-                        <p className="text-2xl font-bold text-white">{formatTime(analyticsData.totalSeconds)}</p>
-                        <p className="text-sm text-slate-400">Tiempo total</p>
+                        <p className="text-2xl font-bold text-white">{analyticsData.totalViews}</p>
+                        <p className="text-sm text-slate-400">Páginas vistas</p>
                       </div>
                     </CardContent>
                   </Card>
                   <Card className="bg-slate-800/50 border-slate-700">
                     <CardContent className="p-4 flex items-center gap-4">
                       <div className="p-3 bg-purple-500/20 rounded-lg">
-                        <TrendingUp className="w-6 h-6 text-purple-400" />
+                        <Clock className="w-6 h-6 text-purple-400" />
                       </div>
                       <div>
                         <p className="text-2xl font-bold text-white">{formatTime(analyticsData.avgSecondsPerView)}</p>
@@ -650,11 +728,22 @@ export default function AdminDashboard({ onLogoutSuccess }: AdminDashboardProps)
                   <Card className="bg-slate-800/50 border-slate-700">
                     <CardContent className="p-4 flex items-center gap-4">
                       <div className="p-3 bg-amber-500/20 rounded-lg">
-                        <Users className="w-6 h-6 text-amber-400" />
+                        <TrendingUp className="w-6 h-6 text-amber-400" />
                       </div>
                       <div>
-                        <p className="text-2xl font-bold text-white">{Object.keys(analyticsData.bySource).length}</p>
-                        <p className="text-sm text-slate-400">Fuentes</p>
+                        <p className="text-2xl font-bold text-white">{leadsCount.total}</p>
+                        <p className="text-sm text-slate-400">Total leads</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  <Card className="bg-slate-800/50 border-slate-700">
+                    <CardContent className="p-4 flex items-center gap-4">
+                      <div className="p-3 bg-cyan-500/20 rounded-lg">
+                        <MessageSquare className="w-6 h-6 text-cyan-400" />
+                      </div>
+                      <div>
+                        <p className="text-2xl font-bold text-white">{leadsCount.nuevos}</p>
+                        <p className="text-sm text-slate-400">Leads nuevos</p>
                       </div>
                     </CardContent>
                   </Card>
@@ -754,6 +843,66 @@ export default function AdminDashboard({ onLogoutSuccess }: AdminDashboardProps)
                     </CardContent>
                   </Card>
                 </div>
+
+                <Card className="bg-slate-800/50 border-slate-700">
+                  <CardHeader>
+                    <CardTitle className="text-lg text-white flex items-center justify-between gap-4 flex-wrap">
+                      <span>Últimos Leads</span>
+                      <Badge variant="outline" className="text-slate-400 border-slate-600">
+                        {leads.length} total
+                      </Badge>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    {leads.length > 0 ? (
+                      <div className="overflow-x-auto">
+                        <table className="w-full">
+                          <thead>
+                            <tr className="border-b border-slate-700">
+                              <th className="text-left py-3 px-2 text-sm font-medium text-slate-400">Nombre</th>
+                              <th className="text-left py-3 px-2 text-sm font-medium text-slate-400">Email</th>
+                              <th className="text-left py-3 px-2 text-sm font-medium text-slate-400 hidden md:table-cell">Proyecto</th>
+                              <th className="text-left py-3 px-2 text-sm font-medium text-slate-400">Estado</th>
+                              <th className="text-left py-3 px-2 text-sm font-medium text-slate-400 hidden sm:table-cell">Fecha</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {leads.slice(0, 10).map((lead) => (
+                              <tr key={lead.id} className="border-b border-slate-700/50" data-testid={`row-lead-${lead.id}`}>
+                                <td className="py-3 px-2">
+                                  <div>
+                                    <p className="font-medium text-white">{lead.nombre}</p>
+                                    <p className="text-xs text-slate-400 md:hidden">{lead.email}</p>
+                                  </div>
+                                </td>
+                                <td className="py-3 px-2 text-sm text-slate-300 hidden md:table-cell">{lead.email}</td>
+                                <td className="py-3 px-2 text-sm text-slate-300 hidden md:table-cell">{lead.proyectoInteres || '-'}</td>
+                                <td className="py-3 px-2">
+                                  <Select value={lead.estado} onValueChange={(val) => handleUpdateLeadStatus(lead.id, val as Lead['estado'])}>
+                                    <SelectTrigger className={`w-28 h-8 text-xs border ${getLeadStatusColor(lead.estado)}`} data-testid={`select-lead-status-${lead.id}`}>
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-slate-800 border-slate-700">
+                                      <SelectItem value="nuevo" className="text-blue-400">Nuevo</SelectItem>
+                                      <SelectItem value="contactado" className="text-yellow-400">Contactado</SelectItem>
+                                      <SelectItem value="convertido" className="text-emerald-400">Convertido</SelectItem>
+                                      <SelectItem value="descartado" className="text-red-400">Descartado</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </td>
+                                <td className="py-3 px-2 text-sm text-slate-400 hidden sm:table-cell">
+                                  {new Date(lead.createdAt).toLocaleDateString('es-AR')}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    ) : (
+                      <p className="text-slate-500 text-center py-4">No hay leads registrados</p>
+                    )}
+                  </CardContent>
+                </Card>
               </>
             )}
           </TabsContent>
