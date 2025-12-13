@@ -1,0 +1,132 @@
+Actúa como desarrollador front-end experto en React + TypeScript + Tailwind dentro de este proyecto (Vite + wouter).
+
+OBJETIVO (FASE 1 – SOLO UI HARDCODEADA):
+Quiero mejorar el Panel de Administración para que se vea moderno, sólido y profesional, similar a un dashboard analítico (como la captura adjunta), con tarjetas KPI, ranking por proyecto, fuentes de tráfico, eventos y leads.
+
+Por ahora TODO puede ser HARDCODEADO (sin backend ni tracking real). Luego le daremos funcionalidad real.
+
+REGLAS IMPORTANTES:
+- NO cambies framework, rutas existentes ni rompas la landing.
+- Mantener wouter para routing.
+- Mantener dark mode actual.
+- Mantener la arquitectura actual.
+- Si modificas o creas archivos: devuélveme SIEMPRE el código completo de cada archivo afectado.
+- Debe ser 100% responsive (desktop / tablet / móvil).
+- Usar componentes reutilizables (cards, tablas, badges, tabs).
+- UI lista para producción, aunque los datos sean mock.
+
+REQUERIMIENTOS DE DISEÑO (referencia: captura):
+
+1) HEADER FIJO DEL ADMIN:
+- Botón/link “Volver al sitio”
+- Título: “Panel de Administración”
+- Acciones a la derecha:
+  - Toggle de tema (si aplica)
+  - Botón “Salir”
+
+2) NAVEGACIÓN INTERNA DEL ADMIN (tabs o navbar):
+- Estadísticas
+- Proyectos
+- Blog
+- Testimonios
+
+3) VISTA “ESTADÍSTICAS” (default):
+- Selector de rango: “Últimos 30 días” (mock)
+- Tarjetas KPI:
+  - Visitantes Únicos
+  - Páginas Vistas
+  - Tiempo Promedio
+  - Total Leads
+- Sección “Rendimiento por Proyecto”:
+  - Tabla ranking con:
+    Rank | Proyecto (nombre + ubicación) | Visitas | Tiempo Prom. | Eventos | Leads
+- Sección “Fuentes de Tráfico”:
+  - Barras/progreso hardcodeadas:
+    Directo, Instagram, Facebook, TikTok, Google
+- Sección “Eventos” (mock)
+- Sección “Últimos Leads” (mock)
+
+4) VISTA “PROYECTOS”:
+- Lista de proyectos (cards o tabla):
+  - Imagen mini
+  - Nombre
+  - Estado (Preventa / Próximamente)
+  - Ubicación
+  - Acciones: Editar / Eliminar (solo UI)
+- Botón “Crear proyecto”
+- Al hacer click en “Editar”:
+  Ruta: /admin/projects/:id
+
+FORMULARIO DE EDICIÓN DE PROYECTO (UI):
+- Título
+- Subtítulo
+- Descripción
+- Estado
+- Tags
+- Ubicación + link Google Maps
+- Galería multimedia (IMÁGENES / VIDEOS / MASTER PLAN)
+
+🔴 REGLA IMPORTANTE SOBRE MULTIMEDIA:
+- La carga de archivos debe permitir:
+  - Seleccionar MÁS DE UN archivo a la vez
+  - Selección múltiple desde carpeta (input type="file" multiple)
+  - Preview visual de los archivos cargados
+  - Mostrar lista/galería de archivos seleccionados
+  - Opción de eliminar uno individualmente (solo UI)
+- El formulario NO debe subir un archivo por campo, sino:
+  - UNA galería multimedia por sección
+  - Soportar múltiples imágenes y/o videos en una sola carga
+
+5) VISTA “BLOG” (solo UI):
+- Listado de posts:
+  - Título
+  - Fecha
+  - Acciones: Editar / Eliminar
+- Botón “Crear post”
+- Formulario de post:
+  - Título
+  - Subtítulo
+  - Contenido
+  - Galería multimedia
+    - Permitir subir múltiples imágenes en una sola selección
+    - Preview + eliminar individual (solo UI)
+
+6) VISTA “TESTIMONIOS” (solo UI):
+- Lista de testimonios:
+  - Imagen
+  - Autor
+  - Rol
+  - Estado (Aprobado / Pendiente)
+- Acciones: Aprobar / Rechazar / Editar / Eliminar (solo UI)
+- Formulario testimonio:
+  - Texto
+  - Autor
+  - Rol
+  - Imagen o multimedia
+  - Permitir subir UNO O VARIOS archivos en una sola acción
+  - Preview antes de guardar
+
+IMPLEMENTACIÓN:
+- Crear estructura clara:
+  client/src/pages/admin/*
+  client/src/components/admin/*
+- Usar datos mock en:
+  client/src/data/adminMock.ts
+- Todo preparado para luego conectar backend real.
+- Accesibilidad básica:
+  botones claros, focus states, aria-labels.
+
+ENTREGA:
+1) Lista de archivos creados/modificados.
+2) Código completo de cada archivo.
+3) Ruta exacta para entrar al admin (ej: /admin).
+4) Diseño muy cercano a la captura:
+   - Cards oscuras
+   - Bordes suaves
+   - Badges redondeados
+   - Tablas limpias
+   - Sensación profesional y confiable.
+
+IMPORTANTE:
+No implementar tracking real todavía.
+Solo UI + estructura escalable.
