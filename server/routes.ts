@@ -8,6 +8,7 @@ import { insertProjectSchema, insertBlogPostSchema, insertTestimonialSchema, typ
 const PROJECTS_FILE = path.join(process.cwd(), "server/data/projects.json");
 const BLOG_FILE = path.join(process.cwd(), "server/data/blog.json");
 const TESTIMONIALS_FILE = path.join(process.cwd(), "server/data/testimonials.json");
+const ANALYTICS_FILE = path.join(process.cwd(), "server/data/analytics.json");
 const UPLOADS_DIR = path.join(process.cwd(), "client/public/uploads");
 
 // Ensure uploads directory exists
@@ -79,6 +80,32 @@ function readTestimonials(): Testimonial[] {
 
 function writeTestimonials(testimonials: Testimonial[]): void {
   fs.writeFileSync(TESTIMONIALS_FILE, JSON.stringify(testimonials, null, 2));
+}
+
+interface AnalyticsEntry {
+  page: string;
+  projectId: string | null;
+  blogId: string | null;
+  source: string;
+  seconds: number;
+  timestamp: string;
+}
+
+interface AnalyticsData {
+  pageViews: AnalyticsEntry[];
+}
+
+function readAnalytics(): AnalyticsData {
+  try {
+    const data = fs.readFileSync(ANALYTICS_FILE, "utf-8");
+    return JSON.parse(data);
+  } catch {
+    return { pageViews: [] };
+  }
+}
+
+function writeAnalytics(data: AnalyticsData): void {
+  fs.writeFileSync(ANALYTICS_FILE, JSON.stringify(data, null, 2));
 }
 
 function generateId(): string {
@@ -676,6 +703,77 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error deleting testimonial:", error);
       res.status(500).json({ error: "Error al eliminar testimonio" });
+    }
+  });
+
+  // ==================== ANALYTICS ENDPOINTS ====================
+
+  // Track page view (público)
+  app.post("/api/analytics/track", (req, res) => {
+    try {
+      const { page, projectId, blogId, source, seconds } = req.body;
+      const analytics = readAnalytics();
+      analytics.pageViews.push({
+        page: page || "/",
+        projectId: projectId || null,
+        blogId: blogId || null,
+        source: source || "direct",
+        seconds: Math.max(1, seconds || 1),
+        timestamp: new Date().toISOString(),
+      });
+      // Mantener solo últimos 10000 registros
+      if (analytics.pageViews.length > 10000) {
+        analytics.pageViews = analytics.pageViews.slice(-10000);
+      }
+      writeAnalytics(analytics);
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ error: "Error" });
+    }
+  });
+
+  // Get analytics summary (admin only)
+  app.get("/api/analytics/summary", requireAdmin, (req, res) => {
+    try {
+      const analytics = readAnalytics();
+      const views = analytics.pageViews;
+
+      const summary = {
+        totalViews: views.length,
+        totalSeconds: views.reduce((acc, v) => acc + v.seconds, 0),
+        avgSecondsPerView: views.length > 0 ? views.reduce((acc, v) => acc + v.seconds, 0) / views.length : 0,
+        byPage: {} as Record<string, { views: number; seconds: number }>,
+        byProject: {} as Record<string, { views: number; seconds: number }>,
+        bySource: {} as Record<string, number>,
+        byDay: {} as Record<string, { views: number; seconds: number }>,
+      };
+
+      views.forEach((v) => {
+        // By page
+        if (!summary.byPage[v.page]) summary.byPage[v.page] = { views: 0, seconds: 0 };
+        summary.byPage[v.page].views++;
+        summary.byPage[v.page].seconds += v.seconds;
+
+        // By project
+        if (v.projectId) {
+          if (!summary.byProject[v.projectId]) summary.byProject[v.projectId] = { views: 0, seconds: 0 };
+          summary.byProject[v.projectId].views++;
+          summary.byProject[v.projectId].seconds += v.seconds;
+        }
+
+        // By source
+        summary.bySource[v.source] = (summary.bySource[v.source] || 0) + 1;
+
+        // By day
+        const day = v.timestamp.split("T")[0];
+        if (!summary.byDay[day]) summary.byDay[day] = { views: 0, seconds: 0 };
+        summary.byDay[day].views++;
+        summary.byDay[day].seconds += v.seconds;
+      });
+
+      res.json(summary);
+    } catch (error) {
+      res.status(500).json({ error: "Error" });
     }
   });
 

@@ -44,9 +44,9 @@ export function useAnalytics() {
   const lastPageRef = useRef<string>('');
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const sendAnalytics = useCallback(async (page: string, seconds: number) => {
+  const sendAnalytics = useCallback(async (page: string, seconds: number, isPageView = false) => {
     if (page.startsWith('/admin')) return;
-    if (seconds < 1) return;
+    if (!isPageView && seconds < 1) return;
 
     const projectId = extractProjectId(page);
     const blogId = extractBlogId(page);
@@ -116,4 +116,10 @@ export function useAnalytics() {
     window.addEventListener('beforeunload', handleBeforeUnload);
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   }, []);
+
+  const trackPageView = useCallback((page: string) => {
+    sendAnalytics(page, 1, true);
+  }, [sendAnalytics]);
+
+  return { trackPageView };
 }

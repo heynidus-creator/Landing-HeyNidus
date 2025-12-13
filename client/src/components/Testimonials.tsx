@@ -1,5 +1,5 @@
 import { useState, memo } from 'react';
-import { testimonials } from '../data/siteData';
+import { useQuery } from '@tanstack/react-query';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { SectionCard } from './SectionCard';
 import testimonialImage1 from '@assets/generated_images/argentine_couple_casual_natural.png';
@@ -12,6 +12,7 @@ import testimonialImage7 from '@assets/generated_images/latina_woman_outdoor_nat
 import testimonialImage8 from '@assets/generated_images/latino_man_friendly_casual.png';
 import testimonialImage9 from '@assets/generated_images/argentine_man_urban_casual.png';
 import testimonialImage10 from '@assets/generated_images/latino_couple_buenos_aires.png';
+import type { Testimonial } from '@shared/schema';
 
 const testimonialImageMap: Record<string, string> = {
   'casual_young_couple_natural.png': testimonialImage1,
@@ -26,8 +27,20 @@ const testimonialImageMap: Record<string, string> = {
   'couple_casual_happy_natural.png': testimonialImage10,
 };
 
+function getImageUrl(imagen: string): string {
+  if (imagen.startsWith('/uploads/')) {
+    return imagen;
+  }
+  const filename = imagen.split('/').pop() || imagen;
+  return testimonialImageMap[filename] || '';
+}
+
 const Testimonials = memo(() => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  
+  const { data: testimonials = [], isLoading } = useQuery<Testimonial[]>({
+    queryKey: ['/api/testimonials/list'],
+  });
 
   const goToPrevious = () => {
     setCurrentIndex((prevIndex) =>
@@ -42,11 +55,27 @@ const Testimonials = memo(() => {
   };
 
   const itemsToShow = 3;
-  const visibleTestimonials = [];
+  const visibleTestimonials: Testimonial[] = [];
   
-  for (let i = 0; i < itemsToShow; i++) {
-    const index = (currentIndex + i) % testimonials.length;
-    visibleTestimonials.push(testimonials[index]);
+  if (testimonials.length > 0) {
+    for (let i = 0; i < Math.min(itemsToShow, testimonials.length); i++) {
+      const index = (currentIndex + i) % testimonials.length;
+      visibleTestimonials.push(testimonials[index]);
+    }
+  }
+
+  if (isLoading) {
+    return (
+      <SectionCard className="mx-auto max-w-6xl px-4">
+        <div className="flex justify-center items-center py-16">
+          <div className="w-8 h-8 border-4 border-emerald-200 dark:border-emerald-800 border-t-emerald-600 dark:border-t-emerald-400 rounded-full animate-spin"></div>
+        </div>
+      </SectionCard>
+    );
+  }
+
+  if (testimonials.length === 0) {
+    return null;
   }
 
   return (
@@ -68,7 +97,7 @@ const Testimonials = memo(() => {
               >
               <div className="w-full h-48 overflow-hidden bg-slate-100 dark:bg-slate-700">
                 <img
-                  src={testimonialImageMap[testimonial.imagen] || ''}
+                  src={getImageUrl(testimonial.imagen)}
                   alt={testimonial.autor}
                   className="w-full h-full object-cover"
                   data-testid={`img-testimonial-${testimonial.id}`}
