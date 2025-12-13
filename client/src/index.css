@@ -26,14 +26,23 @@ body {
   padding: 0;
 }
 
-/* Tema Noche - muy oscuro */
-.dark body {
-  @apply bg-slate-950 text-slate-100;
+/* Tema Noche - negro/gris muy oscuro */
+.dark:not(.rest) body {
+  @apply bg-neutral-950 text-neutral-100;
 }
 
 /* Tema Descanso - azul slate */
-.rest body {
+.dark.rest body {
   @apply bg-slate-900 text-slate-100;
+}
+
+/* Navbar backgrounds por tema */
+.dark:not(.rest) header {
+  @apply !bg-neutral-900/90;
+}
+
+.dark.rest header {
+  @apply !bg-slate-800/90;
 }
 
 /* =========================

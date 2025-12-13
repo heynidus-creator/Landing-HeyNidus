@@ -51,7 +51,7 @@ const Navbar = () => {
 
   return (
     <header className="fixed inset-x-0 top-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur border-b border-slate-200 dark:border-slate-700 w-full">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-3 sm:px-4 py-3 w-full">
+      <nav className="mx-auto flex max-w-6xl items-center justify-between px-3 sm:px-4 py-2 w-full">
         <button 
           onClick={handleLogoClick}
           className="flex items-center hover:opacity-80 transition-opacity cursor-pointer bg-none border-none p-0 flex-shrink-0 group"
@@ -60,7 +60,7 @@ const Navbar = () => {
           <img 
             src="/heynidus-logo.png" 
             alt="HeyNidus" 
-            className="h-10 sm:h-12 w-auto dark:brightness-0 dark:invert"
+            className="h-14 sm:h-16 w-auto dark:brightness-0 dark:invert"
             data-testid="img-logo"
           />
         </button>
