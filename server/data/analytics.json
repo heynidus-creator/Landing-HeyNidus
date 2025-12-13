@@ -1095,6 +1095,94 @@
       "source": "otro",
       "seconds": 31,
       "timestamp": "2025-12-13T01:31:41.294Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 1,
+      "timestamp": "2025-12-13T01:32:08.874Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-13T01:32:38.866Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-13T01:33:08.861Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-13T01:33:39.302Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-13T01:34:38.868Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-13T01:35:09.300Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-13T01:36:08.865Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-13T01:36:39.289Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-13T01:37:39.299Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-13T01:38:09.308Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 1,
+      "timestamp": "2025-12-13T01:38:29.095Z"
     }
   ],
   "sessions": []

@@ -500,7 +500,7 @@ const ProjectDetail = () => {
 
               <div className="pt-4 sm:pt-6 border-t border-slate-200 dark:border-slate-700 space-y-2 sm:space-y-3">
                 <a
-                  href="https://wa.me/5491131298840"
+                  href="https://wa.me/5491171077797"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block w-full bg-emerald-600 text-white font-semibold py-2 sm:py-3 text-sm sm:text-base rounded-full text-center hover:bg-emerald-700 transition"

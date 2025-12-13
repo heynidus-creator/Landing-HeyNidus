@@ -61,7 +61,7 @@
   Mensaje: ${form.mensaje}`;
   
       const encodedMessage = encodeURIComponent(whatsappMessage);
-      const whatsappUrl = `https://wa.me/5491131298840?text=${encodedMessage}`;
+      const whatsappUrl = `https://wa.me/5491171077797?text=${encodedMessage}`;
   
       window.open(whatsappUrl, '_blank');
   
@@ -230,7 +230,7 @@
   
             <div>
               <a
-                href="https://wa.me/5491131298840"
+                href="https://wa.me/5491171077797"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-emerald-600 dark:bg-emerald-600 px-5 py-2 text-sm font-semibold text-white shadow hover:bg-emerald-700 dark:hover:bg-emerald-700 transition"
