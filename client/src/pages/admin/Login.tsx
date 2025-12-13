@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { useToast } from '@/hooks/use-toast';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 
 interface AdminLoginProps {
   onLoginSuccess: () => void;
@@ -9,40 +9,70 @@ interface AdminLoginProps {
 
 export default function AdminLogin({ onLoginSuccess }: AdminLoginProps) {
   const { toast } = useToast();
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isLoading) return;
+
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/admin/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      // 1) Login
+      const loginRes = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password }),
-        credentials: 'include',
+        credentials: "include",
       });
 
-      if (response.ok) {
-        toast({
-          title: 'Bienvenido',
-          description: 'Sesión iniciada correctamente',
-          variant: 'default',
-        });
-        onLoginSuccess();
-      } else {
-        toast({
-          title: 'Error',
-          description: 'Contraseña incorrecta',
-          variant: 'destructive',
-        });
+      // Intentamos leer JSON (aunque no siempre viene)
+      let loginJson: any = null;
+      try {
+        loginJson = await loginRes.json();
+      } catch {
+        // ignore
       }
-    } catch (error) {
+
+      if (!loginRes.ok) {
+        toast({
+          title: "Error",
+          description: loginJson?.message || "Contraseña incorrecta",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // 2) Revalidar sesión (evita el "200 OK pero no entra")
+      const meRes = await fetch("/api/admin/me", {
+        method: "GET",
+        credentials: "include",
+        cache: "no-store",
+      });
+
+      if (!meRes.ok) {
+        toast({
+          title: "Sesión no confirmada",
+          description:
+            "El login respondió OK pero no se pudo validar la sesión. Probablemente la cookie no se está guardando en Vercel.",
+          variant: "destructive",
+        });
+        return;
+      }
+
       toast({
-        title: 'Error',
-        description: 'Error al conectar con el servidor',
-        variant: 'destructive',
+        title: "Bienvenido",
+        description: "Sesión iniciada correctamente",
+        variant: "default",
+      });
+
+      onLoginSuccess();
+    } catch {
+      toast({
+        title: "Error",
+        description: "Error al conectar con el servidor",
+        variant: "destructive",
       });
     } finally {
       setIsLoading(false);
@@ -62,7 +92,10 @@ export default function AdminLogin({ onLoginSuccess }: AdminLoginProps) {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="password" className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300"
+              >
                 Contraseña
               </label>
               <Input
@@ -82,7 +115,7 @@ export default function AdminLogin({ onLoginSuccess }: AdminLoginProps) {
               className="w-full"
               data-testid="button-admin-login"
             >
-              {isLoading ? 'Verificando...' : 'Iniciar Sesión'}
+              {isLoading ? "Verificando..." : "Iniciar Sesión"}
             </Button>
           </form>
 

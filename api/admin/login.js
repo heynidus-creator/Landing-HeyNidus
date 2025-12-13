@@ -1,29 +1,25 @@
 export default function handler(req, res) {
-  // Solo permitimos POST
+  // Evita cache (CRÍTICO)
+  res.setHeader("Cache-Control", "no-store, max-age=0");
+  res.setHeader("Pragma", "no-cache");
+
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
 
   const { password } = req.body || {};
+  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "HEYNIDUS+google/2025";
 
-  // La contraseña va en variables de entorno (NO hardcodear en prod)
-  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
-
-  if (!ADMIN_PASSWORD) {
-    return res.status(500).json({
-      error: "ADMIN_PASSWORD no configurada en Vercel",
-    });
+  if (!password || password !== ADMIN_PASSWORD) {
+    return res.status(401).json({ authenticated: false });
   }
 
-  if (password !== ADMIN_PASSWORD) {
-    return res.status(401).json({
-      ok: false,
-      error: "Contraseña incorrecta",
-    });
-  }
+  // Cookie para Vercel (HTTPS → Secure)
+  const oneWeek = 60 * 60 * 24 * 7;
 
-  // Login OK
-  return res.status(200).json({
-    ok: true,
-  });
+  res.setHeader("Set-Cookie", [
+    `admin_session=1; Path=/; HttpOnly; SameSite=Lax; Secure; Max-Age=${oneWeek}`,
+  ]);
+
+  return res.status(200).json({ authenticated: true });
 }
