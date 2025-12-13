@@ -9,6 +9,7 @@
 html {
   scroll-behavior: smooth;
   color-scheme: light;
+  overflow-y: scroll;
 }
 
 html.dark {
@@ -27,22 +28,30 @@ body {
 }
 
 /* Tema Noche - negro/gris muy oscuro */
-.dark:not(.rest) body {
+html.dark:not(.rest) {
+  @apply bg-neutral-950;
+}
+
+html.dark:not(.rest) body {
   @apply bg-neutral-950 text-neutral-100;
 }
 
 /* Tema Descanso - azul slate */
-.dark.rest body {
+html.dark.rest {
+  @apply bg-slate-900;
+}
+
+html.dark.rest body {
   @apply bg-slate-900 text-slate-100;
 }
 
 /* Navbar backgrounds por tema */
-.dark:not(.rest) header {
-  @apply !bg-neutral-900/90;
+html.dark:not(.rest) header {
+  @apply !bg-neutral-900/90 !border-neutral-700;
 }
 
-.dark.rest header {
-  @apply !bg-slate-800/90;
+html.dark.rest header {
+  @apply !bg-slate-800/90 !border-slate-700;
 }
 
 /* =========================
