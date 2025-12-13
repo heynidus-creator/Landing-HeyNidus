@@ -43,7 +43,7 @@ const Footer = () => {
             <img
               src="/heynidus-logo.png"
               alt="HeyNidus"
-              className="h-24 w-auto dark:brightness-0 dark:invert"
+              className="h-36 w-auto dark:brightness-0 dark:invert"
               data-testid="img-logo-footer"
             />
             <p className="text-sm text-slate-600 dark:text-slate-400">
