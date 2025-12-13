@@ -1,0 +1,38 @@
+Actúa como desarrollador front-end experto en React/TypeScript + Tailwind dentro de este proyecto.
+Objetivo: dejar Proyectos, Blog y Testimonios 100% prolijos y profesionales: todas las “cards/boxes” deben verse del mismo tamaño, sin desparejos, sin imágenes rotas, y manteniendo responsive (sin scroll horizontal).
+
+Qué tenés que hacer (sin inventar estructura nueva)
+
+Cards siempre parejas (misma altura)
+
+En Projects.tsx, Blog.tsx, Testimonials.tsx asegurá que cada card sea un contenedor flex vertical y que ocupe toda la altura disponible del “slot” de la grilla/carrusel.
+
+Hacé que el bloque del contenido sea “elástico” (crece/encoge) y que el footer (botones/autor) se mantenga abajo.
+
+Donde haya textos con longitudes distintas, aplicá recorte controlado (clamp/truncate/limitado por líneas) para que no haya cards más altas que otras. La idea es: mismo alto visual, mismo look.
+
+Imágenes sin romper (y fallback elegante)
+
+En Proyectos/Blog/Testimonios, estandarizá el área de imagen: siempre ocupa su caja y se recorta de forma prolija (object-cover).
+
+Si la imagen no existe o falla, no se debe ver el ícono roto ni romper el diseño: implementá un fallback visual (placeholder simple y elegante) que ocupe el mismo espacio que la imagen.
+
+Podés hacerlo con onError para reemplazar por placeholder o mostrar un div de reemplazo.
+
+Blog HeyNidus: quitar la paloma y centrar
+
+En Blog.tsx eliminá el ícono de paloma del heading.
+
+Centrá el título “Blog HeyNidus” y su descripción dentro de la sección.
+
+Aplicá al título un estilo más “marca” (similar sensación al logo) sin cambiar la tipografía global del sitio: creá una clase CSS pequeña en client/src/index.css y usala solo en ese heading.
+
+Reglas
+
+No cambies rutas, hooks, data ni arquitectura.
+
+No agregues librerías nuevas si no es estrictamente necesario.
+
+No uses medidas hardcodeadas raras: resolvelo con estructura (flex, h-full, mt-auto, clamp, etc.).
+
+Resultado esperado: Proyectos/Blog/Testimonios con cards uniformes, mismo alto, imágenes correctas o placeholder, y Blog sin paloma y centrado.

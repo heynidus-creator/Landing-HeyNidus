@@ -1,37 +1,37 @@
-import { SiFacebook, SiInstagram, SiTiktok, SiYoutube } from 'react-icons/si';
-import { MessageCircle } from 'lucide-react';
+import { SiFacebook, SiInstagram, SiTiktok, SiYoutube } from "react-icons/si";
+import { MessageCircle } from "lucide-react";
 
 const Footer = () => {
   const socialLinks = [
     {
-      name: 'Facebook',
+      name: "Facebook",
       icon: SiFacebook,
-      url: 'https://www.facebook.com/heynidus',
-      testId: 'link-facebook',
+      url: "https://www.facebook.com/heynidus",
+      testId: "link-facebook",
     },
     {
-      name: 'Instagram',
+      name: "Instagram",
       icon: SiInstagram,
-      url: 'https://www.instagram.com/heynidus/',
-      testId: 'link-instagram',
+      url: "https://www.instagram.com/heynidus/",
+      testId: "link-instagram",
     },
     {
-      name: 'TikTok',
+      name: "TikTok",
       icon: SiTiktok,
-      url: 'https://www.tiktok.com/@heynidus',
-      testId: 'link-tiktok',
+      url: "https://www.tiktok.com/@heynidus",
+      testId: "link-tiktok",
     },
     {
-      name: 'YouTube',
+      name: "YouTube",
       icon: SiYoutube,
-      url: 'https://www.youtube.com/@heynidus',
-      testId: 'link-youtube',
+      url: "https://www.youtube.com/@heynidus",
+      testId: "link-youtube",
     },
     {
-      name: 'WhatsApp',
+      name: "WhatsApp",
       icon: MessageCircle,
-      url: 'https://wa.me/5491131298840',
-      testId: 'link-whatsapp-footer',
+      url: "https://wa.me/5491131298840",
+      testId: "link-whatsapp-footer",
     },
   ];
 
@@ -40,17 +40,18 @@ const Footer = () => {
       <div className="mx-auto max-w-6xl px-3 sm:px-4 w-full">
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
           <div className="flex items-center gap-3">
-            <img 
-              src="/heynidus-logo.png" 
-              alt="HeyNidus" 
-              className="h-6 w-auto dark:brightness-0 dark:invert"
+            <img
+              src="/heynidus-logo.png"
+              alt="HeyNidus"
+              className="h-24 w-auto dark:brightness-0 dark:invert"
               data-testid="img-logo-footer"
             />
             <p className="text-sm text-slate-600 dark:text-slate-400">
-              © {new Date().getFullYear()} HeyNidus. Todos los derechos reservados.
+              © {new Date().getFullYear()} HeyNidus. Todos los derechos
+              reservados.
             </p>
           </div>
-          
+
           <div className="flex gap-6">
             {socialLinks.map((social) => {
               const Icon = social.icon;

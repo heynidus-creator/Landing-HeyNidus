@@ -975,6 +975,126 @@
       "source": "direct",
       "seconds": 1,
       "timestamp": "2025-12-13T01:22:18.378Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-13T01:22:47.129Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-13T01:23:47.123Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-13T01:24:17.131Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-13T01:25:17.130Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-13T01:25:47.133Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-13T01:26:17.285Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-13T01:26:47.292Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-13T01:27:47.130Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-13T01:28:17.290Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-13T01:28:47.288Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 33,
+      "timestamp": "2025-12-13T01:29:19.817Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 57,
+      "timestamp": "2025-12-13T01:30:17.649Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 1,
+      "timestamp": "2025-12-13T01:31:10.300Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 1,
+      "timestamp": "2025-12-13T01:31:20.980Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 31,
+      "timestamp": "2025-12-13T01:31:41.294Z"
     }
   ],
   "sessions": []

@@ -90,28 +90,31 @@ const Testimonials = memo(() => {
       <div className="relative">
         <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {visibleTestimonials.map((testimonial, idx) => (
-            <div key={`${currentIndex}-${idx}`}>
+            <div key={`${currentIndex}-${idx}`} className="h-full">
               <div
-                className="flex flex-col rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 overflow-hidden shadow-sm hover:shadow-md transition"
+                className="flex flex-col h-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 overflow-hidden shadow-sm hover:shadow-md transition"
                 data-testid={`card-testimonial-${testimonial.id}`}
               >
-              <div className="w-full h-48 overflow-hidden bg-slate-100 dark:bg-slate-700">
+              <div className="w-full h-48 flex-shrink-0 overflow-hidden bg-slate-100 dark:bg-slate-700">
                 <img
                   src={getImageUrl(testimonial.imagen)}
                   alt={testimonial.autor}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23f1f5f9" width="400" height="300"/%3E%3C/svg%3E';
+                  }}
                   className="w-full h-full object-cover"
                   data-testid={`img-testimonial-${testimonial.id}`}
                 />
               </div>
 
-              <div className="p-5 flex flex-col flex-1">
-                <p className="mb-4 text-xs md:text-sm text-slate-700 dark:text-slate-300 italic leading-relaxed">
+              <div className="p-5 flex flex-col flex-1 min-h-0">
+                <p className="mb-4 text-xs md:text-sm text-slate-700 dark:text-slate-300 italic leading-relaxed line-clamp-4 flex-1">
                   "{testimonial.contenido}"
                 </p>
 
-                <div className="mt-auto pt-4 border-t border-slate-200 dark:border-slate-700">
-                  <p className="font-semibold text-slate-900 dark:text-slate-100 text-sm">{testimonial.autor}</p>
-                  <p className="text-xs text-emerald-700 dark:text-emerald-400">{testimonial.rol}</p>
+                <div className="mt-auto pt-4 border-t border-slate-200 dark:border-slate-700 flex-shrink-0">
+                  <p className="font-semibold text-slate-900 dark:text-slate-100 text-sm line-clamp-1">{testimonial.autor}</p>
+                  <p className="text-xs text-emerald-700 dark:text-emerald-400 line-clamp-1">{testimonial.rol}</p>
                 </div>
               </div>
               </div>

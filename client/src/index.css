@@ -168,6 +168,14 @@ html.dark.rest footer {
   opacity: 0;
 }
 
+/* Blog title style */
+.blog-title {
+  position: relative;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* Stagger delays opcionales */
 .stagger-1 {
   animation-delay: 0.1s;

@@ -83,15 +83,18 @@ const Projects = () => {
             : ProjectImageMap[project.id] || '';
           
           return (
-            <div key={project.id}>
+            <div key={project.id} className="h-full">
               <article
-                className="flex flex-col justify-between rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm hover:shadow-md transition overflow-hidden"
+                className="flex flex-col h-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm hover:shadow-md transition overflow-hidden"
                 data-testid={`card-project-${project.id}`}
               >
-                <div className="relative w-full h-40 sm:h-48 bg-slate-200 dark:bg-slate-700 overflow-hidden">
+                <div className="relative w-full h-40 sm:h-48 bg-slate-200 dark:bg-slate-700 flex-shrink-0 overflow-hidden">
                   <img
                     src={projectImage}
                     alt={project.nombre}
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23e2e8f0" width="400" height="300"/%3E%3C/svg%3E';
+                    }}
                     className={`w-full h-full object-cover ${
                       project.etapa === 'Próximamente' ? 'blur-sm' : ''
                     }`}
@@ -102,17 +105,17 @@ const Projects = () => {
                     </div>
                   )}
                 </div>
-                <div className="p-5 flex flex-col justify-between flex-1">
-                  <div>
-                    <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-1">{project.nombre}</h3>
-                    <div className="flex gap-2 mb-1">
+                <div className="p-5 flex flex-col flex-1 min-h-0">
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-1 line-clamp-2">{project.nombre}</h3>
+                    <div className="flex gap-2 mb-1 flex-wrap">
                       <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-400">{project.tipo}</p>
                       <p className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 px-2 py-0.5 rounded">{project.etapa}</p>
                     </div>
                     <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">{project.ubicacionTexto}</p>
-                    <p className="text-sm text-slate-700 dark:text-slate-300">{project.descripcion}</p>
+                    <p className="text-sm text-slate-700 dark:text-slate-300 line-clamp-3">{project.descripcion}</p>
                   </div>
-                  <div className="mt-4 flex gap-3 flex-col sm:flex-row">
+                  <div className="mt-4 flex gap-3 flex-col sm:flex-row flex-shrink-0">
                     <a
                       href={`/proyecto/${project.id}`}
                       className="inline-flex items-center justify-center rounded-full bg-emerald-600 dark:bg-emerald-600 px-3 sm:px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700 dark:hover:bg-emerald-700 transition"

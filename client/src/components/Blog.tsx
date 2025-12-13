@@ -5,7 +5,6 @@ import blogImage2 from '@assets/generated_images/own_plot_of_land_freedom.png';
 import blogImage3 from '@assets/generated_images/nature_with_modern_services.png';
 import blogImage4 from '@assets/generated_images/investment_opportunities_growth.png';
 import blogImage5 from '@assets/generated_images/pre-construction_development_phase.png';
-import birdIcon from '@assets/image_1763966603851.png';
 import useEmblaCarousel from 'embla-carousel-react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { SectionCard } from './SectionCard';
@@ -56,14 +55,11 @@ const Blog = memo(() => {
 
   return (
     <SectionCard className="mx-auto max-w-6xl px-3 sm:px-4 w-full">
-      <div className="mb-6 sm:mb-8 space-y-2 sm:space-y-3">
-        <h2 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100 flex items-center gap-3">
-          <span className="relative inline-block">
-            Blog HeyNidus
-            <img src={birdIcon} alt="bird" className="absolute w-5 h-5 -top-2 -right-6" style={{marginTop: '-2px'}} />
-          </span>
+      <div className="mb-6 sm:mb-8 space-y-2 sm:space-y-3 text-center">
+        <h2 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100 blog-title">
+          Blog HeyNidus
         </h2>
-        <p className="text-sm md:text-base text-slate-700 dark:text-slate-300">
+        <p className="text-sm md:text-base text-slate-700 dark:text-slate-300 mx-auto max-w-2xl">
           Compartimos información clave para ayudarte a tomar mejores decisiones al momento de elegir un lote o evaluar
           un proyecto.
         </p>
@@ -82,38 +78,41 @@ const Blog = memo(() => {
         <div className="flex-1 min-w-0 overflow-hidden" ref={emblaRef}>
           <div className="flex gap-4 sm:gap-6">
             {blogPosts.map((post, idx) => (
-              <div key={post.id}>
+              <div key={post.id} className="h-full">
                 <article
-                  className="flex-shrink-0 w-64 sm:w-80 flex flex-col justify-between rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 overflow-hidden shadow-sm hover:shadow-md transition"
+                  className="flex-shrink-0 w-64 sm:w-80 h-full flex flex-col rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 overflow-hidden shadow-sm hover:shadow-md transition"
                   data-testid={`card-blog-${post.id}`}
                 >
-                <div className="w-full h-48 overflow-hidden bg-slate-100 dark:bg-slate-700">
+                <div className="w-full h-48 flex-shrink-0 overflow-hidden bg-slate-100 dark:bg-slate-700">
                   <img
                     src={blogImageMap[post.imagen] || ''}
                     alt={post.titulo}
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="320" height="192"%3E%3Crect fill="%23f1f5f9" width="320" height="192"/%3E%3C/svg%3E';
+                    }}
                     className="w-full h-full object-cover"
                     data-testid={`img-blog-${post.id}`}
                   />
                 </div>
-                <div className="p-5">
+                <div className="p-5 flex flex-col flex-1 min-h-0">
                   <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">{post.fecha}</p>
-                  <h3 className="text-sm md:text-base font-semibold text-slate-900 dark:text-slate-100 mb-2">{post.titulo}</h3>
-                  <p className="text-xs md:text-sm text-slate-700 dark:text-slate-300">{post.resumen}</p>
-                </div>
-                <div className="px-5 pb-5">
-                  <button
-                    type="button"
-                    onClick={() => setSelectedPost(selectedPost === post.id ? null : post.id)}
-                    className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 transition"
-                    data-testid={`button-read-more-${post.id}`}
-                  >
-                    {selectedPost === post.id ? 'Leer menos ↑' : 'Leer más →'}
-                  </button>
-                  {selectedPost === post.id && (
-                    <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
-                      {blogContent[post.id]}
-                    </div>
-                  )}
+                  <h3 className="text-sm md:text-base font-semibold text-slate-900 dark:text-slate-100 mb-2 line-clamp-2">{post.titulo}</h3>
+                  <p className="text-xs md:text-sm text-slate-700 dark:text-slate-300 line-clamp-3 flex-1">{post.resumen}</p>
+                  <div className="mt-3">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedPost(selectedPost === post.id ? null : post.id)}
+                      className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 transition"
+                      data-testid={`button-read-more-${post.id}`}
+                    >
+                      {selectedPost === post.id ? 'Leer menos ↑' : 'Leer más →'}
+                    </button>
+                    {selectedPost === post.id && (
+                      <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-300 leading-relaxed max-h-48 overflow-y-auto">
+                        {blogContent[post.id]}
+                      </div>
+                    )}
+                  </div>
                 </div>
                 </article>
               </div>
