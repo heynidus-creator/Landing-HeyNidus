@@ -67,7 +67,7 @@ const ThemeToggle = () => {
           <CurrentIcon className="w-5 h-5" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="min-w-32">
+      <DropdownMenuContent align="end" className="min-w-32 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
         {(Object.keys(themeConfig) as Theme[]).map((t) => {
           const config = themeConfig[t];
           const Icon = config.icon;
