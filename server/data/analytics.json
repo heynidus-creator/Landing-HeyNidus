@@ -111,6 +111,14 @@
       "source": "otro",
       "seconds": 30,
       "timestamp": "2025-12-13T00:20:45.032Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-13T00:21:15.034Z"
     }
   ],
   "sessions": []

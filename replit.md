@@ -89,10 +89,12 @@ Preferred communication style: Simple, everyday language.
 - Admin pages protected with checkAdminAuth middleware
 
 **Admin Features:**
-- Projects admin page at /admin/proyectos
-- Create, edit, delete projects with full CRUD functionality
+- Unified admin panel at /admin with tabbed interface
+- 4 main tabs: Estadísticas, Proyectos, Blog, Testimonios
+- All CRUD operations in single Dashboard component
 - File upload for images, master plan files, and videos
 - Google Maps integration with lat/lng coordinates and place URLs
+- Local theme toggle for dark/light mode preference
 
 ### External Dependencies
 
