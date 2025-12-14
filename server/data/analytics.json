@@ -4399,6 +4399,102 @@
       "source": "otro",
       "seconds": 30,
       "timestamp": "2025-12-14T23:46:58.806Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-14T23:47:58.807Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-14T23:48:58.802Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-14T23:49:58.808Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 36,
+      "timestamp": "2025-12-14T23:50:34.798Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-14T23:51:34.820Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-14T23:52:34.812Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-14T23:53:34.814Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-14T23:54:34.811Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-14T23:55:34.812Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-14T23:56:34.829Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-14T23:57:34.819Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 42,
+      "timestamp": "2025-12-14T23:58:16.924Z"
     }
   ],
   "sessions": []
