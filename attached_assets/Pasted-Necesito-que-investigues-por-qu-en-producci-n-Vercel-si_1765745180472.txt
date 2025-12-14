@@ -1,0 +1,81 @@
+Necesito que investigues por qué en producción (Vercel) siguen fallando cosas aunque en Replit preview funciona. NO hagas cambios ni edites archivos todavía. Solo revisá el código/config y respondé con:
+
+Causa probable de cada problema (con evidencia)
+
+Qué archivos exactos habría que tocar después (lista)
+
+Qué cambio puntual harías (pero sin implementarlo)
+
+Cómo probarlo en local y cómo verificarlo en Vercel
+
+Problemas en producción (Vercel)
+
+A) “Ver más” navega a /proyecto/:id pero en Vercel no entra
+
+Sospecha: SPA routing / rewrites.
+
+Revisar vercel.json (o configuración de Vercel) y confirmar si hay rewrites correctos para rutas client-side como:
+
+/proyecto/*
+
+/blog/*
+
+/admin
+
+y cualquier otra ruta interna del frontend
+
+Decirme si hoy Vercel está devolviendo 404, o si está sirviendo otra cosa, y por qué.
+
+B) Imágenes de proyectos rotas en producción
+
+Revisar client/src/components/Projects.tsx. Sospecha: ProjectImageMap está definido con keys string '1'...'4' pero se indexa con project.id numérico.
+
+Confirmar si se está usando ProjectImageMap[project.id] (mal) vs ProjectImageMap[String(project.id)] (bien).
+
+Confirmar también de dónde deberían salir las imágenes en prod:
+
+client/public/... (assets estáticos)
+
+imports de Vite @assets/... ?url
+
+/public/uploads (subidas por admin con multer)
+
+Si vienen de /public/uploads: explicarme si en Vercel persisten o no (probable que no).
+
+Quiero que me muestres cómo verificar que las imágenes “siguen estando”:
+
+qué carpetas revisar, qué rutas exactas deberían abrir en el navegador, y cómo confirmarlo con logs o inspección.
+
+C) Error: POST /api/analytics/track → 405 Method Not Allowed
+
+Confirmar si existe esa ruta backend y si acepta POST.
+
+Revisar si por algún rewrite de Vercel, /api/* se está yendo al frontend (y por eso 405).
+
+Decirme qué archivo define esa ruta (ej: server/routes.ts, api/analytics/track.js, etc.) y por qué en Vercel responde 405.
+
+Contexto adicional
+
+Adjunté gif + captura donde se ve que en prod falla “Ver más” y las imágenes.
+
+Quiero que tu respuesta incluya pasos concretos de verificación (sin tocar código aún):
+
+Qué endpoints llamar manualmente en el browser/devtools (ej: /api/projects/list, /api/projects/1, etc.)
+
+Qué esperar en cada respuesta
+
+Qué mirar en Network/Console
+
+Entregable
+
+Respondeme con un informe de diagnóstico:
+
+“Hallazgos” (por cada problema A/B/C)
+
+“Pruebas realizadas / evidencia” (qué archivo/línea o config lo demuestra)
+
+“Plan de corrección” (qué cambiarías después, en qué archivos)
+
+“Checklist de verificación en Vercel” (pasos para confirmar que quedó bien)
+
+IMPORTANTE: No implementes cambios todavía. Solo investigar, encontrar la causa y responder.
