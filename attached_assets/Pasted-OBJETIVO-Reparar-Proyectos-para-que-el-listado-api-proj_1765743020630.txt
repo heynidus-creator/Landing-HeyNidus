@@ -1,0 +1,45 @@
+OBJETIVO: Reparar Proyectos para que:
+
+el listado /api/projects/list devuelva proyectos válidos
+
+el detalle /api/projects/:id (o el endpoint que use el detalle) funcione siempre
+
+las imágenes vuelvan a verse en cards y en detalle
+
+si no hay imágenes subidas por admin, usar fallback a las imágenes locales existentes (assets) sin romper nada
+
+CONTEXTO: Frontend React+TS con @tanstack/react-query. En client/src/components/Projects.tsx se consulta queryKey: ['/api/projects/list']. Ahora el sitio muestra error y el detalle /proyecto/:id falla. Antes había data en client/src/data/siteData.ts (projects/blogPosts/testimonials).
+
+INSTRUCCIONES:
+
+Revisá qué endpoint usa la página de detalle (archivo client/src/pages/... del detalle) y asegurá que exista y responda.
+
+Implementá/ajustá en backend Express (o server actual) estos endpoints mínimos:
+
+GET /api/projects/list → devuelve array de proyectos con campos usados en UI (id, nombre, tipo, etapa, descripcion, ubicacionTexto, imagenes?).
+
+GET /api/projects/:id (o GET /api/projects/get/:id si ya existe) → devuelve el proyecto individual.
+
+Fuente de verdad temporal (para recuperar contenido):
+
+Inicializar datos desde client/src/data/siteData.ts (solo como seed inicial) y guardarlos en JSON en server, por ejemplo server/data/projects.json.
+
+Si el JSON existe, usar JSON. Si no existe, copiar desde siteData.ts y crearlo.
+
+Imágenes:
+
+Si project.imagenes[0] existe y apunta a uploads/..., servirlo como estático (/uploads/...) desde public/uploads (asegurar express static).
+
+Si no existe, devolver también un campo fallbackKey o usar id para que el frontend haga el mapeo a assets como ya hace ProjectImageMap.
+
+Garantizar que project.imagenes sea [] en vez de null para no romper.
+
+Asegurar que no haya 404 en /proyecto/:id por falta de endpoint o mismatch de ruta.
+
+Devolver códigos correctos (200, 404 si no existe).
+
+ENTREGABLE:
+
+Decime exactamente qué archivos tocaste y pegá el código completo de cada uno.
+
+Confirmá cómo queda la ruta de detalle que consume el frontend y el endpoint que la alimenta.

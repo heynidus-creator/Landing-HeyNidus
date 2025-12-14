@@ -43,14 +43,117 @@ const upload = multer({
   },
 });
 
+// Seed data for projects (fallback when projects.json doesn't exist)
+const SEED_PROJECTS: Project[] = [
+  {
+    id: "1",
+    nombre: "Barrio Capinota",
+    tipo: "Proyecto de terceros",
+    etapa: "Preventa",
+    ubicacionTexto: "Partido de Merlo",
+    descripcion: "Barrio abierto con 210 lotes de 300 m² cada uno. Preventa de 30 lotes con el mejor precio del mercado. Ventas por etapas.",
+    contenidoLargo: "Barrio Capinota es un proyecto residencial de magnitud en el Partido de Merlo, con 210 lotes de 300 m² cada uno (10m de frente x 30m de fondo). El master plan responde a un concepto de orden, armonía y funcionalidad. Actualmente se abre la preventa exclusiva con 30 lotes disponibles a los mejores precios del mercado. El proyecto contempla amenidades completas con áreas recreativas, plaza con juegos para niños, y servicios básicos (agua, electricidad, acceso principal). Las ventas se realizarán por etapas, permitiendo a los interesados acceso a vivienda con excelente proyección inmobiliaria.",
+    maps: {},
+    linkLotes: "",
+    caracteristicas: [
+      "210 lotes totales de 300 m² (10m x 30m)",
+      "Master plan de 210 lotes con acceso optimizado",
+      "Calles amplias, uniformes y bien distribuidas",
+      "Diseño urbano moderno con concepto de orden y funcionalidad",
+      "Oportunidad exclusiva: 30 lotes en preventa con mejor precio del mercado",
+      "Ventas por etapas con excelente proyección de valorización",
+    ],
+    servicios: ["Agua potable", "Electricidad", "Acceso principal"],
+    amenidades: ["Áreas recreativas", "Plaza con juegos para niños", "Espacios verdes", "Circulaciones amplias"],
+    superficie: "63.000 m²",
+    lotes: "30 lotes en preventa",
+    masterPlanFiles: [],
+    imagenes: [],
+    videos: [],
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "2",
+    nombre: "Altos Valles de Glew",
+    tipo: "Proyecto de terceros",
+    etapa: "Próximamente",
+    ubicacionTexto: "Partido de Glew",
+    descripcion: "Próximamente",
+    contenidoLargo: "",
+    maps: {},
+    linkLotes: "",
+    caracteristicas: [],
+    servicios: [],
+    amenidades: [],
+    superficie: "",
+    lotes: "",
+    masterPlanFiles: [],
+    imagenes: [],
+    videos: [],
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "3",
+    nombre: "Altos de Cañuela",
+    tipo: "Proyecto de terceros",
+    etapa: "Próximamente",
+    ubicacionTexto: "Partido de Cañuelas",
+    descripcion: "Próximamente. Lotes diseñados para familias que buscan espacio, verde y entorno en desarrollo.",
+    contenidoLargo: "Altos de Cañuela es un proyecto próximo a lanzarse en el Partido de Cañuelas, pensado para familias que buscan amplitud y contacto con la naturaleza. Los lotes son de gran superficie, perfectos para construir casas con jardines amplios. El entorno tiene una vocación rural pero con planes de urbanización futura, lo que convierte a este proyecto en una excelente inversión a largo plazo.",
+    maps: {},
+    linkLotes: "",
+    caracteristicas: [
+      "Lotes amplios con mucho espacio",
+      "Entorno rural pero con servicios",
+      "Ideales para familias grandes",
+      "Proyección de urbanización futura",
+    ],
+    servicios: ["Acceso principal planificado", "Servicios a proyectar"],
+    amenidades: ["Mucha vegetación", "Conexión con naturaleza", "Potencial de desarrollo"],
+    superficie: "18.000 m²",
+    lotes: "52 lotes",
+    masterPlanFiles: [],
+    imagenes: [],
+    videos: [],
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "4",
+    nombre: "Valles del Pino",
+    tipo: "Proyecto de terceros",
+    etapa: "Próximamente",
+    ubicacionTexto: "Partido de La Matanza",
+    descripcion: "Próximamente",
+    contenidoLargo: "",
+    maps: {},
+    linkLotes: "",
+    caracteristicas: [],
+    servicios: [],
+    amenidades: [],
+    superficie: "",
+    lotes: "",
+    masterPlanFiles: [],
+    imagenes: [],
+    videos: [],
+    updatedAt: new Date().toISOString(),
+  },
+];
+
 // Helper functions
 function readProjects(): Project[] {
   try {
-    const data = fs.readFileSync(PROJECTS_FILE, "utf-8");
-    return JSON.parse(data);
+    if (fs.existsSync(PROJECTS_FILE)) {
+      const data = fs.readFileSync(PROJECTS_FILE, "utf-8");
+      const projects = JSON.parse(data);
+      if (Array.isArray(projects) && projects.length > 0) {
+        return projects;
+      }
+    }
   } catch {
-    return [];
+    // Fall through to seed data
   }
+  // Return seed data as fallback
+  return SEED_PROJECTS;
 }
 
 function writeProjects(projects: Project[]): void {
