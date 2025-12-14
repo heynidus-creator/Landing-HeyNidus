@@ -3,18 +3,52 @@ import { createServer, type Server } from "http";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
-import { insertProjectSchema, insertBlogPostSchema, insertTestimonialSchema, insertLeadSchema, type Project, type BlogPost, type Testimonial, type Lead } from "@shared/schema";
+import {
+  insertProjectSchema,
+  insertBlogPostSchema,
+  insertTestimonialSchema,
+  insertLeadSchema,
+  type Project,
+  type BlogPost,
+  type Testimonial,
+  type Lead,
+} from "@shared/schema";
 
 const PROJECTS_FILE = path.join(process.cwd(), "server/data/projects.json");
 const BLOG_FILE = path.join(process.cwd(), "server/data/blog.json");
-const TESTIMONIALS_FILE = path.join(process.cwd(), "server/data/testimonials.json");
+const TESTIMONIALS_FILE = path.join(
+  process.cwd(),
+  "server/data/testimonials.json",
+);
 const ANALYTICS_FILE = path.join(process.cwd(), "server/data/analytics.json");
 const LEADS_FILE = path.join(process.cwd(), "server/data/leads.json");
-const UPLOADS_DIR = path.join(process.cwd(), "client/public/uploads");
 
-// Ensure uploads directory exists
+const UPLOADS_DIR = path.join(process.cwd(), "client/public/uploads");
+const DATA_DIR = path.join(process.cwd(), "server/data");
+
+// Ensure data and uploads directories exist
+if (!fs.existsSync(DATA_DIR)) {
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+}
 if (!fs.existsSync(UPLOADS_DIR)) {
   fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+}
+
+/**
+ * Helpers para paths (FIX crítico)
+ * - Si guardamos "/uploads/x.jpg", path.join(..., "/uploads/x.jpg") ignora lo anterior.
+ * - Estos helpers normalizan y siempre apuntan a client/public/...
+ */
+function stripLeadingSlash(p: string) {
+  return p.replace(/^\/+/, "");
+}
+function publicFileFullPath(filePath: string) {
+  const safe = stripLeadingSlash(filePath);
+  return path.join(process.cwd(), "client/public", safe);
+}
+function toPublicUrl(filePath: string) {
+  if (!filePath) return "";
+  return filePath.startsWith("/") ? filePath : `/${filePath}`;
 }
 
 // Multer storage config
@@ -34,11 +68,11 @@ const upload = multer({
   limits: { fileSize: 50 * 1024 * 1024 }, // 50MB max
   fileFilter: (req, file, cb) => {
     const allowedTypes = /jpeg|jpg|png|gif|webp|mp4|mov|avi|webm|pdf/;
-    const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
+    const extname = allowedTypes.test(
+      path.extname(file.originalname).toLowerCase(),
+    );
     const mimetype = allowedTypes.test(file.mimetype);
-    if (extname || mimetype) {
-      return cb(null, true);
-    }
+    if (extname || mimetype) return cb(null, true);
     cb(new Error("Solo se permiten imágenes, videos y PDFs"));
   },
 });
@@ -51,8 +85,10 @@ const SEED_PROJECTS: Project[] = [
     tipo: "Proyecto de terceros",
     etapa: "Preventa",
     ubicacionTexto: "Partido de Merlo",
-    descripcion: "Barrio abierto con 210 lotes de 300 m² cada uno. Preventa de 30 lotes con el mejor precio del mercado. Ventas por etapas.",
-    contenidoLargo: "Barrio Capinota es un proyecto residencial de magnitud en el Partido de Merlo, con 210 lotes de 300 m² cada uno (10m de frente x 30m de fondo). El master plan responde a un concepto de orden, armonía y funcionalidad. Actualmente se abre la preventa exclusiva con 30 lotes disponibles a los mejores precios del mercado. El proyecto contempla amenidades completas con áreas recreativas, plaza con juegos para niños, y servicios básicos (agua, electricidad, acceso principal). Las ventas se realizarán por etapas, permitiendo a los interesados acceso a vivienda con excelente proyección inmobiliaria.",
+    descripcion:
+      "Barrio abierto con 210 lotes de 300 m² cada uno. Preventa de 30 lotes con el mejor precio del mercado. Ventas por etapas.",
+    contenidoLargo:
+      "Barrio Capinota es un proyecto residencial de magnitud en el Partido de Merlo, con 210 lotes de 300 m² cada uno (10m de frente x 30m de fondo). El master plan responde a un concepto de orden, armonía y funcionalidad. Actualmente se abre la preventa exclusiva con 30 lotes disponibles a los mejores precios del mercado. El proyecto contempla amenidades completas con áreas recreativas, plaza con juegos para niños, y servicios básicos (agua, electricidad, acceso principal). Las ventas se realizarán por etapas, permitiendo a los interesados acceso a vivienda con excelente proyección inmobiliaria.",
     maps: {},
     linkLotes: "",
     caracteristicas: [
@@ -64,7 +100,12 @@ const SEED_PROJECTS: Project[] = [
       "Ventas por etapas con excelente proyección de valorización",
     ],
     servicios: ["Agua potable", "Electricidad", "Acceso principal"],
-    amenidades: ["Áreas recreativas", "Plaza con juegos para niños", "Espacios verdes", "Circulaciones amplias"],
+    amenidades: [
+      "Áreas recreativas",
+      "Plaza con juegos para niños",
+      "Espacios verdes",
+      "Circulaciones amplias",
+    ],
     superficie: "63.000 m²",
     lotes: "30 lotes en preventa",
     masterPlanFiles: [],
@@ -98,8 +139,10 @@ const SEED_PROJECTS: Project[] = [
     tipo: "Proyecto de terceros",
     etapa: "Próximamente",
     ubicacionTexto: "Partido de Cañuelas",
-    descripcion: "Próximamente. Lotes diseñados para familias que buscan espacio, verde y entorno en desarrollo.",
-    contenidoLargo: "Altos de Cañuela es un proyecto próximo a lanzarse en el Partido de Cañuelas, pensado para familias que buscan amplitud y contacto con la naturaleza. Los lotes son de gran superficie, perfectos para construir casas con jardines amplios. El entorno tiene una vocación rural pero con planes de urbanización futura, lo que convierte a este proyecto en una excelente inversión a largo plazo.",
+    descripcion:
+      "Próximamente. Lotes diseñados para familias que buscan espacio, verde y entorno en desarrollo.",
+    contenidoLargo:
+      "Altos de Cañuela es un proyecto próximo a lanzarse en el Partido de Cañuelas, pensado para familias que buscan amplitud y contacto con la naturaleza. Los lotes son de gran superficie, perfectos para construir casas con jardines amplios. El entorno tiene una vocación rural pero con planes de urbanización futura, lo que convierte a este proyecto en una excelente inversión a largo plazo.",
     maps: {},
     linkLotes: "",
     caracteristicas: [
@@ -109,7 +152,11 @@ const SEED_PROJECTS: Project[] = [
       "Proyección de urbanización futura",
     ],
     servicios: ["Acceso principal planificado", "Servicios a proyectar"],
-    amenidades: ["Mucha vegetación", "Conexión con naturaleza", "Potencial de desarrollo"],
+    amenidades: [
+      "Mucha vegetación",
+      "Conexión con naturaleza",
+      "Potencial de desarrollo",
+    ],
     superficie: "18.000 m²",
     lotes: "52 lotes",
     masterPlanFiles: [],
@@ -145,14 +192,11 @@ function readProjects(): Project[] {
     if (fs.existsSync(PROJECTS_FILE)) {
       const data = fs.readFileSync(PROJECTS_FILE, "utf-8");
       const projects = JSON.parse(data);
-      if (Array.isArray(projects) && projects.length > 0) {
-        return projects;
-      }
+      if (Array.isArray(projects) && projects.length > 0) return projects;
     }
   } catch {
-    // Fall through to seed data
+    // fall through
   }
-  // Return seed data as fallback
   return SEED_PROJECTS;
 }
 
@@ -212,10 +256,6 @@ function writeAnalytics(data: AnalyticsData): void {
   fs.writeFileSync(ANALYTICS_FILE, JSON.stringify(data, null, 2));
 }
 
-interface LeadsData {
-  leads: Lead[];
-}
-
 function readLeads(): Lead[] {
   try {
     const data = fs.readFileSync(LEADS_FILE, "utf-8");
@@ -242,21 +282,22 @@ function requireAdmin(req: Request, res: Response, next: NextFunction) {
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Admin authentication endpoints
+  // ==================== ADMIN AUTH ====================
   app.post("/api/admin/login", (req, res) => {
     const { password } = req.body;
     const adminPassword = process.env.ADMIN_PASSWORD;
 
     if (!adminPassword) {
-      return res.status(500).json({ error: "Contraseña no configurada en servidor" });
+      return res
+        .status(500)
+        .json({ error: "Contraseña no configurada en servidor" });
     }
 
     if (password === adminPassword) {
       (req.session as any).adminAuth = true;
       req.session.save((err: any) => {
-        if (err) {
+        if (err)
           return res.status(500).json({ error: "Error al crear sesión" });
-        }
         res.json({ success: true });
       });
     } else {
@@ -266,9 +307,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/admin/logout", (req, res) => {
     req.session.destroy((err: any) => {
-      if (err) {
-        return res.status(500).json({ error: "Error al cerrar sesión" });
-      }
+      if (err) return res.status(500).json({ error: "Error al cerrar sesión" });
       res.clearCookie("connect.sid");
       res.json({ success: true });
     });
@@ -276,19 +315,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/admin/me", (req, res) => {
     const isAuthenticated = !!(req.session as any).adminAuth;
-    if (isAuthenticated) {
-      res.json({ authenticated: true });
-    } else {
-      res.status(401).json({ authenticated: false });
-    }
+    if (isAuthenticated) res.json({ authenticated: true });
+    else res.status(401).json({ authenticated: false });
   });
 
-  // Public project endpoints
+  // ==================== PROJECTS (PUBLIC) ====================
   app.get("/api/projects/list", (req, res) => {
     try {
       const projects = readProjects();
       res.json(projects);
-    } catch (error) {
+    } catch {
       res.status(500).json({ error: "Error al leer proyectos" });
     }
   });
@@ -296,17 +332,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/projects/:id", (req, res) => {
     try {
       const projects = readProjects();
-      const project = projects.find((p) => p.id === req.params.id);
-      if (!project) {
+      // FIX: tolera id number/string
+      const project = projects.find(
+        (p) => String(p.id) === String(req.params.id),
+      );
+      if (!project)
         return res.status(404).json({ error: "Proyecto no encontrado" });
-      }
       res.json(project);
-    } catch (error) {
+    } catch {
       res.status(500).json({ error: "Error al leer proyecto" });
     }
   });
 
-  // Admin project endpoints (protected)
+  // ==================== PROJECTS (ADMIN) ====================
   app.post(
     "/api/projects/create",
     requireAdmin,
@@ -317,9 +355,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     ]),
     (req, res) => {
       try {
-        const body = req.body;
-        
-        // Parse JSON fields that come as strings
+        const body: any = req.body;
+
+        // Parse JSON fields
         if (typeof body.maps === "string") {
           try {
             body.maps = JSON.parse(body.maps);
@@ -350,17 +388,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
 
         const validation = insertProjectSchema.safeParse(body);
-        if (!validation.success) {
+        if (!validation.success)
           return res.status(400).json({ error: validation.error.errors });
-        }
 
-        const files = req.files as { [fieldname: string]: Express.Multer.File[] };
-        
+        const files = req.files as {
+          [fieldname: string]: Express.Multer.File[];
+        };
+
         const newProject: Project = {
           id: generateId(),
           ...validation.data,
           maps: validation.data.maps || {},
-          masterPlanFiles: files?.masterPlanFiles?.map((f) => `/uploads/${f.filename}`) || [],
+          masterPlanFiles:
+            files?.masterPlanFiles?.map((f) => `/uploads/${f.filename}`) || [],
           imagenes: files?.imagenes?.map((f) => `/uploads/${f.filename}`) || [],
           videos: files?.videos?.map((f) => `/uploads/${f.filename}`) || [],
           updatedAt: new Date().toISOString(),
@@ -375,7 +415,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.error("Error creating project:", error);
         res.status(500).json({ error: "Error al crear proyecto" });
       }
-    }
+    },
   );
 
   app.put(
@@ -389,14 +429,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     (req, res) => {
       try {
         const projects = readProjects();
-        const index = projects.findIndex((p) => p.id === req.params.id);
-        
-        if (index === -1) {
+        const index = projects.findIndex(
+          (p) => String(p.id) === String(req.params.id),
+        );
+        if (index === -1)
           return res.status(404).json({ error: "Proyecto no encontrado" });
-        }
 
-        const body = req.body;
-        
+        const body: any = req.body;
+
         // Parse JSON fields
         if (typeof body.maps === "string") {
           try {
@@ -431,7 +471,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         let existingMasterPlan: string[] = [];
         let existingImagenes: string[] = [];
         let existingVideos: string[] = [];
-        
+
         if (typeof body.existingMasterPlanFiles === "string") {
           try {
             existingMasterPlan = JSON.parse(body.existingMasterPlanFiles);
@@ -454,24 +494,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
         }
 
-        const files = req.files as { [fieldname: string]: Express.Multer.File[] };
-        const newMasterPlan = files?.masterPlanFiles?.map((f) => `/uploads/${f.filename}`) || [];
-        const newImagenes = files?.imagenes?.map((f) => `/uploads/${f.filename}`) || [];
-        const newVideos = files?.videos?.map((f) => `/uploads/${f.filename}`) || [];
+        const files = req.files as {
+          [fieldname: string]: Express.Multer.File[];
+        };
+        const newMasterPlan =
+          files?.masterPlanFiles?.map((f) => `/uploads/${f.filename}`) || [];
+        const newImagenes =
+          files?.imagenes?.map((f) => `/uploads/${f.filename}`) || [];
+        const newVideos =
+          files?.videos?.map((f) => `/uploads/${f.filename}`) || [];
 
-        // Delete removed files
+        // Delete removed files (FIX: path seguro)
         const oldProject = projects[index];
         const filesToDelete = [
-          ...oldProject.masterPlanFiles.filter((f) => !existingMasterPlan.includes(f)),
-          ...oldProject.imagenes.filter((f) => !existingImagenes.includes(f)),
-          ...oldProject.videos.filter((f) => !existingVideos.includes(f)),
+          ...(oldProject.masterPlanFiles || []).filter(
+            (f) => !existingMasterPlan.includes(f),
+          ),
+          ...(oldProject.imagenes || []).filter(
+            (f) => !existingImagenes.includes(f),
+          ),
+          ...(oldProject.videos || []).filter(
+            (f) => !existingVideos.includes(f),
+          ),
         ];
 
         filesToDelete.forEach((filePath) => {
-          const fullPath = path.join(process.cwd(), "client/public", filePath);
-          if (fs.existsSync(fullPath)) {
-            fs.unlinkSync(fullPath);
-          }
+          const fullPath = publicFileFullPath(filePath);
+          if (fs.existsSync(fullPath)) fs.unlinkSync(fullPath);
         });
 
         const updatedProject: Project = {
@@ -503,32 +552,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.error("Error updating project:", error);
         res.status(500).json({ error: "Error al actualizar proyecto" });
       }
-    }
+    },
   );
 
   app.delete("/api/projects/delete/:id", requireAdmin, (req, res) => {
     try {
       const projects = readProjects();
-      const index = projects.findIndex((p) => p.id === req.params.id);
-      
-      if (index === -1) {
+      const index = projects.findIndex(
+        (p) => String(p.id) === String(req.params.id),
+      );
+      if (index === -1)
         return res.status(404).json({ error: "Proyecto no encontrado" });
-      }
 
       const project = projects[index];
-      
-      // Delete associated files
-      const allFiles = [
-        ...project.masterPlanFiles,
-        ...project.imagenes,
-        ...project.videos,
-      ];
 
+      // Delete associated files (FIX: path seguro)
+      const allFiles = [
+        ...(project.masterPlanFiles || []),
+        ...(project.imagenes || []),
+        ...(project.videos || []),
+      ];
       allFiles.forEach((filePath) => {
-        const fullPath = path.join(process.cwd(), "client/public", filePath);
-        if (fs.existsSync(fullPath)) {
-          fs.unlinkSync(fullPath);
-        }
+        const fullPath = publicFileFullPath(filePath);
+        if (fs.existsSync(fullPath)) fs.unlinkSync(fullPath);
       });
 
       projects.splice(index, 1);
@@ -541,14 +587,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // ==================== BLOG ENDPOINTS ====================
-
-  // Public blog endpoints
+  // ==================== BLOG (PUBLIC) ====================
   app.get("/api/blog/list", (req, res) => {
     try {
       const posts = readBlogPosts();
       res.json(posts);
-    } catch (error) {
+    } catch {
       res.status(500).json({ error: "Error al leer posts" });
     }
   });
@@ -556,17 +600,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/blog/:id", (req, res) => {
     try {
       const posts = readBlogPosts();
-      const post = posts.find((p) => p.id === req.params.id);
-      if (!post) {
-        return res.status(404).json({ error: "Post no encontrado" });
-      }
+      const post = posts.find((p) => String(p.id) === String(req.params.id));
+      if (!post) return res.status(404).json({ error: "Post no encontrado" });
       res.json(post);
-    } catch (error) {
+    } catch {
       res.status(500).json({ error: "Error al leer post" });
     }
   });
 
-  // Admin blog endpoints
+  // ==================== BLOG (ADMIN) ====================
   app.post(
     "/api/blog/create",
     requireAdmin,
@@ -575,13 +617,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       try {
         const body = JSON.parse(req.body.data || "{}");
         const validation = insertBlogPostSchema.safeParse(body);
-
-        if (!validation.success) {
+        if (!validation.success)
           return res.status(400).json({ error: validation.error.errors });
-        }
 
         const files = req.files as Express.Multer.File[];
-        const imagenes = files.map((f) => `uploads/${f.filename}`);
+        // FIX: siempre "/uploads/.."
+        const imagenes = files.map((f) => `/uploads/${f.filename}`);
 
         const posts = readBlogPosts();
         const newPost: BlogPost = {
@@ -602,7 +643,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.error("Error creating blog post:", error);
         res.status(500).json({ error: "Error al crear post" });
       }
-    }
+    },
   );
 
   app.put(
@@ -612,17 +653,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     (req, res) => {
       try {
         const posts = readBlogPosts();
-        const index = posts.findIndex((p) => p.id === req.params.id);
-
-        if (index === -1) {
+        const index = posts.findIndex(
+          (p) => String(p.id) === String(req.params.id),
+        );
+        if (index === -1)
           return res.status(404).json({ error: "Post no encontrado" });
-        }
 
         const body = JSON.parse(req.body.data || "{}");
         const oldPost = posts[index];
 
         const files = req.files as Express.Multer.File[];
-        const newImagenes = files.map((f) => `uploads/${f.filename}`);
+        // FIX: siempre "/uploads/.."
+        const newImagenes = files.map((f) => `/uploads/${f.filename}`);
         const existingImagenes = body.existingImagenes || oldPost.imagenes;
 
         const updatedPost: BlogPost = {
@@ -643,26 +685,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.error("Error updating blog post:", error);
         res.status(500).json({ error: "Error al actualizar post" });
       }
-    }
+    },
   );
 
   app.delete("/api/blog/delete/:id", requireAdmin, (req, res) => {
     try {
       const posts = readBlogPosts();
-      const index = posts.findIndex((p) => p.id === req.params.id);
-
-      if (index === -1) {
+      const index = posts.findIndex(
+        (p) => String(p.id) === String(req.params.id),
+      );
+      if (index === -1)
         return res.status(404).json({ error: "Post no encontrado" });
-      }
 
       const post = posts[index];
 
-      // Delete associated images
-      post.imagenes.forEach((filePath) => {
-        const fullPath = path.join(process.cwd(), "client/public", filePath);
-        if (fs.existsSync(fullPath)) {
-          fs.unlinkSync(fullPath);
-        }
+      // Delete associated images (FIX path)
+      (post.imagenes || []).forEach((filePath) => {
+        const fullPath = publicFileFullPath(filePath);
+        if (fs.existsSync(fullPath)) fs.unlinkSync(fullPath);
       });
 
       posts.splice(index, 1);
@@ -675,38 +715,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // ==================== TESTIMONIALS ENDPOINTS ====================
-
-  // Public: solo aprobados
+  // ==================== TESTIMONIALS ====================
   app.get("/api/testimonials/list", (req, res) => {
     try {
       const testimonials = readTestimonials();
-      const approved = testimonials.filter((t) => t.aprobado);
+      const approved = testimonials.filter((t: any) => t.aprobado);
       res.json(approved);
-    } catch (error) {
+    } catch {
       res.status(500).json({ error: "Error al leer testimonios" });
     }
   });
 
-  // Admin: ver todos
   app.get("/api/testimonials/list-admin", requireAdmin, (req, res) => {
     try {
       const testimonials = readTestimonials();
       res.json(testimonials);
-    } catch (error) {
+    } catch {
       res.status(500).json({ error: "Error al leer testimonios" });
     }
   });
 
-  // Crear testimonio (con imagen opcional)
   app.post(
     "/api/testimonials/create",
     requireAdmin,
     upload.single("imagen"),
     (req, res) => {
       try {
-        const body = req.body;
-        
+        const body: any = req.body;
+
         const validation = insertTestimonialSchema.safeParse({
           autor: body.autor,
           rol: body.rol || "",
@@ -714,9 +750,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           aprobado: body.aprobado === "true" || body.aprobado === true,
         });
 
-        if (!validation.success) {
+        if (!validation.success)
           return res.status(400).json({ error: validation.error.errors });
-        }
 
         const file = req.file;
         const imagen = file ? `/uploads/${file.filename}` : "";
@@ -729,9 +764,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           contenido: validation.data.contenido,
           imagen,
           fecha: new Date().toISOString().split("T")[0],
-          aprobado: validation.data.aprobado ?? false,
+          aprobado: (validation.data as any).aprobado ?? false,
           updatedAt: new Date().toISOString(),
-        };
+        } as any;
 
         testimonials.unshift(newTestimonial);
         writeTestimonials(testimonials);
@@ -741,10 +776,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.error("Error creating testimonial:", error);
         res.status(500).json({ error: "Error al crear testimonio" });
       }
-    }
+    },
   );
 
-  // Actualizar testimonio
   app.put(
     "/api/testimonials/update/:id",
     requireAdmin,
@@ -752,31 +786,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
     (req, res) => {
       try {
         const testimonials = readTestimonials();
-        const index = testimonials.findIndex((t) => t.id === req.params.id);
-
-        if (index === -1) {
+        const index = testimonials.findIndex(
+          (t: any) => String(t.id) === String(req.params.id),
+        );
+        if (index === -1)
           return res.status(404).json({ error: "Testimonio no encontrado" });
-        }
 
-        const body = req.body;
-        const oldTestimonial = testimonials[index];
+        const body: any = req.body;
+        const oldTestimonial: any = testimonials[index];
         const file = req.file;
 
-        let imagen = oldTestimonial.imagen;
+        let imagen = oldTestimonial.imagen || "";
         if (file) {
-          // Delete old image if it's an upload
-          if (oldTestimonial.imagen.startsWith("/uploads/")) {
-            const oldPath = path.join(process.cwd(), "client/public", oldTestimonial.imagen);
-            if (fs.existsSync(oldPath)) {
-              fs.unlinkSync(oldPath);
-            }
+          if (
+            oldTestimonial.imagen &&
+            String(oldTestimonial.imagen).startsWith("/uploads/")
+          ) {
+            const oldPath = publicFileFullPath(oldTestimonial.imagen);
+            if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
           }
           imagen = `/uploads/${file.filename}`;
         } else if (body.existingImagen) {
           imagen = body.existingImagen;
         }
 
-        const updatedTestimonial: Testimonial = {
+        const updatedTestimonial: any = {
           ...oldTestimonial,
           autor: body.autor ?? oldTestimonial.autor,
           rol: body.rol ?? oldTestimonial.rol,
@@ -794,27 +828,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.error("Error updating testimonial:", error);
         res.status(500).json({ error: "Error al actualizar testimonio" });
       }
-    }
+    },
   );
 
-  // Eliminar testimonio
   app.delete("/api/testimonials/delete/:id", requireAdmin, (req, res) => {
     try {
       const testimonials = readTestimonials();
-      const index = testimonials.findIndex((t) => t.id === req.params.id);
-
-      if (index === -1) {
+      const index = testimonials.findIndex(
+        (t: any) => String(t.id) === String(req.params.id),
+      );
+      if (index === -1)
         return res.status(404).json({ error: "Testimonio no encontrado" });
-      }
 
-      const testimonial = testimonials[index];
+      const testimonial: any = testimonials[index];
 
-      // Delete image if it's an upload
-      if (testimonial.imagen.startsWith("/uploads/")) {
-        const fullPath = path.join(process.cwd(), "client/public", testimonial.imagen);
-        if (fs.existsSync(fullPath)) {
-          fs.unlinkSync(fullPath);
-        }
+      if (
+        testimonial.imagen &&
+        String(testimonial.imagen).startsWith("/uploads/")
+      ) {
+        const fullPath = publicFileFullPath(testimonial.imagen);
+        if (fs.existsSync(fullPath)) fs.unlinkSync(fullPath);
       }
 
       testimonials.splice(index, 1);
@@ -827,9 +860,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // ==================== ANALYTICS ENDPOINTS ====================
-
-  // Track page view (público)
+  // ==================== ANALYTICS ====================
   app.post("/api/analytics/track", (req, res) => {
     try {
       const { page, projectId, blogId, source, seconds } = req.body;
@@ -842,18 +873,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         seconds: Math.max(1, seconds || 1),
         timestamp: new Date().toISOString(),
       });
-      // Mantener solo últimos 10000 registros
       if (analytics.pageViews.length > 10000) {
         analytics.pageViews = analytics.pageViews.slice(-10000);
       }
       writeAnalytics(analytics);
       res.json({ success: true });
-    } catch (error) {
+    } catch {
       res.status(500).json({ error: "Error" });
     }
   });
 
-  // Get analytics summary (admin only)
   app.get("/api/analytics/summary", requireAdmin, (req, res) => {
     try {
       const analytics = readAnalytics();
@@ -862,7 +891,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const summary = {
         totalViews: views.length,
         totalSeconds: views.reduce((acc, v) => acc + v.seconds, 0),
-        avgSecondsPerView: views.length > 0 ? views.reduce((acc, v) => acc + v.seconds, 0) / views.length : 0,
+        avgSecondsPerView:
+          views.length > 0
+            ? views.reduce((acc, v) => acc + v.seconds, 0) / views.length
+            : 0,
         byPage: {} as Record<string, { views: number; seconds: number }>,
         byProject: {} as Record<string, { views: number; seconds: number }>,
         bySource: {} as Record<string, number>,
@@ -870,22 +902,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
       };
 
       views.forEach((v) => {
-        // By page
-        if (!summary.byPage[v.page]) summary.byPage[v.page] = { views: 0, seconds: 0 };
+        if (!summary.byPage[v.page])
+          summary.byPage[v.page] = { views: 0, seconds: 0 };
         summary.byPage[v.page].views++;
         summary.byPage[v.page].seconds += v.seconds;
 
-        // By project
         if (v.projectId) {
-          if (!summary.byProject[v.projectId]) summary.byProject[v.projectId] = { views: 0, seconds: 0 };
+          if (!summary.byProject[v.projectId])
+            summary.byProject[v.projectId] = { views: 0, seconds: 0 };
           summary.byProject[v.projectId].views++;
           summary.byProject[v.projectId].seconds += v.seconds;
         }
 
-        // By source
         summary.bySource[v.source] = (summary.bySource[v.source] || 0) + 1;
 
-        // By day
         const day = v.timestamp.split("T")[0];
         if (!summary.byDay[day]) summary.byDay[day] = { views: 0, seconds: 0 };
         summary.byDay[day].views++;
@@ -893,12 +923,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       res.json(summary);
-    } catch (error) {
+    } catch {
       res.status(500).json({ error: "Error" });
     }
   });
 
-  // Get analytics with date filter
   app.get("/api/analytics/summary-filtered", requireAdmin, (req, res) => {
     try {
       const days = parseInt(req.query.days as string) || 30;
@@ -907,31 +936,46 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const cutoffStr = cutoffDate.toISOString();
 
       const analytics = readAnalytics();
-      const views = analytics.pageViews.filter(v => v.timestamp >= cutoffStr);
+      const views = analytics.pageViews.filter((v) => v.timestamp >= cutoffStr);
       const projects = readProjects();
 
-      const uniqueVisitors = new Set(views.map(v => `${v.source}-${v.timestamp.split('T')[0]}`)).size;
+      const uniqueVisitors = new Set(
+        views.map((v) => `${v.source}-${v.timestamp.split("T")[0]}`),
+      ).size;
 
       const summary = {
         totalViews: views.length,
         uniqueVisitors,
         totalSeconds: views.reduce((acc, v) => acc + v.seconds, 0),
-        avgSecondsPerView: views.length > 0 ? views.reduce((acc, v) => acc + v.seconds, 0) / views.length : 0,
+        avgSecondsPerView:
+          views.length > 0
+            ? views.reduce((acc, v) => acc + v.seconds, 0) / views.length
+            : 0,
         byPage: {} as Record<string, { views: number; seconds: number }>,
-        byProject: {} as Record<string, { views: number; seconds: number; name?: string }>,
+        byProject: {} as Record<
+          string,
+          { views: number; seconds: number; name?: string }
+        >,
         bySource: {} as Record<string, number>,
         byDay: {} as Record<string, { views: number; seconds: number }>,
       };
 
       views.forEach((v) => {
-        if (!summary.byPage[v.page]) summary.byPage[v.page] = { views: 0, seconds: 0 };
+        if (!summary.byPage[v.page])
+          summary.byPage[v.page] = { views: 0, seconds: 0 };
         summary.byPage[v.page].views++;
         summary.byPage[v.page].seconds += v.seconds;
 
         if (v.projectId) {
           if (!summary.byProject[v.projectId]) {
-            const proj = projects.find(p => p.id === v.projectId);
-            summary.byProject[v.projectId] = { views: 0, seconds: 0, name: proj?.nombre };
+            const proj = projects.find(
+              (p) => String(p.id) === String(v.projectId),
+            );
+            summary.byProject[v.projectId] = {
+              views: 0,
+              seconds: 0,
+              name: proj?.nombre,
+            };
           }
           summary.byProject[v.projectId].views++;
           summary.byProject[v.projectId].seconds += v.seconds;
@@ -946,34 +990,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       res.json(summary);
-    } catch (error) {
+    } catch {
       res.status(500).json({ error: "Error" });
     }
   });
 
-  // Leads endpoints
+  // ==================== LEADS ====================
   app.post("/api/leads/create", (req, res) => {
     try {
       const result = insertLeadSchema.safeParse(req.body);
-      if (!result.success) {
+      if (!result.success)
         return res.status(400).json({ error: result.error.errors[0].message });
-      }
+
       const leads = readLeads();
       const newLead: Lead = {
         id: generateId(),
         ...result.data,
-        telefono: result.data.telefono || "",
-        mensaje: result.data.mensaje || "",
-        proyectoInteres: result.data.proyectoInteres || "",
-        fuente: result.data.fuente || "web",
+        telefono: (result.data as any).telefono || "",
+        mensaje: (result.data as any).mensaje || "",
+        proyectoInteres: (result.data as any).proyectoInteres || "",
+        fuente: (result.data as any).fuente || "web",
         estado: "nuevo",
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-      };
+      } as any;
+
       leads.push(newLead);
       writeLeads(leads);
       res.json(newLead);
-    } catch (error) {
+    } catch {
       res.status(500).json({ error: "Error al crear lead" });
     }
   });
@@ -981,8 +1026,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/leads/list", requireAdmin, (req, res) => {
     try {
       const leads = readLeads();
-      res.json(leads.sort((a, b) => b.createdAt.localeCompare(a.createdAt)));
-    } catch (error) {
+      res.json(
+        leads.sort((a: any, b: any) =>
+          String(b.createdAt).localeCompare(String(a.createdAt)),
+        ),
+      );
+    } catch {
       res.status(500).json({ error: "Error" });
     }
   });
@@ -991,14 +1040,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { id } = req.params;
       const { estado } = req.body;
-      const leads = readLeads();
-      const idx = leads.findIndex(l => l.id === id);
-      if (idx === -1) return res.status(404).json({ error: "Lead no encontrado" });
+      const leads: any[] = readLeads() as any;
+      const idx = leads.findIndex((l) => String(l.id) === String(id));
+      if (idx === -1)
+        return res.status(404).json({ error: "Lead no encontrado" });
       leads[idx].estado = estado;
       leads[idx].updatedAt = new Date().toISOString();
-      writeLeads(leads);
+      writeLeads(leads as any);
       res.json(leads[idx]);
-    } catch (error) {
+    } catch {
       res.status(500).json({ error: "Error" });
     }
   });
@@ -1006,11 +1056,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.delete("/api/leads/delete/:id", requireAdmin, (req, res) => {
     try {
       const { id } = req.params;
-      const leads = readLeads();
-      const filtered = leads.filter(l => l.id !== id);
-      writeLeads(filtered);
+      const leads: any[] = readLeads() as any;
+      const filtered = leads.filter((l) => String(l.id) !== String(id));
+      writeLeads(filtered as any);
       res.json({ success: true });
-    } catch (error) {
+    } catch {
       res.status(500).json({ error: "Error" });
     }
   });
@@ -1021,10 +1071,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const cutoffDate = new Date();
       cutoffDate.setDate(cutoffDate.getDate() - days);
       const cutoffStr = cutoffDate.toISOString();
-      const leads = readLeads();
-      const filtered = leads.filter(l => l.createdAt >= cutoffStr);
-      res.json({ total: filtered.length, nuevos: filtered.filter(l => l.estado === 'nuevo').length });
-    } catch (error) {
+
+      const leads: any[] = readLeads() as any;
+      const filtered = leads.filter((l) => String(l.createdAt) >= cutoffStr);
+      res.json({
+        total: filtered.length,
+        nuevos: filtered.filter((l) => l.estado === "nuevo").length,
+      });
+    } catch {
       res.status(500).json({ error: "Error" });
     }
   });

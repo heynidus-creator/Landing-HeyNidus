@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import type { Project } from "@shared/schema";
 import { AlertCircle } from "lucide-react";
+import { Link } from "wouter";
+
 import barrioBg from "@assets/DJI_20251119104425_0010_D_1763965801429.JPG?url";
 import altosVallesBg from "@assets/generated_images/altos_valles_glew_lots.png";
 import altoCañuelaBg from "@assets/generated_images/alto_de_cañuela_lots.png";
@@ -17,10 +19,9 @@ const ProjectImageMap: Record<string, string> = {
   "4": vallesPinoBg,
 };
 
-/**
- * Normaliza un "project" venga de la API o de siteData.ts
- * para que el render no se rompa.
- */
+const FALLBACK_SVG =
+  'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23334155" width="400" height="300"/%3E%3C/svg%3E';
+
 function normalizeProjects(apiProjects: Project[] | undefined): Array<any> {
   const hasApi = Array.isArray(apiProjects) && apiProjects.length > 0;
 
@@ -36,7 +37,6 @@ function normalizeProjects(apiProjects: Project[] | undefined): Array<any> {
     }));
   }
 
-  // Fallback desde siteData.ts
   return (fallbackProjects || []).map((p: any) => ({
     id: String(p.id),
     nombre: p.nombre ?? "",
@@ -44,9 +44,25 @@ function normalizeProjects(apiProjects: Project[] | undefined): Array<any> {
     etapa: p.etapa ?? "",
     descripcion: p.descripcion ?? "",
     ubicacionTexto: p.ubicacion ?? "",
-    // siteData trae "imagen" (string). Lo pasamos como lista para mantener lógica.
     imagenes: p.imagen ? [p.imagen] : [],
   }));
+}
+
+function normalizePathMaybe(p?: string) {
+  if (!p) return "";
+  const s = String(p);
+  return s.startsWith("/") ? s : `/${s}`;
+}
+
+function isUploadsPath(p?: string) {
+  if (!p) return false;
+  return String(p).includes("/uploads/");
+}
+
+function isVercelLikeHost() {
+  if (typeof window === "undefined") return false;
+  const h = window.location.hostname;
+  return h.includes("vercel.app") || h.includes("heynidus");
 }
 
 const Projects = () => {
@@ -56,10 +72,14 @@ const Projects = () => {
     isError,
   } = useQuery<Project[]>({
     queryKey: ["/api/projects/list"],
+    queryFn: async () => {
+      const res = await fetch("/api/projects/list", { credentials: "include" });
+      if (!res.ok) throw new Error("Failed to fetch projects");
+      return res.json();
+    },
   });
 
   const projects = normalizeProjects(apiProjects);
-  const usingFallback = !apiProjects || apiProjects.length === 0;
 
   if (isLoading) {
     return (
@@ -122,6 +142,10 @@ const Projects = () => {
     );
   }
 
+  const isProd =
+    typeof window !== "undefined" && window.location.hostname !== "localhost";
+  const vercelLike = isVercelLikeHost();
+
   return (
     <SectionCard className="mx-auto max-w-6xl px-3 sm:px-4 w-full">
       <div className="mb-6 sm:mb-8 space-y-2 sm:space-y-3">
@@ -132,30 +156,23 @@ const Projects = () => {
           Combinamos desarrollos propios y de terceros para que encuentres el
           lote que mejor se adapte a tu plan de vida o inversión.
         </p>
-
-        {/* (Opcional) si querés ver cuándo está usando fallback en prod, descomentá:
-        {usingFallback && (
-          <p className="text-xs text-amber-600 dark:text-amber-400">
-            Mostrando contenido de respaldo (fallback). Conectando con la API...
-          </p>
-        )} */}
       </div>
 
       <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 w-full">
         {projects.map((project: any) => {
+          const idStr = String(project.id);
+          const fallbackSrc = ProjectImageMap[idStr] || "";
+
           const firstImage = project.imagenes?.[0];
+          const apiImage = normalizePathMaybe(firstImage);
 
-          // Si viene de la API con uploads: a veces ya viene con "uploads/.."
-          // Lo normalizamos para que siempre empiece con "/"
-          const apiImage = firstImage
-            ? firstImage.startsWith("/")
-              ? firstImage
-              : `/${firstImage}`
-            : "";
+          const apiLooksLikeUpload = isUploadsPath(apiImage);
 
-          // Si no hay imagen real, usamos el mapa por ID (assets importados)
-          const projectImage =
-            apiImage || ProjectImageMap[String(project.id)] || "";
+          // ✅ En Vercel-like: si es upload, NO lo intentamos (probable 404)
+          const initialSrc =
+            (vercelLike && apiLooksLikeUpload ? "" : apiImage) ||
+            fallbackSrc ||
+            FALLBACK_SVG;
 
           const isComingSoon =
             String(project.etapa || "")
@@ -165,26 +182,48 @@ const Projects = () => {
               .toLowerCase()
               .includes("proxim");
 
+          if (!isProd && typeof window !== "undefined") {
+            // eslint-disable-next-line no-console
+            console.info("[Projects] img", {
+              id: project.id,
+              apiImage,
+              fallbackSrc,
+              chosen: initialSrc,
+              vercelLike,
+            });
+          }
+
           return (
             <article
-              key={project.id}
+              key={idStr}
               className="flex flex-col rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm hover:shadow-md transition overflow-hidden h-full"
-              data-testid={`card-project-${project.id}`}
+              data-testid={`card-project-${idStr}`}
             >
               <div className="relative w-full h-40 sm:h-48 bg-slate-200 dark:bg-slate-700 flex-shrink-0 overflow-hidden">
-                {projectImage ? (
-                  <img
-                    src={projectImage}
-                    alt={project.nombre}
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src =
-                        'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23334155" width="400" height="300"/%3E%3C/svg%3E';
-                    }}
-                    className={`w-full h-full object-cover ${isComingSoon ? "blur-sm" : ""}`}
-                  />
-                ) : (
-                  <div className="w-full h-full" />
-                )}
+                <img
+                  src={initialSrc}
+                  alt={project.nombre}
+                  data-img-source={
+                    initialSrc === fallbackSrc
+                      ? "fallback-asset"
+                      : apiLooksLikeUpload
+                        ? "api-upload"
+                        : "api-image"
+                  }
+                  onError={(e) => {
+                    const img = e.currentTarget;
+
+                    // 1) Si falló una imagen de API, probamos fallback real
+                    if (fallbackSrc && img.src !== fallbackSrc) {
+                      img.src = fallbackSrc;
+                      return;
+                    }
+
+                    // 2) Último recurso
+                    img.src = FALLBACK_SVG;
+                  }}
+                  className={`w-full h-full object-cover ${isComingSoon ? "blur-sm" : ""}`}
+                />
 
                 {isComingSoon && (
                   <div className="absolute inset-0 flex items-center justify-center bg-black/30">
@@ -195,7 +234,6 @@ const Projects = () => {
                 )}
               </div>
 
-              {/* ✅ Esto asegura mismo alto “visual” y botón siempre abajo */}
               <div className="p-5 flex flex-col flex-1 min-h-0">
                 <div className="flex-1 min-h-0">
                   <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-1 line-clamp-2">
@@ -223,13 +261,14 @@ const Projects = () => {
                 </div>
 
                 <div className="mt-4 flex gap-3 flex-col sm:flex-row flex-shrink-0">
-                  <a
-                    href={`/proyecto/${project.id}`}
+                  {/* ✅ FIX 404: navegación SPA con wouter */}
+                  <Link
+                    href={`/proyecto/${idStr}`}
                     className="inline-flex items-center justify-center rounded-full bg-emerald-600 dark:bg-emerald-600 px-3 sm:px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700 dark:hover:bg-emerald-700 transition"
-                    data-testid={`button-project-detail-${project.id}`}
+                    data-testid={`button-project-detail-${idStr}`}
                   >
                     Ver más
-                  </a>
+                  </Link>
 
                   <button
                     onClick={() => {
@@ -249,7 +288,7 @@ const Projects = () => {
                       }
                     }}
                     className="inline-flex items-center justify-center rounded-full border border-emerald-600 dark:border-emerald-500 px-3 sm:px-4 py-2 text-xs font-semibold text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition"
-                    data-testid={`button-project-contact-${project.id}`}
+                    data-testid={`button-project-contact-${idStr}`}
                     type="button"
                   >
                     Contactar

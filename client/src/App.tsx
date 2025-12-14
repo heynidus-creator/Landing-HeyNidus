@@ -1,4 +1,4 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { lazy, Suspense, useEffect } from "react";
 import Navbar from "./components/Navbar.tsx";
 import Hero from "./components/Hero.tsx";
@@ -54,17 +54,21 @@ function HomePage() {
 
 function App() {
   const { trackPageView } = useAnalytics();
+  const [location] = useLocation();
 
+  // ✅ Trackea cada cambio de ruta (SPA)
   useEffect(() => {
-    trackPageView(window.location.pathname);
-  }, []);
+    trackPageView(location);
+  }, [location, trackPageView]);
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
       <Switch>
+        {/* Admin sin navbar/footer */}
         <Route path="/admin" component={AdminPage} />
+
+        {/* Landing layout */}
         <Route>
-          {/* Landing layout */}
           <Navbar />
           <Switch>
             <Route path="/" component={HomePage} />
