@@ -200,7 +200,7 @@
                   <span className="font-semibold">Email:</span> ventas@heynidus.com
                 </li>
                 <li>
-                  <span className="font-semibold">Teléfono:</span> +54 9 11 3129-8840
+                  <span className="font-semibold">Teléfono:</span> +54 9 11 7107-7797
                 </li>
                 <li>
                   <span className="font-semibold">Horario:</span> Lunes a viernes, de 9:00 a 18:00 hs.
