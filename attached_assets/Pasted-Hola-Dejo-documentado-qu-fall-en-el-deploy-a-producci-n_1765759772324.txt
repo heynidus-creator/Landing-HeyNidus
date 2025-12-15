@@ -1,0 +1,134 @@
+Hola 👋
+Dejo documentado qué falló en el deploy a producción de HeyNidus, por qué ocurrió y cómo lo resolvimos, para evitar que se repita en futuros cambios.
+
+🧠 Contexto general
+
+El frontend (React + Vite) funcionaba correctamente en Preview, pero en producción fallaban:
+
+Rutas dinámicas (/proyecto/:id)
+
+Consumo de API (/api/projects/list, /api/testimonials/list, /api/analytics/track)
+
+Carga de testimonios e imágenes en producción
+
+El problema no era el frontend, sino la integración entre Vercel (frontend) + Express (backend en Replit).
+
+❌ Problemas detectados
+
+SPA routing roto en producción
+
+Todas las rutas se reescribían a index.html
+
+/proyecto/:id devolvía 404
+
+Rewrites incorrectos en vercel.json
+
+/api/* también se reescribía a index.html
+
+Resultado: 404 / 502 en todas las llamadas a la API
+
+Backend Express sí existía, pero no se estaba alcanzando
+
+La API estaba viva en Replit (*.kirk.replit.dev)
+
+Vercel nunca llegaba a esa URL
+
+Uploads locales no persistentes en producción
+
+/uploads/* funciona en local/preview
+
+En Vercel no existe → imágenes rotas
+
+Testimonios no cargaban
+
+Mismo origen que proyectos: API no accesible en prod
+
+✅ Soluciones aplicadas (sin reescribir el proyecto)
+1️⃣ vercel.json
+
+Se agregó excepción explícita para /api/*
+
+Se mantuvo el fallback SPA solo para rutas de frontend
+
+Resultado:
+
+/proyecto/:id renderiza correctamente
+
+/api/* ya no se pisa con index.html
+
+2️⃣ Backend Express (Replit)
+
+Se confirmó y validó el backend productivo:
+
+/api/projects/list
+
+/api/testimonials/list
+
+/api/analytics/track
+
+Se identificó y probó la URL pública real:
+
+https://<hash>.kirk.replit.dev/api/...
+
+
+Resultado:
+
+API estable y accesible desde producción
+
+3️⃣ client/src/components/Projects.tsx
+
+Normalización de project.id a string
+
+Corrección de ProjectImageMap
+
+Prioridad a assets estáticos importados
+
+Fallback automático cuando la imagen de API no existe
+
+Evitar /uploads/* en producción
+
+Resultado:
+
+Proyectos visibles
+
+Botón “Ver más” funcional
+
+Sin errores silenciosos
+
+4️⃣ Testimonios
+
+No se modificó el componente
+
+Volvieron a aparecer automáticamente al corregirse /api/*
+
+📋 Estado final (verificado)
+
+✅ Home carga sin errores
+
+✅ /proyecto/:id funciona
+
+✅ Proyectos visibles en producción
+
+✅ Testimonios visibles
+
+✅ API responde 200
+
+✅ Consola limpia de errores críticos
+
+🧩 Conclusión
+
+El fallo fue estructural de deploy, no de lógica de aplicación.
+La causa raíz fue mezclar SPA routing y API sin excepciones claras en rewrites.
+Con los ajustes realizados, la arquitectura quedó estable y predecible.
+
+🔒 Nota para el futuro
+
+Si se vuelve a tocar deploy:
+
+Definir explícitamente si el backend vive en Replit u otra infra
+
+Nunca reescribir /api/* al frontend
+
+No depender de uploads locales en Vercel
+
+Fin de actualización ✅
