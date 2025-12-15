@@ -73,7 +73,9 @@ const Projects = () => {
   } = useQuery<Project[]>({
     queryKey: ["/api/projects/list"],
     queryFn: async () => {
-      const res = await fetch("/api/projects/list", { credentials: "include" });
+      const res = await fetch(
+        "https://7da18ae8-5e3b-451c-b32a-151a94237984-00-npd7udeo3dgw.kirk.replit.dev/api/projects/list",
+      );
       if (!res.ok) throw new Error("Failed to fetch projects");
       return res.json();
     },
