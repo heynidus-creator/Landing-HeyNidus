@@ -24,11 +24,20 @@
       "Oportunidad exclusiva: 30 lotes en preventa con mejor precio del mercado",
       "Ventas por etapas con excelente proyección de valorización"
     ],
-    "servicios": ["Agua potable", "Electricidad", "Acceso principal"],
-    "amenidades": ["Áreas recreativas", "Plaza con juegos para niños", "Espacios verdes", "Circulaciones amplias"],
+    "servicios": [
+      "Agua potable",
+      "Electricidad",
+      "Acceso principal"
+    ],
+    "amenidades": [
+      "Áreas recreativas",
+      "Plaza con juegos para niños",
+      "Espacios verdes",
+      "Circulaciones amplias"
+    ],
     "superficie": "63.000 m²",
     "lotes": "30 lotes en preventa",
-    "updatedAt": "2025-12-12T00:00:00.000Z"
+    "updatedAt": "2025-12-19T04:41:17.095Z"
   },
   {
     "id": "2",
@@ -69,8 +78,15 @@
       "Ideales para familias grandes",
       "Proyección de urbanización futura"
     ],
-    "servicios": ["Acceso principal planificado", "Servicios a proyectar"],
-    "amenidades": ["Mucha vegetación", "Conexión con naturaleza", "Potencial de desarrollo"],
+    "servicios": [
+      "Acceso principal planificado",
+      "Servicios a proyectar"
+    ],
+    "amenidades": [
+      "Mucha vegetación",
+      "Conexión con naturaleza",
+      "Potencial de desarrollo"
+    ],
     "superficie": "18.000 m²",
     "lotes": "52 lotes",
     "updatedAt": "2025-12-12T00:00:00.000Z"

@@ -6807,6 +6807,1230 @@
       "source": "otro",
       "seconds": 36,
       "timestamp": "2025-12-19T04:17:57.025Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:18:21.193Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 34,
+      "timestamp": "2025-12-19T04:18:31.486Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:18:34.172Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:18:34.223Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 31,
+      "timestamp": "2025-12-19T04:19:02.143Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 47,
+      "timestamp": "2025-12-19T04:19:09.311Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:19:10.536Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:19:10.568Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:19:29.145Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:19:30.231Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:19:33.845Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:19:36.545Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:19:45.213Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:19:45.366Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:20:05.206Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 31,
+      "timestamp": "2025-12-19T04:20:16.177Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 79,
+      "timestamp": "2025-12-19T04:20:21.127Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 31,
+      "timestamp": "2025-12-19T04:20:36.259Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 37,
+      "timestamp": "2025-12-19T04:20:58.184Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:21:16.192Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 34,
+      "timestamp": "2025-12-19T04:21:32.133Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:21:36.175Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 30,
+      "timestamp": "2025-12-19T04:21:46.189Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-19T04:22:02.139Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-19T04:22:06.174Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-19T04:22:36.182Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 44,
+      "timestamp": "2025-12-19T04:22:46.003Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:22:46.169Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:23:04.865Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:23:15.772Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 30,
+      "timestamp": "2025-12-19T04:23:16.192Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:23:36.719Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-19T04:23:46.135Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-19T04:24:16.146Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 61,
+      "timestamp": "2025-12-19T04:24:17.174Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 45,
+      "timestamp": "2025-12-19T04:24:21.188Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:25:16.152Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 61,
+      "timestamp": "2025-12-19T04:25:18.173Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:25:21.182Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:26:16.152Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 61,
+      "timestamp": "2025-12-19T04:26:19.174Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:26:21.179Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 51,
+      "timestamp": "2025-12-19T04:27:07.511Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 61,
+      "timestamp": "2025-12-19T04:27:20.184Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:27:21.707Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 39,
+      "timestamp": "2025-12-19T04:27:46.141Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-19T04:28:16.143Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:28:21.198Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 61,
+      "timestamp": "2025-12-19T04:28:21.689Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 38,
+      "timestamp": "2025-12-19T04:28:53.803Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:29:21.196Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:29:21.328Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 52,
+      "timestamp": "2025-12-19T04:29:46.141Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-19T04:30:16.149Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:30:21.172Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:30:21.180Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-19T04:30:46.154Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:31:21.195Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:31:21.201Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:31:46.149Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:32:21.199Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:32:21.690Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 95,
+      "timestamp": "2025-12-19T04:33:21.156Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:33:21.185Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:33:21.272Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:34:21.149Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:34:21.183Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:34:21.723Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 55,
+      "timestamp": "2025-12-19T04:35:16.161Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:35:21.185Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:35:21.714Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 65,
+      "timestamp": "2025-12-19T04:36:21.159Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:36:21.190Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:36:21.729Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 55,
+      "timestamp": "2025-12-19T04:37:16.155Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:37:21.195Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:37:21.489Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:38:16.158Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:38:21.174Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:38:21.183Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:39:16.154Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:39:21.184Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:39:21.782Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:39:45.569Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:40:14.089Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-19T04:40:15.374Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:40:21.192Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:40:21.197Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 9,
+      "timestamp": "2025-12-19T04:40:22.670Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:40:22.676Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 7,
+      "timestamp": "2025-12-19T04:40:29.392Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:40:29.397Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:40:31.902Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:41:02.363Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:41:07.302Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:41:19.767Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:41:21.177Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:41:21.709Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-19T04:41:49.787Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "facebook",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:41:51.169Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:42:07.480Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-19T04:42:19.790Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:42:21.178Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:42:21.476Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:43:19.790Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:43:21.180Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:43:21.465Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:44:19.785Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:44:21.194Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:44:21.727Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-19T04:44:50.164Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:45:21.194Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:45:21.493Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "facebook",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:45:33.618Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "facebook",
+      "seconds": 30,
+      "timestamp": "2025-12-19T04:46:03.363Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 91,
+      "timestamp": "2025-12-19T04:46:21.153Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:46:21.184Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:46:21.188Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "facebook",
+      "seconds": 30,
+      "timestamp": "2025-12-19T04:46:33.186Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 59,
+      "timestamp": "2025-12-19T04:47:20.670Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:47:21.292Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:47:21.320Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:48:03.774Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 61,
+      "timestamp": "2025-12-19T04:48:21.159Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:48:21.180Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:48:21.183Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:49:21.170Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:49:21.189Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:49:21.200Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:50:21.167Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:50:21.201Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:50:21.490Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 39,
+      "timestamp": "2025-12-19T04:51:00.454Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:51:21.207Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:51:21.216Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 50,
+      "timestamp": "2025-12-19T04:51:50.163Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:52:21.202Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:52:21.733Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 91,
+      "timestamp": "2025-12-19T04:53:21.173Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:53:21.223Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:53:21.735Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 38,
+      "timestamp": "2025-12-19T04:53:59.132Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:54:21.194Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:54:21.716Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "facebook",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:54:25.875Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 51,
+      "timestamp": "2025-12-19T04:54:50.165Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 1,
+      "timestamp": "2025-12-19T04:55:01.879Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-19T04:55:20.166Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:55:21.732Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:55:21.741Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 61,
+      "timestamp": "2025-12-19T04:56:21.183Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:56:21.203Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-19T04:56:21.722Z"
     }
   ],
   "sessions": []
