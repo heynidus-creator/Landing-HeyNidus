@@ -5175,6 +5175,390 @@
       "source": "otro",
       "seconds": 47,
       "timestamp": "2025-12-15T00:50:17.847Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-15T00:51:00.994Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 1,
+      "timestamp": "2025-12-15T00:51:03.826Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-15T00:52:00.924Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-15T00:53:00.397Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-15T00:54:00.403Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-15T00:55:00.960Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-15T00:56:00.976Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "facebook",
+      "seconds": 1,
+      "timestamp": "2025-12-15T00:56:07.992Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "facebook",
+      "seconds": 1,
+      "timestamp": "2025-12-15T00:56:29.743Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-15T00:57:00.389Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-15T00:58:00.923Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-15T00:59:01.044Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-15T01:00:00.410Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 60,
+      "timestamp": "2025-12-15T01:01:00.925Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 61,
+      "timestamp": "2025-12-19T03:00:21.141Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 1,
+      "timestamp": "2025-12-19T03:00:22.173Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 1,
+      "timestamp": "2025-12-19T03:00:33.759Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 12,
+      "timestamp": "2025-12-19T03:00:33.769Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-19T03:01:04.094Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T03:01:21.634Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-19T03:01:34.088Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-19T03:02:04.086Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T03:02:21.651Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-19T03:02:34.088Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 32,
+      "timestamp": "2025-12-19T03:02:53.537Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 1,
+      "timestamp": "2025-12-19T03:02:54.063Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 1,
+      "timestamp": "2025-12-19T03:02:59.305Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "otro",
+      "seconds": 1,
+      "timestamp": "2025-12-19T03:03:12.483Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 1,
+      "timestamp": "2025-12-19T03:03:24.030Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T03:03:34.086Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 47,
+      "timestamp": "2025-12-19T03:04:21.089Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T03:05:21.091Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T03:06:21.090Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T03:07:21.081Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "facebook",
+      "seconds": 1,
+      "timestamp": "2025-12-19T03:07:21.385Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T03:08:21.083Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "facebook",
+      "seconds": 62,
+      "timestamp": "2025-12-19T03:08:23.469Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T03:09:21.097Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T03:10:21.095Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 43,
+      "timestamp": "2025-12-19T03:11:04.091Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-19T03:11:34.093Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 30,
+      "timestamp": "2025-12-19T03:12:04.099Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T03:13:04.089Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 77,
+      "timestamp": "2025-12-19T03:14:21.089Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T03:15:21.091Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 60,
+      "timestamp": "2025-12-19T03:16:21.086Z"
+    },
+    {
+      "page": "/",
+      "projectId": null,
+      "blogId": null,
+      "source": "direct",
+      "seconds": 1,
+      "timestamp": "2025-12-19T03:16:53.819Z"
+    },
+    {
+      "page": "/proyecto/1",
+      "projectId": "1",
+      "blogId": null,
+      "source": "otro",
+      "seconds": 1,
+      "timestamp": "2025-12-19T03:16:58.571Z"
     }
   ],
   "sessions": []
