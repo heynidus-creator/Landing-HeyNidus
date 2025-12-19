@@ -26,9 +26,15 @@ export function log(message: string, source = "express") {
 
 export const app = express();
 
-declare module 'http' {
+/**
+ * Necesario para cookies "secure" detrás de proxy (Replit / Vercel / etc).
+ * Sin esto, en producción puede NO setear cookie y te da 401.
+ */
+app.set("trust proxy", 1);
+
+declare module "http" {
   interface IncomingMessage {
-    rawBody: unknown
+    rawBody: unknown;
   }
 }
 
@@ -40,53 +46,57 @@ declare global {
   }
 }
 
-app.use(express.json({
-  verify: (req, _res, buf) => {
-    req.rawBody = buf;
-  }
-}));
+// Body parsers (guardamos rawBody por si lo usan para webhooks / firmas)
+app.use(
+  express.json({
+    verify: (req, _res, buf) => {
+      (req as any).rawBody = buf;
+    },
+  }),
+);
 app.use(express.urlencoded({ extended: false }));
 
+/**
+ * Sesión:
+ * - En prod: cookie secure (HTTPS) + sameSite lax (ok para navegación normal)
+ * - trust proxy habilitado arriba para que secure funcione detrás de proxy
+ */
 app.use(
   session({
     store: new SessionStore({
-      checkPeriod: 86400000,
+      checkPeriod: 86400000, // 24hs
     }),
-    secret: process.env.SESSION_SECRET || 'heynidus-secret-key',
+    secret: process.env.SESSION_SECRET || "heynidus-secret-key",
     resave: false,
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
       maxAge: 24 * 60 * 60 * 1000,
     },
-  })
+  }),
 );
 
+// Logger de requests /api/*
 app.use((req, res, next) => {
   const start = Date.now();
-  const path = req.path;
+  const p = req.path;
   let capturedJsonResponse: Record<string, any> | undefined = undefined;
 
-  const originalResJson = res.json;
-  res.json = function (bodyJson, ...args) {
+  const originalResJson = res.json.bind(res);
+  (res as any).json = (bodyJson: any, ...args: any[]) => {
     capturedJsonResponse = bodyJson;
-    return originalResJson.apply(res, [bodyJson, ...args]);
+    return originalResJson(bodyJson, ...args);
   };
 
   res.on("finish", () => {
     const duration = Date.now() - start;
-    if (path.startsWith("/api")) {
-      let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
-      if (capturedJsonResponse) {
+    if (p.startsWith("/api")) {
+      let logLine = `${req.method} ${p} ${res.statusCode} in ${duration}ms`;
+      if (capturedJsonResponse)
         logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
-      }
-
-      if (logLine.length > 80) {
-        logLine = logLine.slice(0, 79) + "…";
-      }
-
+      if (logLine.length > 160) logLine = logLine.slice(0, 159) + "…";
       log(logLine);
     }
   });
@@ -97,30 +107,33 @@ app.use((req, res, next) => {
 export default async function runApp(
   setup: (app: Express, server: Server) => Promise<void>,
 ) {
+  // 1) Monta rutas API y devuelve el http server
   const server = await registerRoutes(app);
 
+  // 2) Error handler: NO tirar throw (eso te puede crashear el proceso en prod)
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-    const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
-
-    res.status(status).json({ message });
-    throw err;
+    const status = err?.status || err?.statusCode || 500;
+    const message = err?.message || "Internal Server Error";
+    // logueamos para debug
+    log(`ERROR ${status}: ${message}`, "error");
+    res.status(status).json({ error: message });
   });
 
-  // importantly run the final setup after setting up all the other routes so
-  // the catch-all route doesn't interfere with the other routes
+  // 3) Setup final (estáticos + SPA fallback) SIEMPRE al final
   await setup(app, server);
 
-  // ALWAYS serve the app on the port specified in the environment variable PORT
-  // Other ports are firewalled. Default to 5000 if not specified.
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = parseInt(process.env.PORT || '5000', 10);
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
-    log(`serving on port ${port}`);
-  });
+  // 4) Listen (solo una vez)
+  const port = Number(process.env.PORT || 5000);
+  const host = "0.0.0.0";
+
+  const alreadyListening = (server as any).listening === true;
+  if (!alreadyListening) {
+    server.listen(port, host, () => {
+      log(`serving on http://${host}:${port}`);
+    });
+  } else {
+    log("server already listening (skipping listen)", "express");
+  }
+
+  return server;
 }
