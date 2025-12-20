@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://7da18ae8-5e3b-451c-b32a-151a94237984-00-npd7udeo3dgw.kirk.replit.dev/api/:path*"
+      "destination": "https://landing-hey-nidus--juanascenzi.replit.app/api/:path*"
     },
     {
       "source": "/(.*)",

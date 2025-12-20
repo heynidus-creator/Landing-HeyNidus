@@ -101,7 +101,7 @@ const FALLBACK_SVG =
 
 const ProjectDetail = () => {
   const params = useParams<{ id: string }>();
-  const projectId = params.id;
+  const projectId = params?.id;
 
   const [currentMasterPlanIndex, setCurrentMasterPlanIndex] = useState(0);
   const [currentGaleriaIndex, setCurrentGaleriaIndex] = useState(0);
@@ -111,43 +111,38 @@ const ProjectDetail = () => {
   const [masterPlanFullscreen, setMasterPlanFullscreen] = useState(false);
   const [galeriaFullscreen, setGaleriaFullscreen] = useState(false);
 
-  // ✅ Fetch real: /api/projects/:id
+  // ✅ QueryKey como URL real (aprovecha el queryClient default)
+  const projectUrl = useMemo(
+    () => (projectId ? `/api/projects/${projectId}` : ""),
+    [projectId],
+  );
+
   const {
     data: project,
     isLoading,
     isError,
   } = useQuery<Project>({
-    queryKey: ["/api/projects/:id", projectId],
+    queryKey: projectUrl ? [projectUrl] : ["__no_project__"],
     enabled: !!projectId,
-    queryFn: async () => {
-      const res = await fetch(`/api/projects/${projectId}`, {
-        credentials: "include",
-      });
-      if (!res.ok) throw new Error("Failed to fetch project");
-      return res.json();
-    },
   });
 
   const idStr = useMemo(
     () => String((project as any)?.id ?? projectId ?? ""),
     [project, projectId],
   );
+
   const fallbackCover = ProjectImageMap[idStr] || "";
 
-  // ✅ HERO: si la imagen es /uploads en Vercel, preferimos fallback (porque suele romperse).
-  // Igual dejamos onError para fallback final.
   const heroImage = useMemo(() => {
     const first = (project as any)?.imagenes?.[0];
     const api = normalizePathMaybe(first);
     const vercelLike = isVercelLikeHost();
 
-    // Si en Vercel viene /uploads, probablemente 404 => usar cover por ID
+    // En Vercel, si viene /uploads, suele romper => usar cover por ID
     if (vercelLike && isUploadsPath(api)) return fallbackCover || "";
-
     return api || fallbackCover || "";
   }, [project, fallbackCover]);
 
-  // ✅ MasterPlan: si es proyecto 1, siempre hay defaults si API no trae algo usable
   const masterPlanImages = useMemo(() => {
     const files = Array.isArray((project as any)?.masterPlanFiles)
       ? (project as any).masterPlanFiles
@@ -158,8 +153,6 @@ const ProjectDetail = () => {
 
     const vercelLike = isVercelLikeHost();
     const hasNonUpload = apiList.some((p: string) => !isUploadsPath(p));
-
-    // En Vercel, si SOLO hay uploads, tratamos como vacío para caer a defaults (solo en id=1)
     const usableApiList =
       vercelLike && apiList.length > 0 && !hasNonUpload ? [] : apiList;
 
@@ -169,7 +162,6 @@ const ProjectDetail = () => {
     return usableApiList;
   }, [project, idStr]);
 
-  // ✅ Galería: mismo criterio
   const galeriaImages = useMemo(() => {
     const imgs = Array.isArray((project as any)?.imagenes)
       ? (project as any).imagenes
@@ -189,7 +181,6 @@ const ProjectDetail = () => {
     return usableApiList;
   }, [project, idStr]);
 
-  // ✅ Evita índices fuera de rango cuando cambia el set de imágenes
   useEffect(() => {
     setCurrentMasterPlanIndex((i) =>
       masterPlanImages.length === 0
@@ -205,24 +196,28 @@ const ProjectDetail = () => {
   }, [galeriaImages.length]);
 
   const goToPreviousMasterPlan = () => {
+    if (masterPlanImages.length <= 1) return;
     setCurrentMasterPlanIndex((prevIndex) =>
       prevIndex === 0 ? masterPlanImages.length - 1 : prevIndex - 1,
     );
   };
 
   const goToNextMasterPlan = () => {
+    if (masterPlanImages.length <= 1) return;
     setCurrentMasterPlanIndex((prevIndex) =>
       prevIndex === masterPlanImages.length - 1 ? 0 : prevIndex + 1,
     );
   };
 
   const goToPreviousGaleria = () => {
+    if (galeriaImages.length <= 1) return;
     setCurrentGaleriaIndex((prevIndex) =>
       prevIndex === 0 ? galeriaImages.length - 1 : prevIndex - 1,
     );
   };
 
   const goToNextGaleria = () => {
+    if (galeriaImages.length <= 1) return;
     setCurrentGaleriaIndex((prevIndex) =>
       prevIndex === galeriaImages.length - 1 ? 0 : prevIndex + 1,
     );
@@ -289,8 +284,11 @@ const ProjectDetail = () => {
     );
   }
 
-  const hasLocation = (project as any).maps?.lat && (project as any).maps?.lng;
-  const hasPlaceUrl = (project as any).maps?.placeUrl;
+  const maps = (project as any)?.maps || {};
+  const lat = maps?.lat;
+  const lng = maps?.lng;
+  const hasLocation = !!lat && !!lng;
+  const hasPlaceUrl = !!maps?.placeUrl;
 
   const isComingSoon =
     String((project as any).etapa || "")
@@ -432,7 +430,9 @@ const ProjectDetail = () => {
                 {hasLocation && (
                   <div className="w-full h-64 sm:h-80 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 mb-4">
                     <iframe
-                      src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d${(project as any).maps.lng}!3d${(project as any).maps.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM!5e0!3m2!1ses!2sar!4v1600000000000!5m2!1ses!2sar`}
+                      src={`https://www.google.com/maps?q=${encodeURIComponent(
+                        `${lat},${lng}`,
+                      )}&z=15&output=embed`}
                       width="100%"
                       height="100%"
                       style={{ border: 0 }}
@@ -772,6 +772,7 @@ const ProjectDetail = () => {
           className="fixed inset-0 z-50 bg-black flex items-center justify-center"
           onClick={() => setMasterPlanFullscreen(false)}
           onKeyDown={handleKeyDown}
+          tabIndex={0}
           role="dialog"
           aria-modal="true"
           data-testid="modal-fullscreen-master-plan"
@@ -833,6 +834,7 @@ const ProjectDetail = () => {
           className="fixed inset-0 z-50 bg-black flex items-center justify-center"
           onClick={() => setGaleriaFullscreen(false)}
           onKeyDown={handleKeyDown}
+          tabIndex={0}
           role="dialog"
           aria-modal="true"
           data-testid="modal-fullscreen-galeria"

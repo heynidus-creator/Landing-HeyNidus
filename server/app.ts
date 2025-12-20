@@ -27,8 +27,9 @@ export function log(message: string, source = "express") {
 export const app = express();
 
 /**
- * Necesario para cookies "secure" detrás de proxy (Replit / Vercel / etc).
- * Sin esto, en producción puede NO setear cookie y te da 401.
+ * 🔴 CRÍTICO
+ * Necesario para cookies secure detrás de proxy
+ * (Vercel / Replit / Render / etc.)
  */
 app.set("trust proxy", 1);
 
@@ -46,7 +47,7 @@ declare global {
   }
 }
 
-// Body parsers (guardamos rawBody por si lo usan para webhooks / firmas)
+// ==================== BODY PARSERS ====================
 app.use(
   express.json({
     verify: (req, _res, buf) => {
@@ -56,29 +57,27 @@ app.use(
 );
 app.use(express.urlencoded({ extended: false }));
 
-/**
- * Sesión:
- * - En prod: cookie secure (HTTPS) + sameSite lax (ok para navegación normal)
- * - trust proxy habilitado arriba para que secure funcione detrás de proxy
- */
+// ==================== SESSION ====================
 app.use(
   session({
+    name: "admin.sid", // 🔹 nombre explícito (importante)
     store: new SessionStore({
       checkPeriod: 86400000, // 24hs
     }),
     secret: process.env.SESSION_SECRET || "heynidus-secret-key",
     resave: false,
     saveUninitialized: false,
+    proxy: true, // 🔹 clave para HTTPS detrás de proxy
     cookie: {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: 24 * 60 * 60 * 1000,
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      maxAge: 24 * 60 * 60 * 1000, // 1 día
     },
   }),
 );
 
-// Logger de requests /api/*
+// ==================== LOGGER /api ====================
 app.use((req, res, next) => {
   const start = Date.now();
   const p = req.path;
@@ -104,30 +103,29 @@ app.use((req, res, next) => {
   next();
 });
 
+// ==================== BOOTSTRAP ====================
 export default async function runApp(
   setup: (app: Express, server: Server) => Promise<void>,
 ) {
-  // 1) Monta rutas API y devuelve el http server
+  // 1) Registrar rutas (API)
   const server = await registerRoutes(app);
 
-  // 2) Error handler: NO tirar throw (eso te puede crashear el proceso en prod)
+  // 2) Error handler global (no crashea prod)
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err?.status || err?.statusCode || 500;
     const message = err?.message || "Internal Server Error";
-    // logueamos para debug
     log(`ERROR ${status}: ${message}`, "error");
     res.status(status).json({ error: message });
   });
 
-  // 3) Setup final (estáticos + SPA fallback) SIEMPRE al final
+  // 3) Setup final (estáticos + SPA fallback)
   await setup(app, server);
 
-  // 4) Listen (solo una vez)
+  // 4) Listen (una sola vez)
   const port = Number(process.env.PORT || 5000);
   const host = "0.0.0.0";
 
-  const alreadyListening = (server as any).listening === true;
-  if (!alreadyListening) {
+  if (!(server as any).listening) {
     server.listen(port, host, () => {
       log(`serving on http://${host}:${port}`);
     });

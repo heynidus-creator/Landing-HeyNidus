@@ -1,25 +1,28 @@
 import { Switch, Route, useLocation } from "wouter";
 import { lazy, Suspense, useEffect } from "react";
-import Navbar from "./components/Navbar.tsx";
-import Hero from "./components/Hero.tsx";
-import About from "./components/About.tsx";
-import Projects from "./components/Projects.tsx";
-import ContactSection from "./components/ContactSection.tsx";
-import Footer from "./components/Footer.tsx";
-import BackToTopButton from "./components/BackToTopButton.tsx";
-import ProjectDetail from "./pages/ProjectDetail.tsx";
-import BlogList from "./pages/BlogList.tsx";
-import BlogDetail from "./pages/BlogDetail.tsx";
-import NotFound from "./pages/not-found.tsx";
-import AdminPage from "./pages/admin/AdminPage.tsx";
+
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import About from "./components/About";
+import Projects from "./components/Projects";
+import ContactSection from "./components/ContactSection";
+import Footer from "./components/Footer";
+import BackToTopButton from "./components/BackToTopButton";
+
+import ProjectDetail from "./pages/ProjectDetail";
+import BlogList from "./pages/BlogList";
+import BlogDetail from "./pages/BlogDetail";
+import NotFound from "./pages/not-found";
+import AdminPage from "./pages/admin/AdminPage";
+
 import { useAnalytics } from "./hooks/useAnalytics";
 
-const Blog = lazy(() => import("./components/Blog.tsx"));
-const Testimonials = lazy(() => import("./components/Testimonials.tsx"));
+const Blog = lazy(() => import("./components/Blog"));
+const Testimonials = lazy(() => import("./components/Testimonials"));
 
 const LoadingFallback = () => (
   <div className="flex justify-center items-center py-16">
-    <div className="w-8 h-8 border-4 border-emerald-200 dark:border-emerald-800 border-t-emerald-600 dark:border-t-emerald-400 rounded-full animate-spin"></div>
+    <div className="w-8 h-8 border-4 border-emerald-200 dark:border-emerald-800 border-t-emerald-600 dark:border-t-emerald-400 rounded-full animate-spin" />
   </div>
 );
 
@@ -29,22 +32,27 @@ function HomePage() {
       <section id="inicio">
         <Hero />
       </section>
+
       <section id="quienes-somos" className="py-16">
         <About />
       </section>
+
       <section id="proyectos" className="py-16 bg-white dark:bg-slate-900">
         <Projects />
       </section>
+
       <section id="blog" className="py-16">
         <Suspense fallback={<LoadingFallback />}>
           <Blog />
         </Suspense>
       </section>
+
       <section id="testimonios" className="py-16 bg-white dark:bg-slate-900">
         <Suspense fallback={<LoadingFallback />}>
           <Testimonials />
         </Suspense>
       </section>
+
       <section id="contacto" className="py-16">
         <ContactSection />
       </section>
@@ -52,11 +60,10 @@ function HomePage() {
   );
 }
 
-function App() {
+export default function App() {
   const { trackPageView } = useAnalytics();
   const [location] = useLocation();
 
-  // ✅ Trackea cada cambio de ruta (SPA)
   useEffect(() => {
     trackPageView(location);
   }, [location, trackPageView]);
@@ -64,10 +71,10 @@ function App() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
       <Switch>
-        {/* Admin sin navbar/footer */}
-        <Route path="/admin" component={AdminPage} />
+        {/* ✅ Admin (incluye subrutas) */}
+        <Route path="/admin/:rest*" component={AdminPage} />
 
-        {/* Landing layout */}
+        {/* ✅ Sitio público */}
         <Route>
           <Navbar />
           <Switch>
@@ -84,5 +91,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

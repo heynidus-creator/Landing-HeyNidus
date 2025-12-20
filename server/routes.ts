@@ -14,17 +14,21 @@ import {
   type Lead,
 } from "@shared/schema";
 
-const PROJECTS_FILE = path.join(process.cwd(), "server/data/projects.json");
-const BLOG_FILE = path.join(process.cwd(), "server/data/blog.json");
-const TESTIMONIALS_FILE = path.join(
-  process.cwd(),
-  "server/data/testimonials.json",
-);
-const ANALYTICS_FILE = path.join(process.cwd(), "server/data/analytics.json");
-const LEADS_FILE = path.join(process.cwd(), "server/data/leads.json");
-
-const UPLOADS_DIR = path.join(process.cwd(), "client/public/uploads");
 const DATA_DIR = path.join(process.cwd(), "server/data");
+
+// ✅ En PROD el frontend compilado vive en dist/public; en DEV vive en client/public
+const PUBLIC_DIR =
+  process.env.NODE_ENV === "production"
+    ? path.join(process.cwd(), "dist", "public")
+    : path.join(process.cwd(), "client", "public");
+
+const UPLOADS_DIR = path.join(PUBLIC_DIR, "uploads");
+
+const PROJECTS_FILE = path.join(DATA_DIR, "projects.json");
+const BLOG_FILE = path.join(DATA_DIR, "blog.json");
+const TESTIMONIALS_FILE = path.join(DATA_DIR, "testimonials.json");
+const ANALYTICS_FILE = path.join(DATA_DIR, "analytics.json");
+const LEADS_FILE = path.join(DATA_DIR, "leads.json");
 
 // Ensure data and uploads directories exist
 if (!fs.existsSync(DATA_DIR)) {
@@ -37,14 +41,14 @@ if (!fs.existsSync(UPLOADS_DIR)) {
 /**
  * Helpers para paths (FIX crítico)
  * - Si guardamos "/uploads/x.jpg", path.join(..., "/uploads/x.jpg") ignora lo anterior.
- * - Estos helpers normalizan y siempre apuntan a client/public/...
+ * - Estos helpers normalizan y siempre apuntan a PUBLIC_DIR/...
  */
 function stripLeadingSlash(p: string) {
-  return p.replace(/^\/+/, "");
+  return String(p || "").replace(/^\/+/, "");
 }
 function publicFileFullPath(filePath: string) {
   const safe = stripLeadingSlash(filePath);
-  return path.join(process.cwd(), "client/public", safe);
+  return path.join(PUBLIC_DIR, safe);
 }
 function toPublicUrl(filePath: string) {
   if (!filePath) return "";
@@ -53,10 +57,10 @@ function toPublicUrl(filePath: string) {
 
 // Multer storage config
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
+  destination: (_req, _file, cb) => {
     cb(null, UPLOADS_DIR);
   },
-  filename: (req, file, cb) => {
+  filename: (_req, file, cb) => {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     const ext = path.extname(file.originalname);
     cb(null, file.fieldname + "-" + uniqueSuffix + ext);
@@ -66,13 +70,13 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage,
   limits: { fileSize: 50 * 1024 * 1024 }, // 50MB max
-  fileFilter: (req, file, cb) => {
+  fileFilter: (_req, file, cb) => {
     const allowedTypes = /jpeg|jpg|png|gif|webp|mp4|mov|avi|webm|pdf/;
-    const extname = allowedTypes.test(
+    const extOk = allowedTypes.test(
       path.extname(file.originalname).toLowerCase(),
     );
-    const mimetype = allowedTypes.test(file.mimetype);
-    if (extname || mimetype) return cb(null, true);
+    const mimeOk = allowedTypes.test(String(file.mimetype || "").toLowerCase());
+    if (extOk || mimeOk) return cb(null, true);
     cb(new Error("Solo se permiten imágenes, videos y PDFs"));
   },
 });
@@ -206,8 +210,10 @@ function writeProjects(projects: Project[]): void {
 
 function readBlogPosts(): BlogPost[] {
   try {
+    if (!fs.existsSync(BLOG_FILE)) return [];
     const data = fs.readFileSync(BLOG_FILE, "utf-8");
-    return JSON.parse(data);
+    const parsed = JSON.parse(data);
+    return Array.isArray(parsed) ? parsed : [];
   } catch {
     return [];
   }
@@ -219,8 +225,10 @@ function writeBlogPosts(posts: BlogPost[]): void {
 
 function readTestimonials(): Testimonial[] {
   try {
+    if (!fs.existsSync(TESTIMONIALS_FILE)) return [];
     const data = fs.readFileSync(TESTIMONIALS_FILE, "utf-8");
-    return JSON.parse(data);
+    const parsed = JSON.parse(data);
+    return Array.isArray(parsed) ? parsed : [];
   } catch {
     return [];
   }
@@ -245,8 +253,11 @@ interface AnalyticsData {
 
 function readAnalytics(): AnalyticsData {
   try {
+    if (!fs.existsSync(ANALYTICS_FILE)) return { pageViews: [] };
     const data = fs.readFileSync(ANALYTICS_FILE, "utf-8");
-    return JSON.parse(data);
+    const parsed = JSON.parse(data);
+    if (!parsed || !Array.isArray(parsed.pageViews)) return { pageViews: [] };
+    return parsed;
   } catch {
     return { pageViews: [] };
   }
@@ -258,8 +269,10 @@ function writeAnalytics(data: AnalyticsData): void {
 
 function readLeads(): Lead[] {
   try {
+    if (!fs.existsSync(LEADS_FILE)) return [];
     const data = fs.readFileSync(LEADS_FILE, "utf-8");
-    return JSON.parse(data).leads || [];
+    const parsed = JSON.parse(data);
+    return Array.isArray(parsed?.leads) ? parsed.leads : [];
   } catch {
     return [];
   }
@@ -288,20 +301,46 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const adminPassword = process.env.ADMIN_PASSWORD;
 
     if (!adminPassword) {
-      return res
-        .status(500)
-        .json({ error: "Contraseña no configurada en servidor" });
+      return res.status(500).json({ error: "Contraseña no configurada" });
     }
 
-    if (password === adminPassword) {
+    if (password !== adminPassword) {
+      return res.status(401).json({ error: "Contraseña incorrecta" });
+    }
+
+    req.session.regenerate((err) => {
+      if (err) {
+        return res.status(500).json({ error: "Error al iniciar sesión" });
+      }
+
       (req.session as any).adminAuth = true;
-      req.session.save((err: any) => {
-        if (err)
-          return res.status(500).json({ error: "Error al crear sesión" });
+
+      req.session.save((err) => {
+        if (err) {
+          return res.status(500).json({ error: "Error al guardar sesión" });
+        }
         res.json({ success: true });
       });
+    });
+  });
+
+  app.post("/api/admin/logout", (req, res) => {
+    req.session.destroy(() => {
+      res.clearCookie("admin.sid");
+      res.json({ success: true });
+    });
+  });
+
+  app.get("/api/admin/me", (req, res) => {
+    res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+    res.setHeader("Pragma", "no-cache");
+
+    const isAuthenticated = !!(req.session as any)?.adminAuth;
+
+    if (isAuthenticated) {
+      res.json({ authenticated: true });
     } else {
-      res.status(401).json({ error: "Contraseña incorrecta" });
+      res.status(401).json({ authenticated: false });
     }
   });
 
@@ -320,7 +359,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // ==================== PROJECTS (PUBLIC) ====================
-  app.get("/api/projects/list", (req, res) => {
+  app.get("/api/projects/list", (_req, res) => {
     try {
       const projects = readProjects();
       res.json(projects);
@@ -332,7 +371,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/projects/:id", (req, res) => {
     try {
       const projects = readProjects();
-      // FIX: tolera id number/string
       const project = projects.find(
         (p) => String(p.id) === String(req.params.id),
       );
@@ -357,7 +395,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       try {
         const body: any = req.body;
 
-        // Parse JSON fields
         if (typeof body.maps === "string") {
           try {
             body.maps = JSON.parse(body.maps);
@@ -437,7 +474,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
         const body: any = req.body;
 
-        // Parse JSON fields
         if (typeof body.maps === "string") {
           try {
             body.maps = JSON.parse(body.maps);
@@ -467,7 +503,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
         }
 
-        // Parse existing files to keep
         let existingMasterPlan: string[] = [];
         let existingImagenes: string[] = [];
         let existingVideos: string[] = [];
@@ -504,8 +539,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const newVideos =
           files?.videos?.map((f) => `/uploads/${f.filename}`) || [];
 
-        // Delete removed files (FIX: path seguro)
         const oldProject = projects[index];
+
         const filesToDelete = [
           ...(oldProject.masterPlanFiles || []).filter(
             (f) => !existingMasterPlan.includes(f),
@@ -566,7 +601,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const project = projects[index];
 
-      // Delete associated files (FIX: path seguro)
       const allFiles = [
         ...(project.masterPlanFiles || []),
         ...(project.imagenes || []),
@@ -588,7 +622,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // ==================== BLOG (PUBLIC) ====================
-  app.get("/api/blog/list", (req, res) => {
+  app.get("/api/blog/list", (_req, res) => {
     try {
       const posts = readBlogPosts();
       res.json(posts);
@@ -615,30 +649,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
     upload.array("imagenes", 10),
     (req, res) => {
       try {
-        const body = JSON.parse(req.body.data || "{}");
-        const validation = insertBlogPostSchema.safeParse(body);
+        const body: any = req.body;
+
+        // ✅ Ahora sí: BlogAdmin manda FormData normal (no "data" JSON)
+        const normalized = {
+          titulo: body.titulo,
+          subtitulo: body.subtitulo || "",
+          contenido: body.contenido,
+          fecha: body.fecha || new Date().toISOString().split("T")[0],
+        };
+
+        const validation = insertBlogPostSchema.safeParse(normalized);
         if (!validation.success)
           return res.status(400).json({ error: validation.error.errors });
 
-        const files = req.files as Express.Multer.File[];
-        // FIX: siempre "/uploads/.."
+        const files = (req.files || []) as Express.Multer.File[];
         const imagenes = files.map((f) => `/uploads/${f.filename}`);
 
         const posts = readBlogPosts();
         const newPost: BlogPost = {
           id: generateId(),
-          titulo: body.titulo,
-          subtitulo: body.subtitulo || "",
-          contenido: body.contenido,
-          fecha: body.fecha || new Date().toISOString(),
+          titulo: validation.data.titulo,
+          subtitulo: (validation.data as any).subtitulo || "",
+          contenido: validation.data.contenido,
+          fecha:
+            (validation.data as any).fecha ||
+            new Date().toISOString().split("T")[0],
           imagenes,
           updatedAt: new Date().toISOString(),
-        };
+        } as any;
 
         posts.unshift(newPost);
         writeBlogPosts(posts);
 
-        res.json(newPost);
+        res.status(201).json(newPost);
       } catch (error) {
         console.error("Error creating blog post:", error);
         res.status(500).json({ error: "Error al crear post" });
@@ -659,13 +703,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
         if (index === -1)
           return res.status(404).json({ error: "Post no encontrado" });
 
-        const body = JSON.parse(req.body.data || "{}");
+        const body: any = req.body;
         const oldPost = posts[index];
 
-        const files = req.files as Express.Multer.File[];
-        // FIX: siempre "/uploads/.."
+        // existingImagenes viene como JSON string desde BlogAdmin
+        let existingImagenes: string[] = oldPost.imagenes || [];
+        if (typeof body.existingImagenes === "string") {
+          try {
+            existingImagenes = JSON.parse(body.existingImagenes);
+          } catch {
+            existingImagenes = oldPost.imagenes || [];
+          }
+        } else if (Array.isArray(body.existingImagenes)) {
+          existingImagenes = body.existingImagenes;
+        }
+
+        const files = (req.files || []) as Express.Multer.File[];
         const newImagenes = files.map((f) => `/uploads/${f.filename}`);
-        const existingImagenes = body.existingImagenes || oldPost.imagenes;
+
+        // borrar imágenes quitadas
+        const removed = (oldPost.imagenes || []).filter(
+          (f) => !existingImagenes.includes(f),
+        );
+        removed.forEach((filePath) => {
+          const fullPath = publicFileFullPath(filePath);
+          if (fs.existsSync(fullPath)) fs.unlinkSync(fullPath);
+        });
 
         const updatedPost: BlogPost = {
           ...oldPost,
@@ -673,9 +736,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           subtitulo: body.subtitulo ?? oldPost.subtitulo,
           contenido: body.contenido ?? oldPost.contenido,
           fecha: body.fecha ?? oldPost.fecha,
-          imagenes: [...existingImagenes, ...newImagenes],
+          imagenes: [...existingImagenes, ...newImagenes].map(toPublicUrl),
           updatedAt: new Date().toISOString(),
-        };
+        } as any;
 
         posts[index] = updatedPost;
         writeBlogPosts(posts);
@@ -699,7 +762,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const post = posts[index];
 
-      // Delete associated images (FIX path)
       (post.imagenes || []).forEach((filePath) => {
         const fullPath = publicFileFullPath(filePath);
         if (fs.existsSync(fullPath)) fs.unlinkSync(fullPath);
@@ -716,7 +778,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // ==================== TESTIMONIALS ====================
-  app.get("/api/testimonials/list", (req, res) => {
+  app.get("/api/testimonials/list", (_req, res) => {
     try {
       const testimonials = readTestimonials();
       const approved = testimonials.filter((t: any) => t.aprobado);
@@ -726,7 +788,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/testimonials/list-admin", requireAdmin, (req, res) => {
+  app.get("/api/testimonials/list-admin", requireAdmin, (_req, res) => {
     try {
       const testimonials = readTestimonials();
       res.json(testimonials);
@@ -760,7 +822,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const newTestimonial: Testimonial = {
           id: generateId(),
           autor: validation.data.autor,
-          rol: validation.data.rol || "",
+          rol: (validation.data as any).rol || "",
           contenido: validation.data.contenido,
           imagen,
           fecha: new Date().toISOString().split("T")[0],
@@ -883,7 +945,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/analytics/summary", requireAdmin, (req, res) => {
+  app.get("/api/analytics/summary", requireAdmin, (_req, res) => {
     try {
       const analytics = readAnalytics();
       const views = analytics.pageViews;
@@ -1023,7 +1085,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/leads/list", requireAdmin, (req, res) => {
+  app.get("/api/leads/list", requireAdmin, (_req, res) => {
     try {
       const leads = readLeads();
       res.json(

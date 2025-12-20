@@ -7,14 +7,27 @@ async function throwIfResNotOk(res: Response) {
   }
 }
 
+function normalizeApiUrl(url: string) {
+  // ✅ Regla: en frontend SIEMPRE usar rutas relativas /api/...
+  // Si alguien pasa "api/..." lo convertimos a "/api/..."
+  if (!url) return url;
+  if (url.startsWith("http://") || url.startsWith("https://")) return url; // permitimos absoluto si fuese intencional
+  return url.startsWith("/") ? url : `/${url}`;
+}
+
 export async function apiRequest(
   method: string,
   url: string,
-  data?: unknown | undefined,
+  data?: unknown,
 ): Promise<Response> {
-  const res = await fetch(url, {
+  const normalizedUrl = normalizeApiUrl(url);
+
+  const res = await fetch(normalizedUrl, {
     method,
-    headers: data ? { "Content-Type": "application/json" } : {},
+    headers: {
+      Accept: "application/json",
+      ...(data ? { "Content-Type": "application/json" } : {}),
+    },
     body: data ? JSON.stringify(data) : undefined,
     credentials: "include",
   });
@@ -24,17 +37,26 @@ export async function apiRequest(
 }
 
 type UnauthorizedBehavior = "returnNull" | "throw";
+
 export const getQueryFn: <T>(options: {
   on401: UnauthorizedBehavior;
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    const res = await fetch(queryKey.join("/") as string, {
+    // react-query a veces recibe queryKey como array de strings,
+    // tu patrón es ["/api/...."] así que tomamos el primero.
+    const raw = Array.isArray(queryKey)
+      ? String(queryKey[0])
+      : String(queryKey);
+    const url = normalizeApiUrl(raw);
+
+    const res = await fetch(url, {
       credentials: "include",
+      headers: { Accept: "application/json" },
     });
 
     if (unauthorizedBehavior === "returnNull" && res.status === 401) {
-      return null;
+      return null as any;
     }
 
     await throwIfResNotOk(res);

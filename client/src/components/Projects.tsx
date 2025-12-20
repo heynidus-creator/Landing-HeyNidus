@@ -73,9 +73,14 @@ const Projects = () => {
   } = useQuery<Project[]>({
     queryKey: ["/api/projects/list"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://7da18ae8-5e3b-451c-b32a-151a94237984-00-npd7udeo3dgw.kirk.replit.dev/api/projects/list",
-      );
+      // ✅ CLAVE: llamar SIEMPRE relativo, para que:
+      // - en Vercel => use vercel.json rewrites hacia Replit Publish
+      // - en Replit Publish => pegue al mismo host
+      const res = await fetch("/api/projects/list", {
+        method: "GET",
+        credentials: "include",
+        headers: { Accept: "application/json" },
+      });
       if (!res.ok) throw new Error("Failed to fetch projects");
       return res.json();
     },
@@ -263,7 +268,6 @@ const Projects = () => {
                 </div>
 
                 <div className="mt-4 flex gap-3 flex-col sm:flex-row flex-shrink-0">
-                  {/* ✅ FIX 404: navegación SPA con wouter */}
                   <Link
                     href={`/proyecto/${idStr}`}
                     className="inline-flex items-center justify-center rounded-full bg-emerald-600 dark:bg-emerald-600 px-3 sm:px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700 dark:hover:bg-emerald-700 transition"
